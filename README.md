@@ -1,4 +1,4 @@
-# ndc-sandbox
+# NDC Sandbox
 A development-focused server-side restful NDC sandbox.
 
 This project is currently under pre-development debate on how to approach it.
