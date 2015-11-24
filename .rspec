@@ -1,0 +1,6 @@
+--color
+--format=nested
+--order=rand
+--profile
+-I .
+-I spec/
