@@ -4,8 +4,6 @@ require 'active_record'
 require 'grape'
 require 'nokogiri'
 
-require 'api/air_shopping_endpoint'
-
 module API
 
   class Base < Grape::API
