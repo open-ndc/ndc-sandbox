@@ -1,19 +1,21 @@
 # External dependencies
-require 'json'
 require 'active_record'
 require 'grape'
 require 'nokogiri'
+
+# API Modules
+require_relative 'api_ndc_endpoint'
 
 module API
 
   class Base < Grape::API
 
-    CONTENT_TYPE = "application/hal+json"
+    CONTENT_TYPE = "application/xml"
     RACK_CONTENT_TYPE_HEADER = {"content-type" => CONTENT_TYPE}
     HTTP_STATUS_CODES = Rack::Utils::HTTP_STATUS_CODES.invert
 
     format :xml
-    content_type :xml, 'application/xml'
+    content_type :xml, CONTENT_TYPE
     version 'v0', using: :path
 
     rescue_from Grape::Exceptions::Validation do |e|
@@ -50,6 +52,7 @@ module API
     end
 
     # Mount other api modules here
+    mount NDCEndpoint
 
   end
 

@@ -1,8 +1,6 @@
 $RACK_ENV = ENV['RACK_ENV'] || 'development'
 $APP_ROOT = File.expand_path(File.dirname(__FILE__))
 
-require 'pry'
-
 puts "Starting RackApp with environment (#{$RACK_ENV}) in path (#{$APP_ROOT})"
 
 require File.join(File.dirname(__FILE__), 'init')
