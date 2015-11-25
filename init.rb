@@ -10,6 +10,8 @@ require 'middleware/db_connection_sweeper'
 require 'middleware/logger'
 require 'logger'
 
+require 'pry' if $RACK_ENV == 'development'
+
 class ::Logger; alias_method :write, :<<; end # for Rack::CommonLogger
 
 # $LOG_FILE = "./log/#{$RACK_ENV}.log"
