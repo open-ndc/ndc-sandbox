@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/EDIST" targetNamespace="http://www.iata.org/IATA/EDIST" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.000" id="IATA2015.2">
+	<xsd:include schemaLocation="edist_commontypes.xsd"/>
+	<xsd:include schemaLocation="edist_structures.xsd"/>
+	<!--
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+   A I R   D O C U M E N T   R E F U N D   R E Q U E S T   B U S I N E S S   O B J E C T
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+	<xsd:element name="AirDocRefundRQ">
+		<xsd:annotation>
+			<xsd:documentation source="DESCRIPTION" xml:lang="en">The AirDocRefund transaction set requests an Airline to refund, part refund (or void if not reported) flight (ET) and/or ancillary (EMD) document(s).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PointOfSale" minOccurs="0"/>
+				<xsd:element ref="Document"/>
+				<xsd:element ref="Party"/>
+				<xsd:element name="Query">
+					<xsd:annotation>
+						<xsd:documentation>Air Document Refund Request Query.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="TicketDocQuantity"/>
+							<xsd:element name="TicketDocument" type="TicketDocumentType" maxOccurs="unbounded">
+								<xsd:annotation>
+									<xsd:documentation>The ticket document to be refunded.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="Waivers" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Validating Carrier-assigned Fare Rule Modification or Override information.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="Waiver" maxOccurs="5">
+											<xsd:annotation>
+												<xsd:documentation>Waiver detail.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="Code" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Fare Rule Waiver Code.
+
+Note: This is a code assigned by the validating carrier that allows fare rule modification or override.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:pattern value="[0-9a-zA-Z]{1,19}"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element name="Type" type="FareWaiverRuleSimpleType" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Fare Waiver Rule Type. Examples: ExchangeReissued, FareComponent</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="IATA_PayloadStdAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

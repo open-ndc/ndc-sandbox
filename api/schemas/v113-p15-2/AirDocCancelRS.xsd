@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by JRT (JR Technologies, Inc.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/EDIST" targetNamespace="http://www.iata.org/IATA/EDIST" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.000" id="IATA2015.2">
+	<xsd:include schemaLocation="edist_commontypes.xsd"/>
+	<xsd:include schemaLocation="edist_structures.xsd"/>
+	<!--
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+    A I R   D O C U M E N T  C A N C E L   R E S P O N S E   B U S I N E S S   O B J E C T
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+	<xsd:element name="AirDocCancelRS">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">The AirDocCancel transaction set requests an Airline to cancel flight (ET) and/or ancillary (EMD) document(s).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Document"/>
+				<xsd:choice>
+					<xsd:sequence>
+						<xsd:element name="Success" type="SuccessType">
+							<xsd:annotation>
+								<xsd:documentation>The presence of the empty Success element explicitly indicates that the message succeeded.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Warnings" type="WarningsType" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Used in conjunction with the Success element to define one or more business errors.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Response">
+							<xsd:annotation>
+								<xsd:documentation>Query Results.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="Processing" minOccurs="0"/>
+									<xsd:element name="DocumentType">
+										<xsd:annotation>
+											<xsd:documentation>Cancelled Document reference, which may be a ticket document or order reference.</xsd:documentation>
+										</xsd:annotation>
+										<xsd:complexType>
+											<xsd:choice>
+												<xsd:element name="TicketDocument" type="TicketDocumentType">
+													<xsd:annotation>
+														<xsd:documentation>Cancelled ticket/ document information.</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="OrderReference" type="CouponOrderKeyType">
+													<xsd:annotation>
+														<xsd:documentation>Cancelled order reference. 
+
+Note: This should only be used if the ticket/ document number is not known.</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+											</xsd:choice>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+					<xsd:element ref="Errors"/>
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="IATA_PayloadStdAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="AirDocCancelResProcessType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Response Message Processing.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AssociatedObjectBaseType">
+				<xsd:sequence>
+					<xsd:element ref="Alerts" minOccurs="0"/>
+					<xsd:element ref="Notices" minOccurs="0"/>
+					<xsd:element ref="MarketingMessages" minOccurs="0"/>
+					<xsd:element ref="Policies" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation source="description" xml:lang="en">Message Policy information.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="AlertInd" type="xsd:boolean" use="optional">
+					<xsd:annotation>
+						<xsd:documentation source="description" xml:lang="en">When TRUE, processing alerts have been generated and the Alerts node should be parsed.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="MarketingInd" type="xsd:boolean" use="optional">
+					<xsd:annotation>
+						<xsd:documentation source="description" xml:lang="en">When TRUE, supplemental marketing information has been generated and the Notifications/ MarketingMessage node should be parsed.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="WarningInd" type="xsd:boolean" use="optional">
+					<xsd:annotation>
+						<xsd:documentation source="description" xml:lang="en">When TRUE, business warnings have been generated and the Notification/Warning node should be parsed.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="NoticeInd" type="xsd:boolean" use="optional">
+					<xsd:annotation>
+						<xsd:documentation source="description" xml:lang="en">When TRUE, notices have been generated and the Notifications/Notice node should be parsed.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Processing" type="AirDocCancelResProcessType">
+		<xsd:annotation>
+			<xsd:documentation>Transaction Processing Results, including processing status, payload content notifices, , business warnings and supplemental marketing messages.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

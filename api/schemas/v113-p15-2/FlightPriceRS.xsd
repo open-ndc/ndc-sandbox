@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/EDIST" targetNamespace="http://www.iata.org/IATA/EDIST" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.000" id="IATA2015.2">
+	<xsd:include schemaLocation="edist_commontypes.xsd"/>
+	<xsd:include schemaLocation="edist_structures.xsd"/>
+	<!--
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+     F L I G H T   P R I C E   R E S P O N S E   B U S I N E S S   O B J E C T
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+	<xsd:element name="FlightPriceRS">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">The FlightPrice transaction set may return two different sets of content. Based on request attributes, the response may initially provide additional a la carte ancillary services that are applicable and available for the selected offer.
+
+If no ancillary services are available, the message returns a final pricing. If ancillary services are available, the modified pricing request includes selected services and returns a final pricing that includes service(s) selection. The response message also returns multi-media content at the message level with media references at the service level.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element ref="Document"/>
+					<xsd:element name="Success" type="SuccessType">
+						<xsd:annotation>
+							<xsd:documentation>The presence of the empty Success element explicitly indicates that the message succeeded.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Used in conjunction with the Success element to define one or more business errors.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Processing" type="ProcessingResultType" minOccurs="0"/>
+					<xsd:element name="Parameters" type="FltPriceResParamsType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation source="description" xml:lang="en">Search Result Parameters that influence overall message results.
+
+Note: These capabilities may not be supported by all NDC-enabled systems or may be supported by bilateral agreement only. The technical implementation of this capability is not dictated by this specification. </xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="ShoppingResponseIDs" minOccurs="0"/>
+					<xsd:element name="PricedFlightOffers" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>PRICED FLIGHT Airline Offer(s).</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element ref="PricedFlightOffer" maxOccurs="unbounded">
+									<xsd:annotation>
+										<xsd:documentation>Priced Flight Offer detail.
+
+Notes:
+1. A Priced Flight Offer may contain Branded Fare information. If it is a Branded Fare, Price Class-association will be specified.
+
+2. Additionally, Lead Pricing Calendar fares (prior to and/ or after the specified departure date) may be specified by passenger type.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="AirlineOffers" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation source="description" xml:lang="en">Other Airline Offer(s).</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="AirlineOffer" maxOccurs="unbounded">
+									<xsd:annotation>
+										<xsd:documentation source="description" xml:lang="en">Offer detail.</xsd:documentation>
+									</xsd:annotation>
+									<xsd:complexType>
+										<xsd:complexContent>
+											<xsd:extension base="OfferType">
+												<xsd:sequence>
+													<xsd:element ref="PricedOffer"/>
+												</xsd:sequence>
+											</xsd:extension>
+										</xsd:complexContent>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="Payments" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Payment information.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="Payment" type="OrderPaymentFormType" maxOccurs="unbounded">
+									<xsd:annotation>
+										<xsd:documentation>Payment detail, including association(s).</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="Promotions" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Promotion information.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="Promotion" type="PromotionType" maxOccurs="unbounded">
+									<xsd:annotation>
+										<xsd:documentation>Promotion Code.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element ref="Commission" minOccurs="0"/>
+					<xsd:element name="DataLists" type="DataListType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Data Lists(s).</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Metadata" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation source="description" xml:lang="en">Metadata List(s).</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:complexContent>
+								<xsd:extension base="FltPriceResMetadataType"/>
+							</xsd:complexContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element ref="Policies" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation source="description" xml:lang="en">Message Policy information.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:sequence>
+					<xsd:element ref="Errors"/>
+				</xsd:sequence>
+			</xsd:choice>
+			<xsd:attributeGroup ref="IATA_PayloadStdAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="FltPriceResParamsType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">A data type for Flight Price Response Message Parameters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MessageParamsBaseType">
+				<xsd:sequence>
+					<xsd:element name="Pricing" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation source="description" xml:lang="en">Pricing Parameters, including Simple Pricing, Award Travel, Auto Exchange, Override Currency and Fee Exemption.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="OverrideCurrency" type="CurrencySimpleType" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation source="description" xml:lang="en">Requested override currency code for pricing.
+Example: EUR</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="FeeExemption" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation source="description" xml:lang="en">Fee exemption application for Offer pricing.</xsd:documentation>
+									</xsd:annotation>
+									<xsd:complexType>
+										<xsd:complexContent>
+											<xsd:extension base="AssociatedObjectBaseType">
+												<xsd:sequence>
+													<xsd:element name="Fee" minOccurs="0" maxOccurs="unbounded">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Exemption(s) based on tax codes plus (optional) tax types within a tax code.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="Code">
+																	<xsd:annotation>
+																		<xsd:documentation source="description" xml:lang="en">Exempt tax code.
+Example: YQ/YR</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:simpleContent>
+																			<xsd:extension base="xsd:string">
+																				<xsd:attribute name="CollectionPoint" use="optional">
+																					<xsd:annotation>
+																						<xsd:documentation source="description" xml:lang="en">Airport code location for exempt ZP or XF taxes.
+Example: MIA</xsd:documentation>
+																						<xsd:documentation source="ENCODING" xml:lang="en">For maximum interoperability, it is recommended that IATA (three character) Airport/ City Code values be used. Use an IATA code or a proprietary string value.
+
+http://www.iata.org/publications/Pages/code-search.aspx</xsd:documentation>
+																					</xsd:annotation>
+																				</xsd:attribute>
+																			</xsd:extension>
+																		</xsd:simpleContent>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="TaxType" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+																	<xsd:annotation>
+																		<xsd:documentation source="description" xml:lang="en">Tax type(s) within the tax code.
+Examples: I, C</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+															</xsd:sequence>
+															<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element ref="CountryCode" minOccurs="0" maxOccurs="unbounded"/>
+													<xsd:element name="ProvinceCode" type="ProperNameSimpleType" minOccurs="0" maxOccurs="unbounded">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Exempt province(s).</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="GovernmentBody" type="ProperNameSimpleType" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Entity name.</xsd:documentation>
+															<xsd:documentation source="Guidelines" xml:lang="en">=notes=:
+1. This must be provided for certain exemptions in the Canadian market.</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:extension>
+										</xsd:complexContent>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:attribute name="AutoExchangeInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation>When TRUE, fare information for one or more Offer Items has been returned from an auto-exchanging application.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="AwardIncludedInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation>When TRUE, award eligible in addition to priced offers and fares is requested.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="AwardOnlyInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation>When TRUE, only award eligible offers/ fares have been returned.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="SimpleInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation>When TRUE, Simple Pricing  for flight offers has been applied.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--
+====================================================
+===  O F F E R  C A T E G O R I E S
+====================================================-->
+	<xsd:element name="PricedFlightOffer">
+		<xsd:annotation>
+			<xsd:documentation>A PRICED FLIGHT Offer.
+
+Notes:
+1. A Priced Flight Offer may contain Branded Fare information. If it is a Branded Fare, Price Class-association will be specified.
+
+2. Additionally, Lead Pricing Calendar fares (prior to and/ or after the specified departure date) may be specified by passenger type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="KeyWithMetaObjectBaseType">
+					<xsd:sequence>
+						<xsd:element name="Parameters" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation source="description" xml:lang="en">Offer-wide parameters, including Traveler Applicability; Total Offer Quantity; Passenger Pricing Method; Inventory Guarantee.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="TotalItemQuantity" type="xsd:positiveInteger" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation source="description" xml:lang="en">Total Offer Items in this Offer. Example: 3</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element ref="PTC_Priced" minOccurs="0" maxOccurs="unbounded">
+										<xsd:annotation>
+											<xsd:documentation source="description" xml:lang="en">Requested and Priced PTC (passenger type code) and associated Traveler quantity.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+								</xsd:sequence>
+								<xsd:attribute name="ApplyToAllInd" type="xsd:boolean" use="optional">
+									<xsd:annotation>
+										<xsd:documentation>When TRUE, this Offer applies to all Travelers.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:attribute>
+								<xsd:attribute name="RedemptionOnlyInd" type="xsd:boolean" use="optional">
+									<xsd:annotation>
+										<xsd:documentation>When TRUE, this Offer must be redeemed, e.g. it cannot be purchased.
+
+Note: Taxes may still apply.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="OfferID" type="ItemID_Type">
+							<xsd:annotation>
+								<xsd:documentation>Globally unique Offer instance ID. length should not be exceed 64 character and it is recommended to not use dash char in it.Example: QWASZXERDFCVTYGHBNUIJKNMF67D5F9GHR567SWER41SD458F9456FMDIRTN34DF</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="OfferPrice" type="OfferPriceLeadType" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation source="description" xml:lang="en">Fare Offer and Lead Calendar Pricing information.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="TimeLimits" type="OfferTimeLimitSetType">
+							<xsd:annotation>
+								<xsd:documentation source="description" xml:lang="en">Offer-Level Time Limits, including Offer Expiration, Payment and Bilateral Time Limits.
+
+Note: If specified, these time limits are at the OFFER-LEVEL and will apply by default to any relevant (child) Offer Items. These time limits may also be specified at a (child) OFFER ITEM-level where it will apply to that one instance of the Offer Item (and override the Offer-level time limit if one has been specified.)</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Associations" type="PricedFlightOfferAssocType" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>Priced Flight Offer Association(s), including Traveler, Flight, Baggage, Included Optional Services, Associated Optional Services, Price Class and other miscellaneous association.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element ref="DescriptionReferences" minOccurs="0"/>
+						<xsd:element name="Disclosure" type="DisclosureType" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation source="description" xml:lang="en">Disclosure information.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Penalty" type="OfferPenaltyType" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation source="description" xml:lang="en">Penalty information.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element ref="FareDetail" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!--
+====================================================
+===  M E T A D A T A
+====================================================-->
+	<xsd:complexType name="FltPriceResMetadataType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Flight Price Response Metadata definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Shopping" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Shopping Query-Related Metadata.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ShopMetadataGroup"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Traveler" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Traveler Metadata List(s).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="TravelerMetadata"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Other" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="description" xml:lang="en">Other Metadata Lists(s).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="OtherMetadata" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation source="description" xml:lang="en">Other Metadata List.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:choice>
+									<xsd:element ref="AddressMetadatas"/>
+									<xsd:element ref="AircraftMetadatas"/>
+									<xsd:element ref="AirportMetadatas"/>
+									<xsd:element ref="CityMetadatas"/>
+									<xsd:element ref="CodesetMetadatas"/>
+									<xsd:element ref="ContactMetadatas"/>
+									<xsd:element ref="CountryMetadatas"/>
+									<xsd:element ref="CurrencyMetadatas"/>
+									<xsd:element ref="DescriptionMetadatas"/>
+									<xsd:element ref="EquivalentID_Metadatas"/>
+									<xsd:element ref="LanguageMetadatas"/>
+									<xsd:element ref="PaymentCardMetadatas"/>
+									<xsd:element ref="PaymentFormMetadatas"/>
+									<xsd:element ref="PriceMetadatas"/>
+									<xsd:element ref="RuleMetadatas"/>
+									<xsd:element ref="StateProvMetadatas"/>
+									<xsd:element ref="ZoneMetadatas"/>
+								</xsd:choice>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

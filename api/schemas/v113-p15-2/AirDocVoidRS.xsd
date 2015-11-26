@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/EDIST" targetNamespace="http://www.iata.org/IATA/EDIST" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.000" id="IATA2015.2">
+	<xsd:include schemaLocation="edist_commontypes.xsd"/>
+	<xsd:include schemaLocation="edist_structures.xsd"/>
+	<!--
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+    A I R   D O C U M E N T   V O I D   R E S P O N S E   B U S I N E S S   O B J E C T
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+	<xsd:element name="AirDocVoidProcessing">
+		<xsd:annotation>
+			<xsd:documentation>Transaction Processing Results, including processing status, payload content notifices, , business warnings and supplemental marketing messages.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="AirDocVoidResProcessType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="AirDocVoidResProcessType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Air Doc Void Response Message Processing.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="MarketingMessages" minOccurs="0"/>
+			<xsd:element ref="Policies" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="description" xml:lang="en">Message Policy information.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+		<xsd:attribute name="AlertInd" type="xsd:boolean" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">When TRUE, processing alerts have been generated and the Alerts node should be parsed.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="MarketingInd" type="xsd:boolean" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">When TRUE, supplemental marketing information has been generated and the Notifications/ MarketingMessage node should be parsed.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="WarningInd" type="xsd:boolean" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">When TRUE, business warnings have been generated and the Notification/Warning node should be parsed.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="NoticeInd" type="xsd:boolean" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">When TRUE, notices have been generated and the Notifications/Notice node should be parsed.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="AirDocVoidRS">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">The AirDocVoid transaction set requests an Airline to void flight (ET) and/or ancillary (EMD) document(s).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Document"/>
+				<xsd:choice>
+					<xsd:sequence>
+						<xsd:element name="Success" type="SuccessType">
+							<xsd:annotation>
+								<xsd:documentation>The presence of the empty Success element explicitly indicates that the message succeeded.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Warnings" type="WarningsType" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Used in conjunction with the Success element to define one or more business errors.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Response">
+							<xsd:annotation>
+								<xsd:documentation>Query Results.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="AirDocVoidProcessing" minOccurs="0"/>
+									<xsd:element name="TicketDocument" minOccurs="0" maxOccurs="unbounded">
+										<xsd:annotation>
+											<xsd:documentation>A ticket/document that was voided.</xsd:documentation>
+										</xsd:annotation>
+										<xsd:complexType>
+											<xsd:complexContent>
+												<xsd:extension base="TicketDocumentType">
+													<xsd:sequence>
+														<xsd:element name="SettlementAuthCode" type="ContextSimpleType" minOccurs="0">
+															<xsd:annotation>
+																<xsd:documentation>The settlement authorization code generated by the airline.</xsd:documentation>
+															</xsd:annotation>
+														</xsd:element>
+													</xsd:sequence>
+												</xsd:extension>
+											</xsd:complexContent>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+					<xsd:element ref="Errors"/>
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="IATA_PayloadStdAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
