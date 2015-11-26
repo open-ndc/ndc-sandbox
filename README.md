@@ -31,3 +31,9 @@ Any kind of software contribution, bug-report, and feedback is welcome and great
 
 Codebase started from
 [grape-skeleton](https://github.com/xurde/grape-skeleton) by [xurde](https://github.com/xurde)
+
+# How to setup
+
+1. Install dependencies with ```bundle install```
+2. Run ```rackup``` to start a local server (by default runs on port 9292)
+3. Test the API by validating a NDC payload, here is a curl example: ```curl -X POST "http://localhost:9292/api/v0/ndc" -H "Content-Type: application/xml" --data @search_payload.xml```
