@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by JRT (JR Technologies, Inc.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/EDIST" targetNamespace="http://www.iata.org/IATA/EDIST" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.000" id="IATA2015.2">
+	<xsd:include schemaLocation="edist_commontypes.xsd"/>
+	<xsd:include schemaLocation="edist_structures.xsd"/>
+	<!---->
+	<!--
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+
+    O R D E R  C R E A T E   R E Q U E S T   B U S I N E S S   O B J E C T
+
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+	<xsd:element name="OrderCreateRQ">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">The OrderCreate/ OrderView transaction is a multi-function message that may:
+
+1) Request specified inventory to be held (and returns a reference to the held inventory)
+
+2) Request that an order to be created (returning the complete view of the Order)
+
+3) Request additions to order data elements (e.g. add frequent flyer data)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PointOfSale" minOccurs="0"/>
+				<xsd:element ref="Document"/>
+				<xsd:element ref="Party"/>
+				<xsd:element ref="OrderCreateParameters" minOccurs="0"/>
+				<xsd:element name="Query">
+					<xsd:annotation>
+						<xsd:documentation>Order Create Query.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Passengers">
+								<xsd:annotation>
+									<xsd:documentation source="description" xml:lang="en">Passenger and Group information.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element ref="Passenger" minOccurs="0" maxOccurs="unbounded"/>
+										<xsd:element name="Group" type="GroupType" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Group Information.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="OrderItems">
+								<xsd:annotation>
+									<xsd:documentation>Order Item(s) to be created.
+
+Notes:
+1. Two methods are provided for specifying shopping Offer Items that are to be converted into Order Items:
+
+i) Specifying a ShoppingResponseID from a prior shopping transaction. This method provides a direct correlation between one associated Offer Item and one Order Item.
+Note that order-related Offer Item details, such as passenger association and inventory guarantee information may be specified. Additionally, order-related Optional Service(s) may be specified to support service bundles where individual service items may be selected.
+
+ii) Specifying individual Order Item Sets and their associated Offer Item(s). This supports EDIST-enabled systems that return multiple Offer Items associated with one flight, e.g. an outbound flight offer and an inbound flight offer.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="ShoppingResponse" type="ShoppingResponseOrderType">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Shopping Response ID(s).</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element name="OfferItem" type="OrderOfferItemType" minOccurs="0" maxOccurs="unbounded">
+											<xsd:annotation>
+												<xsd:documentation>Offer Item(s) that comprise the Order Item.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="OfferItemQuantity" type="xsd:positiveInteger" use="optional">
+										<xsd:annotation>
+											<xsd:documentation>Total quantity of Order Items included in the order.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:attribute>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="Payments" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation source="description" xml:lang="en">Payment information.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="Payment" type="OrderPaymentFormType" maxOccurs="unbounded">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Payment detail, including association(s).</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="Promotions" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Promotion information.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="Promotion" maxOccurs="unbounded">
+											<xsd:annotation>
+												<xsd:documentation>Promotion Code.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:complexContent>
+													<xsd:extension base="PromotionType">
+														<xsd:sequence>
+															<xsd:element name="Passengers" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Passenger(s)/ Group(s) associated with the Promotion.</xsd:documentation>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:choice>
+																		<xsd:element ref="PassengerReferences">
+																			<xsd:annotation>
+																				<xsd:documentation>Association to multiple Passenger instance(s). Example: pax1 pax2</xsd:documentation>
+																			</xsd:annotation>
+																		</xsd:element>
+																		<xsd:element ref="GroupReference"/>
+																	</xsd:choice>
+																</xsd:complexType>
+															</xsd:element>
+														</xsd:sequence>
+													</xsd:extension>
+												</xsd:complexContent>
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="Commission" type="CommissionType" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Commission information</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element ref="BookingReferences" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Existing Booking Reference (e.g. PNR Record Locator). Example: R1A3SK</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="DataLists" type="DataListType" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Data Lists(s).</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="Metadata" type="OrdCreateMetadataType" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation source="description" xml:lang="en">Metadata List(s).</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="IATA_PayloadStdAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="OrderCreateParameters" type="OrdCreateParamsType">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that influence overall message results.
+
+Note: These capabilities may not be supported by all EDIST-enabled systems or may be supported by bilateral agreement only. The technical implementation of this capability is not dictated by this specification. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="OrdCreateAlertsType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en"> Alerts definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AssociatedObjectBaseType">
+				<xsd:sequence>
+					<xsd:element name="PIN_AuthResponse" type="PinPhraseAnswerType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Traveler PIN Phrase Authentication Response.
+
+Notes:
+1. This is part of an ongoing transaction for a processing condition that occured when additional Traveler authentication was required to complete transaction processing, such as access to secure FQTV information to complete Order amendment.
+2. This information contains the authentication scheme response information, e.g. the Pin Phrase answer.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="PaymentAuthentication" type="SecurePaymentAlertType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>3D Secure Payment Processing information.
+
+Notes:
+1. This is part of an ongoing transaction for a processing condition that occured when payment card authentication was required to complete transaction processing.
+2. This information contains the 3DS response information, e.g. the PARes and associated parameters.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="OrdCreateMetadataType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Metadata definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="PassengerMetadata" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Other" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="description" xml:lang="en">Other Metadata Lists(s).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="OtherMetadata" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation source="description" xml:lang="en">Other Metadata List.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:choice>
+									<xsd:element ref="ZoneMetadatas"/>
+									<xsd:element ref="StateProvMetadatas"/>
+									<xsd:element ref="RuleMetadatas"/>
+									<xsd:element ref="PriceMetadatas"/>
+									<xsd:element ref="PaymentFormMetadatas"/>
+									<xsd:element ref="PaymentCardMetadatas"/>
+									<xsd:element ref="LanguageMetadatas"/>
+									<xsd:element ref="EquivalentID_Metadatas"/>
+									<xsd:element ref="DescriptionMetadatas"/>
+									<xsd:element ref="CurrencyMetadatas"/>
+									<xsd:element ref="CountryMetadatas"/>
+									<xsd:element ref="ContentMetadatas"/>
+									<xsd:element ref="ContactMetadatas"/>
+									<xsd:element ref="CodesetMetadatas"/>
+									<xsd:element ref="CityMetadatas"/>
+									<xsd:element ref="AirportMetadatas"/>
+									<xsd:element ref="AircraftMetadatas"/>
+									<xsd:element ref="AddressMetadatas"/>
+								</xsd:choice>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrdCreateNoticesType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Notice definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NoticeBaseType">
+				<xsd:sequence>
+					<xsd:element name="CampaignReferral" type="CampaignReferralType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>UTM Search Campaign Referral Notice.
+
+Note: Supports marketing channel measurement from trading partner websites that refer shoppers to other EDIST-enabled systems. Urchin Tracking Monitoring (UTM) parameters are used to specify referral source and campaign parameters.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="PaymentRules" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Payment Processing Rule(s) Notice.
+
+Note: Supports specifying Payment Processing Rules, including payment failure. Request messages may include defined payment processing rules and an indicator requesting that the rules be applied during payment processing where relevant. Response messages may additionally include notice about if and how payment rule(s) were applied during transaction processing.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:attribute name="ProceedOnFailureInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation>When TRUE, the Seller wants to proceed with Order creation if one of multiple forms of payment provided fails.
+
+Note: This supports multi payment form-enabled systems where one Traveler may provide multiple FOPs, or individual Travelers may each provide their own FOP.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="PricingParameters" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pricing Parameters Notice.
+
+Note: Supports specifying transaction pricing parameters. Request messages may include indicators requesting that certain methods be applied during payment processing where relevant. Response messages may additionally include notice about if and how pricing parameters were applied during transaction processing.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:attribute name="AutoExchRequestInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation source="DESCRIPTION" xml:lang="en">When TRUE, this request is to be handled by an auto-exchange process</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="IncludeAwardRequestInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation source="DESCRIPTION" xml:lang="en">When TRUE, award eligible in addition to priced offers and fares is requested.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="AwardOnlyRequestInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation source="DESCRIPTION" xml:lang="en">When TRUE, only award eligible offers/ fares are requested.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="SimpleRequestInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation source="DESCRIPTION" xml:lang="en">When TRUE, Simple Pricing  for flight offers is requested.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="PriceVarianceRules" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Price Variance Rule(s) Notice.
+
+Note: Supports specifying the acceptable amount and/or percentage of the total amount by which the Order item price can vary from the Offer price for Order creation to proceed, for example to cover minor currency exchange rate fluctuations for taxes quoted in a different currency. </xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="PriceVarianceRule" maxOccurs="unbounded">
+									<xsd:annotation>
+										<xsd:documentation>Price Variance Rule detail.</xsd:documentation>
+									</xsd:annotation>
+									<xsd:complexType>
+										<xsd:complexContent>
+											<xsd:extension base="KeyWithMetaObjectBaseType">
+												<xsd:sequence>
+													<xsd:element name="SequenceNbr" type="xsd:positiveInteger" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Rule sequence (or order) number. Example: 1</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="RuleID" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Unique Rule ID.
+Example: PRICERULE001
+
+Note: Optional rule context and name may also be specified.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:simpleContent>
+																<xsd:extension base="ProperNameSimpleType">
+																	<xsd:attribute name="Context" type="ContextSimpleType" use="optional">
+																		<xsd:annotation>
+																			<xsd:documentation source="description" xml:lang="en">Rule ID Context.</xsd:documentation>
+																		</xsd:annotation>
+																	</xsd:attribute>
+																	<xsd:attribute name="Name">
+																		<xsd:annotation>
+																			<xsd:documentation>Rule Name.
+Example: Acceptable Order Item Price Variance</xsd:documentation>
+																		</xsd:annotation>
+																	</xsd:attribute>
+																</xsd:extension>
+															</xsd:simpleContent>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="AcceptableVariance">
+														<xsd:annotation>
+															<xsd:documentation>Acceptable amount and/or percentage of the total amount by which the Order item price can vary.
+Example: 20 USD, 2 Percent</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element ref="PercentageValue"/>
+																<xsd:element ref="CurrencyAmountValue"/>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="Name" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Rule Name. Example: Acceptable Price variance</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:simpleContent>
+																<xsd:extension base="ProperNameSimpleType"/>
+															</xsd:simpleContent>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="Owner" type="ContextSimpleType" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Entity that owns/ assigned this Rule. Example: BA
+
+Note: If this is an airline, the IATA/ A4A (two or three character) Airline Designator Code should be used.</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="RuleValid" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Rule Effective Period.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element ref="YearPeriod"/>
+																<xsd:element ref="YearMonthPeriod"/>
+																<xsd:element ref="TimePeriod"/>
+																<xsd:element ref="QuarterPeriod"/>
+																<xsd:element ref="MonthPeriod"/>
+																<xsd:element ref="DayPeriod"/>
+																<xsd:element ref="DateTimePeriod"/>
+																<xsd:element ref="DatePeriod"/>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="Currencies" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Rule-applicable Input and Settlement Currency(s).
+
+Note: This contains one or multiple input and settlement currency codes that this rule applies to. In addition to the specified currency code, an Application of InputCurrency and/ or SettlementCurrency should be specified.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="InputCode" type="CurrencyCodeType" minOccurs="0" maxOccurs="unbounded">
+																	<xsd:annotation>
+																		<xsd:documentation>Input Payment Currency code. Example: USD
+
+Encoding Scheme: ISO 4217 (three alpha character) Currency Code</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element name="SettlementCode" type="CurrencyCodeType" minOccurs="0" maxOccurs="unbounded">
+																	<xsd:annotation>
+																		<xsd:documentation>Settlement Payment Currency code. Example: CHF
+
+Encoding Scheme: ISO 4217 (three alpha character) Currency Code</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="Associations" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Association(s).</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="OfferSetReferences" type="xsd:IDREFS" minOccurs="0">
+																	<xsd:annotation>
+																		<xsd:documentation>Associated Offer Set(s).</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element ref="OfferItemID" minOccurs="0" maxOccurs="unbounded">
+																	<xsd:annotation>
+																		<xsd:documentation>Associated Offer Item ID(s).
+Example: OFFER1226</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element name="Passengers" minOccurs="0">
+																	<xsd:annotation>
+																		<xsd:documentation>Passenger(s)/ Group associated with the Offer Item.
+
+Note: This contains references to Passenger and Group instance(s) defined in the  Passengers node.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element ref="PassengerReferences">
+																				<xsd:annotation>
+																					<xsd:documentation>Association to multiple Passenger instance(s). Example: pax1 pax2</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																			<xsd:element ref="GroupReference"/>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="OtherAssociation" minOccurs="0" maxOccurs="unbounded">
+																	<xsd:annotation>
+																		<xsd:documentation source="description" xml:lang="en">Other Named Association(s).
+
+Note: Includes an association type choice (e.g. MediaGroup) and an instance association value (e.g. mediagrp1).</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:attribute name="Type" type="OtherOrderAssocListType" use="required">
+																			<xsd:annotation>
+																				<xsd:documentation>Named Instance Association Type. Examples: CarryOnAllowance, MediaGroup</xsd:documentation>
+																			</xsd:annotation>
+																		</xsd:attribute>
+																		<xsd:attribute name="ReferenceValue" type="xsd:IDREF" use="required">
+																			<xsd:annotation>
+																				<xsd:documentation>Associated object instance value.
+Example: mediagrp1</xsd:documentation>
+																			</xsd:annotation>
+																		</xsd:attribute>
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element ref="Remarks" minOccurs="0"/>
+												</xsd:sequence>
+											</xsd:extension>
+										</xsd:complexContent>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:attribute name="trxItemKey" type="xsd:ID" use="optional">
+								<xsd:annotation>
+									<xsd:documentation source="description" xml:lang="en">Globally unique id for this Transaction Processing object instance.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="VarianceRuleInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation>When TRUE, price variance rule(s) have been specified.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="TaxExemptionRules" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Tax/ Fee Exemption Notice.
+
+Note: Supports notification to receiving system that tax/ fee exemptions are requested during transaction processing, and, if and how the exemptions were applied to message results.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="Named" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Named Tax Exemptions, including Country(s), Entity(s), Territory(s) and Tax Code(s).</xsd:documentation>
+									</xsd:annotation>
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="Countries" minOccurs="0">
+												<xsd:annotation>
+													<xsd:documentation source="description" xml:lang="en">Exempt tax country information.</xsd:documentation>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence>
+														<xsd:element ref="CountryCode" maxOccurs="unbounded"/>
+													</xsd:sequence>
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element name="Entities" minOccurs="0">
+												<xsd:annotation>
+													<xsd:documentation source="description" xml:lang="en">Fee/ Tax Exempt Entity(s).
+
+Note: Includes companies and government bodies.</xsd:documentation>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence>
+														<xsd:element name="Entity" maxOccurs="unbounded">
+															<xsd:annotation>
+																<xsd:documentation source="description" xml:lang="en">Exempt tax entity name.  Example: Military, IBM</xsd:documentation>
+															</xsd:annotation>
+															<xsd:simpleType>
+																<xsd:restriction base="ProperNameSimpleType">
+																	<xsd:pattern value="[A-Z]{2}"/>
+																</xsd:restriction>
+															</xsd:simpleType>
+														</xsd:element>
+													</xsd:sequence>
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element name="Territories" minOccurs="0">
+												<xsd:annotation>
+													<xsd:documentation source="description" xml:lang="en">Exempt tax province/ territory information.</xsd:documentation>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence>
+														<xsd:element name="Territory" maxOccurs="unbounded">
+															<xsd:annotation>
+																<xsd:documentation source="description" xml:lang="en">Exempt tax province/  territory name or code.  Example: QC</xsd:documentation>
+															</xsd:annotation>
+															<xsd:simpleType>
+																<xsd:restriction base="ProperNameSimpleType">
+																	<xsd:pattern value="[A-Z]{2}"/>
+																</xsd:restriction>
+															</xsd:simpleType>
+														</xsd:element>
+													</xsd:sequence>
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element name="TaxCodes" minOccurs="0">
+												<xsd:annotation>
+													<xsd:documentation source="description" xml:lang="en">Exempt Tax Code(s).
+
+Note: This contains tax exemption(s) based on tax designator and nature.</xsd:documentation>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence>
+														<xsd:element name="TaxCode" maxOccurs="unbounded">
+															<xsd:annotation>
+																<xsd:documentation>Tax Code detail.</xsd:documentation>
+															</xsd:annotation>
+															<xsd:complexType>
+																<xsd:sequence>
+																	<xsd:element name="Designator">
+																		<xsd:annotation>
+																			<xsd:documentation source="description" xml:lang="en">Tax designator. Example: XY</xsd:documentation>
+																		</xsd:annotation>
+																		<xsd:simpleType>
+																			<xsd:restriction base="xsd:string">
+																				<xsd:pattern value="[A-Z]{1,2}"/>
+																			</xsd:restriction>
+																		</xsd:simpleType>
+																	</xsd:element>
+																	<xsd:element name="Nature" minOccurs="0">
+																		<xsd:annotation>
+																			<xsd:documentation source="description" xml:lang="en">Tax nature. Example: I</xsd:documentation>
+																		</xsd:annotation>
+																		<xsd:simpleType>
+																			<xsd:restriction base="xsd:string">
+																				<xsd:pattern value="[A-Z]{1,2}"/>
+																			</xsd:restriction>
+																		</xsd:simpleType>
+																	</xsd:element>
+																</xsd:sequence>
+															</xsd:complexType>
+														</xsd:element>
+													</xsd:sequence>
+												</xsd:complexType>
+											</xsd:element>
+										</xsd:sequence>
+									</xsd:complexType>
+								</xsd:element>
+								<xsd:element name="Rules" type="RuleSetType" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Additional Tax Exemption Rule(s).</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:attribute name="trxItemKey" type="xsd:ID" use="optional">
+								<xsd:annotation>
+									<xsd:documentation source="description" xml:lang="en">Globally unique id for this Transaction Processing object instance.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="ExemptAllInd" type="xsd:boolean" use="optional">
+								<xsd:annotation>
+									<xsd:documentation source="description" xml:lang="en">When TRUE, all pricing is tax/ fee exempt.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="OrdCreateParamsType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Message Parameters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Alerts" minOccurs="0"/>
+			<xsd:element ref="Notices" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="references" type="MultiAssocSimpleType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">Object association(s) between this object and any other object or metadata instance(s).</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+</xsd:schema>

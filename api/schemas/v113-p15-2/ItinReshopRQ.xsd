@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 (http://www.altova.com) by Atul Bhabal (JR Technologies, Inc.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/EDIST" targetNamespace="http://www.iata.org/IATA/EDIST" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.000" id="IATA2015.2">
+	<xsd:include schemaLocation="edist_commontypes.xsd"/>
+	<xsd:include schemaLocation="edist_structures.xsd"/>
+	<!--
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+    I T I N   R E S H O P   R E Q U E S T   B U S I N E S S   O B J E C T
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+	<xsd:element name="ItinReshopRQ">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">The ItinReshop transaction set passes new shopping requests to an airline to replace existing specified order or order items in an Order or for new shopping requests to add to an existing Order. 
+
+Airline responds with product offers within the context of the existing Order. This transaction may also be used to re-price an order (e.g. prior to payment). 
+
+There is no change to the Order or Order Items. Typically this transaction will be followed by an OrderChangeRQ or OrderCancelRQ or AirDocRefundRQ or AirDocExchangeRQ transaction, to commit the re-shop offer.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PointOfSale" minOccurs="0"/>
+				<xsd:element ref="Document"/>
+				<xsd:element ref="Party"/>
+				<xsd:element ref="ItinReshopParameters" minOccurs="0"/>
+				<xsd:element name="Query">
+					<xsd:annotation>
+						<xsd:documentation>itinerary Reshop Query.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:choice>
+							<xsd:element name="RepriceOnly">
+								<xsd:annotation>
+									<xsd:documentation>Itinerary Repricing.
+
+Notes:
+1. Full itinerary (all order items) and/ or specified order item(s) repricing is supported.
+2. Repricing is performed with no change to the order or the order items.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="OrderItems" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Specified Order Items to be repriced.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:complexContent>
+													<xsd:extension base="OrderItemCoreType"/>
+												</xsd:complexContent>
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="RepriceAllInd" type="xsd:boolean" use="optional">
+										<xsd:annotation>
+											<xsd:documentation>When TRUE, repricing for all order items is requested.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:attribute>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="Reshop">
+								<xsd:annotation>
+									<xsd:documentation>Reshop Parameters. Reshop is performed with no change to the order or the order items.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="Actions" maxOccurs="unbounded">
+											<xsd:annotation>
+												<xsd:documentation>Reshop Actions.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="ActionType">
+														<xsd:annotation>
+															<xsd:documentation>Order Action. Examples: Cancel, Create, Update, Delete, Reissue, Reprice</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:simpleContent>
+																<xsd:extension base="OrderItemActionListType">
+																	<xsd:attribute name="Context" type="ContextSimpleType" use="optional">
+																		<xsd:annotation>
+																			<xsd:documentation>Action Type Context.</xsd:documentation>
+																		</xsd:annotation>
+																	</xsd:attribute>
+																</xsd:extension>
+															</xsd:simpleContent>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element ref="BookingReferences" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Existing Booking Reference (e.g. PNR Record Locator). Example: R1A3SK</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element ref="OrderID" minOccurs="0"/>
+													<xsd:element name="OfferItemSets" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>One or more Offer Item Sets that each may contain one or more Offer Items that comprise one Order Item.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="OfferItemSet" maxOccurs="unbounded">
+																	<xsd:annotation>
+																		<xsd:documentation>One or more Offer Item Sets that each may contain one or more Offer Items that comprise one Order Item.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:complexContent>
+																			<xsd:extension base="KeyWithMetaObjectBaseType">
+																				<xsd:sequence>
+																					<xsd:element name="OfferItem" type="OrderOfferItemType" maxOccurs="unbounded">
+																						<xsd:annotation>
+																							<xsd:documentation>Offer Item(s) that comprise the Order Item.</xsd:documentation>
+																						</xsd:annotation>
+																					</xsd:element>
+																				</xsd:sequence>
+																				<xsd:attribute name="SetItemQuantity" type="xsd:positiveInteger" use="optional">
+																					<xsd:annotation>
+																						<xsd:documentation>Quantity of Offer Items included in one Order Item.</xsd:documentation>
+																					</xsd:annotation>
+																				</xsd:attribute>
+																			</xsd:extension>
+																		</xsd:complexContent>
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="OrderItems" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Order Item Detail.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:complexContent>
+																<xsd:extension base="OrderItemDetailType"/>
+															</xsd:complexContent>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="TicketDocuments" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Ticket documents information.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="TicketDocument" type="TicketDocumentType" minOccurs="0" maxOccurs="unbounded">
+																	<xsd:annotation>
+																		<xsd:documentation>The ticket documents that .</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="Passengers" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Passenger and Group information.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element ref="Passenger" minOccurs="0" maxOccurs="unbounded"/>
+																<xsd:element name="Group" type="GroupType" minOccurs="0">
+																	<xsd:annotation>
+																		<xsd:documentation source="description" xml:lang="en">Group Information.</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="Qualifiers" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Shopper requested qualifiers to influence search results (e.g. offers and/ or offer pricing), including Payment Card, Programs, Promotions, Social Media, Special Fares and Special Needs.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="Qualifier" maxOccurs="unbounded">
+																	<xsd:annotation>
+																		<xsd:documentation source="description" xml:lang="en">Qualifier choices.
+
+Notes: 
+1. These qualifiers may be specified for (e.g. apply to) both Attribute and Affinity queries.
+2. These capabilities may not be supported by all EDIST-enabled systems or may be supported by bilateral agreement only. If supported, the technical implementation of the capability is not dictated by this specification. </xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:choice>
+																			<xsd:element ref="BaggagePricingQualifier"/>
+																			<xsd:element ref="ExistingOrderQualifier"/>
+																			<xsd:element ref="PaymentCardQualifiers"/>
+																			<xsd:element ref="ProgramQualifiers"/>
+																			<xsd:element ref="PromotionQualifiers"/>
+																			<xsd:element ref="SeatQualifier"/>
+																			<xsd:element ref="ServiceQualifier"/>
+																			<xsd:element ref="SocialMediaQualifiers"/>
+																			<xsd:element ref="SpecialFareQualifiers"/>
+																			<xsd:element ref="SpecialNeedQualifiers"/>
+																			<xsd:element ref="TripPurposeQualifier"/>
+																		</xsd:choice>
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="Preferences" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Shopping Preference(s), including Airline Supplier, Alliance Program, Fare, Flight and Transfer/ Connection Points.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="Preference" maxOccurs="unbounded">
+																	<xsd:annotation>
+																		<xsd:documentation source="description" xml:lang="en">Preference choices.
+
+Notes: 
+1. These preferences may be specified for (e.g. apply to) both Attribute and Affinity queries.
+2. These capabilities may not be supported by all EDIST-enabled systems or may be supported by bilateral agreement only. If supported, the technical implementation of the capability is not dictated by this specification. </xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:choice>
+																			<xsd:element ref="AirlinePreferences"/>
+																			<xsd:element ref="AlliancePreferences"/>
+																			<xsd:element ref="FlightPreferences"/>
+																			<xsd:element ref="FarePreferences"/>
+																			<xsd:element ref="PricingMethodPreference"/>
+																			<xsd:element ref="SegMaxTimePreferences"/>
+																			<xsd:element ref="ServicePricingOnlyPreference"/>
+																			<xsd:element ref="TransferPreferences"/>
+																			<xsd:element ref="CabinPreferences"/>
+																		</xsd:choice>
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:choice>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="DataLists" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Data Lists(s).</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:complexContent>
+							<xsd:extension base="DataListType"/>
+						</xsd:complexContent>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="IATA_PayloadStdAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ItinReshopParameters" type="ItinReshopParamsType">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that influence overall message results.
+
+Note: These capabilities may not be supported by all EDIST-enabled systems or may be supported by bilateral agreement only. The technical implementation of this capability is not dictated by this specification. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ItinShopAction">
+		<xsd:annotation>
+			<xsd:documentation>Transaction Processing Notice(s).
+
+Note:
+1. These notices contain information for requested functionality (utilized during transaction processing) that may not be supported by all implementers.
+2. Specified notice(s) will be ignored by receiving systems that do not support this capability.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CRUD_Rule"/>
+			<xsd:element name="Associations">
+				<xsd:annotation>
+					<xsd:documentation>Stuff defined in data lists.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ItinReshopParamsType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Request Message Parameters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Alerts" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Transaction Processing Alert(s).
+
+Note: Alerts contain processing information have resulted in successful, but incomplete transaction processing that initiate - or are part of - an ongoing transaction.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="PIN_AuthAlertResponse" type="PinPhraseAnswerType" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Traveler PIN Phrase Authentication Response.
+
+Notes:
+1. This is part of an ongoing transaction for a processing condition that occured when additional Traveler authentication was required to complete transaction processing, such as access to secure FQTV information to complete Order amendment.
+2. This information contains the authentication scheme response information, e.g. the Pin Phrase answer.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Notices" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Transaction Processing Notice(s).
+
+Note: These notices contain requested transaction processing parameters that may be ignored by EDIST-enabled systems that do not support the capability.
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="NoticeBaseType">
+							<xsd:sequence>
+								<xsd:element name="PricingParameters" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Pricing Parameters Notice.
+
+Note: Supports specifying transaction pricing parameters. Request messages may include indicators requesting that certain methods be applied during payment processing where relevant. Response messages may additionally include notice about if and how pricing parameters were applied during transaction processing.</xsd:documentation>
+									</xsd:annotation>
+									<xsd:complexType>
+										<xsd:attribute name="AutoExchRequestInd" type="xsd:boolean" use="optional">
+											<xsd:annotation>
+												<xsd:documentation source="DESCRIPTION" xml:lang="en">When TRUE, this request is to be handled by an auto-exchange process.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:attribute>
+										<xsd:attribute name="IncludeAwardRequestInd" type="xsd:boolean" use="optional">
+											<xsd:annotation>
+												<xsd:documentation source="DESCRIPTION" xml:lang="en">When TRUE, award eligible in addition to priced offers and fares is requested.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:attribute>
+										<xsd:attribute name="AwardOnlyRequestInd" type="xsd:boolean" use="optional">
+											<xsd:annotation>
+												<xsd:documentation source="DESCRIPTION" xml:lang="en">When TRUE, only award eligible offers/ fares are requested.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:attribute>
+										<xsd:attribute name="SimpleRequestInd" type="xsd:boolean" use="optional">
+											<xsd:annotation>
+												<xsd:documentation source="DESCRIPTION" xml:lang="en">When TRUE, Simple Pricing  for flight offers is requested.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:attribute>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="refs" type="MultiAssocSimpleType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">Object association(s) between this object and any other object or metadata instance(s).</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!--
+===================================================
+===  S H O P P I N G  Q U E R Y  T Y P E
+===================================================-->
+	<xsd:element name="ShoppingQueryTypeGroup" abstract="true" nillable="false">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Core Air Shopping information by supported Air Shopping Query type.
+
+Shopping Query Input may be specified as:
+1) Prior Shopping Session Basket
+2) Attribute Shopping Query
+3) Affinity Shopping Query</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!---->
+</xsd:schema>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by JRT (JR Technologies, Inc.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/EDIST" targetNamespace="http://www.iata.org/IATA/EDIST" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.000" id="IATA2015.2">
+	<xsd:include schemaLocation="edist_commontypes.xsd"/>
+	<xsd:include schemaLocation="edist_structures.xsd"/>
+	<!--
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+   A I R   D O C U M E N T   E X C H A N G E   R E Q U E S T   B U S I N E S S   O B J E C T
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+	<xsd:element name="AirDocExchangeRQ">
+		<xsd:annotation>
+			<xsd:documentation source="DESCRIPTION" xml:lang="en">The AirDocExchange transaction set requests an Airline to exchange/reissue flight (ET) and/or ancillary (EMD) document(s).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PointOfSale" minOccurs="0"/>
+				<xsd:element ref="Document"/>
+				<xsd:element ref="Party"/>
+				<xsd:element name="Query">
+					<xsd:annotation>
+						<xsd:documentation source="Description" xml:lang="en">Core query parameters.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="TicketDocQuantity"/>
+							<xsd:element name="TicketDocInfo" maxOccurs="unbounded">
+								<xsd:annotation>
+									<xsd:documentation>Coupon Creation Information, including Traveler; Order/ Booking Reference ID(s); Promotions and Commission.
+
+</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element ref="TravelerInfo" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Traveler information, including name, passenger type and contact.
+
+</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element ref="BookingReferences" minOccurs="0"/>
+										<xsd:element name="Promotions" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Promotion information.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="Promotion" type="PromotionType" maxOccurs="unbounded">
+														<xsd:annotation>
+															<xsd:documentation>Promotion Code.</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="Payment" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Payment information.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="Payment" type="AcceptedPaymentFormType" maxOccurs="unbounded">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Payment detail.</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="Commission" type="CommissionType" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Commission information</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element name="OrderReference" type="CouponOrderKeyType" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>The order id for which the ticket/document is being exchanged.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element name="TicketDocument" type="TicketDocumentType" maxOccurs="unbounded">
+											<xsd:annotation>
+												<xsd:documentation>The ticket/document to be exchanged.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="IATA_PayloadStdAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

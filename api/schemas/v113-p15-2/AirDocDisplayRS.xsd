@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by JRT (JR Technologies, Inc.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/EDIST" targetNamespace="http://www.iata.org/IATA/EDIST" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.000" id="IATA2015.2">
+	<xsd:include schemaLocation="edist_commontypes.xsd"/>
+	<xsd:include schemaLocation="edist_structures.xsd"/>
+	<!--
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+    A I R   D O C U M E N T   D I S P L A Y   R E S P O N S E   B U S I N E S S   O B J E C T
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+	<xsd:element name="AirDocDisplayRS">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">The AirDocDisplay transaction returns the results of a payment and ticketing query.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Document"/>
+				<xsd:choice>
+					<xsd:sequence>
+						<xsd:element name="Success" type="SuccessType">
+							<xsd:annotation>
+								<xsd:documentation>The presence of the empty Success element explicitly indicates that the message succeeded.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Warnings" type="WarningsType" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Used in conjunction with the Success element to define one or more business errors.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Response">
+							<xsd:annotation>
+								<xsd:documentation>Query Results.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="AirDocDisplayProcessing" minOccurs="0"/>
+									<xsd:element name="TicketDocInfos" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>Ticket/document information</xsd:documentation>
+										</xsd:annotation>
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="TicketDocInfo" maxOccurs="unbounded">
+													<xsd:annotation>
+														<xsd:documentation>Ticket/document information.</xsd:documentation>
+													</xsd:annotation>
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element name="Traveler" type="CouponTravelerDetailType"/>
+															<xsd:element name="AgentIDs" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Booking and Servicing Agent information.</xsd:documentation>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element ref="AgentID" maxOccurs="2"/>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element ref="IssuingAirlineInfo"/>
+															<xsd:element ref="BookingReferences"/>
+															<xsd:element name="Payments">
+																<xsd:annotation>
+																	<xsd:documentation source="description" xml:lang="en">Payment information.</xsd:documentation>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element name="Payment" type="OrderPaymentFormType" maxOccurs="unbounded">
+																			<xsd:annotation>
+																				<xsd:documentation source="description" xml:lang="en">Payment detail.</xsd:documentation>
+																			</xsd:annotation>
+																		</xsd:element>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element name="OriginDestination" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Origin and Destination Airport/ City.</xsd:documentation>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element name="Origin" type="AirportCitySimpleType">
+																			<xsd:annotation>
+																				<xsd:documentation>The origin city code.</xsd:documentation>
+																			</xsd:annotation>
+																		</xsd:element>
+																		<xsd:element name="Destination" type="AirportCitySimpleType">
+																			<xsd:annotation>
+																				<xsd:documentation>The destination city code.</xsd:documentation>
+																			</xsd:annotation>
+																		</xsd:element>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element name="EndorsementText" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Endorsement/ Restriction text.</xsd:documentation>
+																</xsd:annotation>
+																<xsd:simpleType>
+																	<xsd:restriction base="xsd:string">
+																		<xsd:pattern value="[0-9a-zA-Z]{1,70}
+"/>
+																	</xsd:restriction>
+																</xsd:simpleType>
+															</xsd:element>
+															<xsd:element name="AddlReferenceIDs" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Additional Reference information.</xsd:documentation>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element ref="AddlReferenceID" maxOccurs="5"/>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element name="FareInfo" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Fare Information</xsd:documentation>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element ref="BaseFare" minOccurs="0" maxOccurs="3"/>
+																		<xsd:element ref="EquivFare" minOccurs="0" maxOccurs="3"/>
+																		<xsd:element name="Total" type="TotalFareTransactionType" minOccurs="0" maxOccurs="3"/>
+																		<xsd:element name="Taxes" minOccurs="0">
+																			<xsd:annotation>
+																				<xsd:documentation>Fare Tax information.</xsd:documentation>
+																			</xsd:annotation>
+																			<xsd:complexType>
+																				<xsd:complexContent>
+																					<xsd:extension base="TaxDetailType"/>
+																				</xsd:complexContent>
+																			</xsd:complexType>
+																		</xsd:element>
+																		<xsd:element ref="UnstructuredFareCalcInfo" minOccurs="0" maxOccurs="3"/>
+																		<xsd:element ref="FareInfo" minOccurs="0"/>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element ref="TicketDocument" maxOccurs="4"/>
+															<xsd:element name="Price" type="ServicePriceType" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Fare Tax information.</xsd:documentation>
+																</xsd:annotation>
+															</xsd:element>
+															<xsd:element name="OrderReference" type="CouponOrderKeyType" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Associated Order ID(s) information.</xsd:documentation>
+																</xsd:annotation>
+															</xsd:element>
+															<xsd:element name="Commission" type="CommissionType" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Commission information.</xsd:documentation>
+																</xsd:annotation>
+															</xsd:element>
+															<xsd:element ref="CarrierFeeInfo" minOccurs="0"/>
+															<xsd:element ref="OriginalIssueInfo" minOccurs="0"/>
+															<xsd:element ref="PricingInfo" minOccurs="0"/>
+															<xsd:element name="PassengerSpecificData" type="StringLength1to32" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Agency or airline specified information associated to the passenger. </xsd:documentation>
+																</xsd:annotation>
+															</xsd:element>
+															<xsd:element name="TaxCouponInfo" type="TaxCouponInfoType" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Used to specify tax information for a coupon.</xsd:documentation>
+																</xsd:annotation>
+															</xsd:element>
+															<xsd:element name="ReissuedFlown" type="ReissuedFlownType" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>The reissued flown flight coupon information.</xsd:documentation>
+																</xsd:annotation>
+															</xsd:element>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+					<xsd:element ref="Errors"/>
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="IATA_PayloadStdAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="AirDocDisplayResProcessType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Air Doc Display Response Message Processing.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Alerts" minOccurs="0"/>
+			<xsd:element ref="Notices" minOccurs="0"/>
+			<xsd:element ref="MarketingMessages" minOccurs="0"/>
+			<xsd:element ref="Policies" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="description" xml:lang="en">Message Policy information.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+		<xsd:attribute name="AlertInd" type="xsd:boolean" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">When TRUE, processing alerts have been generated and the Alerts node should be parsed.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="MarketingInd" type="xsd:boolean" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">When TRUE, supplemental marketing information has been generated and the Notifications/ MarketingMessage node should be parsed.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="WarningInd" type="xsd:boolean" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">When TRUE, business warnings have been generated and the Notification/Warning node should be parsed.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="NoticeInd" type="xsd:boolean" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">When TRUE, notices have been generated and the Notifications/Notice node should be parsed.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="AirDocDisplayProcessing" type="AirDocDisplayResProcessType">
+		<xsd:annotation>
+			<xsd:documentation>Transaction Processing Results, including processing status, payload content notifices, , business warnings and supplemental marketing messages.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AirDocResMetadataType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Air Shopping Response Metadata definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="OtherMetadata" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation source="description" xml:lang="en">Other Metadata List.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element ref="AircraftMetadatas" minOccurs="0"/>
+						<xsd:element ref="AirportMetadatas" minOccurs="0"/>
+						<xsd:element ref="CityMetadatas" minOccurs="0"/>
+						<xsd:element ref="CodesetMetadatas" minOccurs="0"/>
+						<xsd:element ref="ContactMetadatas" minOccurs="0"/>
+						<xsd:element ref="CountryMetadatas" minOccurs="0"/>
+						<xsd:element ref="CurrencyMetadatas" minOccurs="0"/>
+						<xsd:element ref="DescriptionMetadatas" minOccurs="0"/>
+						<xsd:element ref="EquivalentID_Metadatas" minOccurs="0"/>
+						<xsd:element ref="LanguageMetadatas" minOccurs="0"/>
+						<xsd:element ref="PaymentCardMetadatas" minOccurs="0"/>
+						<xsd:element ref="PaymentFormMetadatas" minOccurs="0"/>
+						<xsd:element ref="PriceMetadatas" minOccurs="0"/>
+						<xsd:element ref="RuleMetadatas" minOccurs="0"/>
+						<xsd:element ref="StateProvMetadatas" minOccurs="0"/>
+						<xsd:element ref="ZoneMetadatas" minOccurs="0"/>
+						<xsd:element ref="AddressMetadatas" minOccurs="0"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

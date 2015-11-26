@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/EDIST" targetNamespace="http://www.iata.org/IATA/EDIST" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.000" id="IATA2015.2">
+	<xsd:include schemaLocation="edist_commontypes.xsd"/>
+	<xsd:include schemaLocation="edist_structures.xsd"/>
+	<!--
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+    S H O P   P R O D U C T   R E Q U E S T   B U S I N E S S   O B J E C T
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+	<xsd:element name="ShopProductRQ">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">The ShopProduct transaction set queries for ancillary offers only with no priced itineraries in the response.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PointOfSale" minOccurs="0"/>
+				<xsd:element ref="Document"/>
+				<xsd:element ref="Party"/>
+				<xsd:element ref="ShopProductParameters" minOccurs="0"/>
+				<xsd:element ref="Travelers"/>
+				<xsd:choice>
+					<xsd:element name="Query" nillable="false">
+						<xsd:annotation>
+							<xsd:documentation source="description" xml:lang="en">Shop Product Query.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:complexContent>
+								<xsd:extension base="AssociatedObjectBaseType">
+									<xsd:sequence>
+										<xsd:element name="Qualifiers" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Shopper requested qualifiers to influence search results (e.g. offers and/ or offer pricing), including Payment Card, Programs, Promotions, Social Media, Special Fares and Special Needs.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="Qualifier" maxOccurs="unbounded">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Qualifier choices.
+
+Notes: 
+1. These qualifiers may be specified for (e.g. apply to) both Attribute and Affinity queries.
+2. These capabilities may not be supported by all EDIST-enabled systems or may be supported by bilateral agreement only. If supported, the technical implementation of the capability is not dictated by this specification. </xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:choice>
+																<xsd:element ref="BaggagePricingQualifier"/>
+																<xsd:element ref="ExistingOrderQualifier"/>
+																<xsd:element ref="PaymentCardQualifiers"/>
+																<xsd:element ref="ProgramQualifiers"/>
+																<xsd:element ref="PromotionQualifiers"/>
+																<xsd:element ref="SeatQualifier"/>
+																<xsd:element ref="ServiceQualifier"/>
+																<xsd:element ref="SocialMediaQualifiers"/>
+																<xsd:element ref="SpecialFareQualifiers"/>
+																<xsd:element ref="SpecialNeedQualifiers"/>
+																<xsd:element ref="TripPurposeQualifier"/>
+															</xsd:choice>
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="Locations" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Trip Flight Location information.
+
+Note: This information may be used for airport associated products, such as an annual lounge pass.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:complexContent>
+													<xsd:extension base="AssociatedObjectBaseType">
+														<xsd:sequence>
+															<xsd:element name="LocationCode" maxOccurs="unbounded">
+																<xsd:annotation>
+																	<xsd:documentation source="description" xml:lang="en">Airport or City Location code. Example: TPA
+
+Encoding Scheme: IATA/ A4A (three character) Airport or City Code</xsd:documentation>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:simpleContent>
+																		<xsd:extension base="AirportCitySimpleType">
+																			<xsd:attributeGroup ref="PreferenceAttrGroup">
+																				<xsd:annotation>
+																					<xsd:documentation source="description" xml:lang="en">Preference Level for specified Airport or City code.</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:attributeGroup>
+																			<xsd:attributeGroup ref="RadiusAttrGroup">
+																				<xsd:annotation>
+																					<xsd:documentation source="description" xml:lang="en">Search Radius for specified Airport or City code.</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:attributeGroup>
+																		</xsd:extension>
+																	</xsd:simpleContent>
+																</xsd:complexType>
+															</xsd:element>
+														</xsd:sequence>
+													</xsd:extension>
+												</xsd:complexContent>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="Preferences" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Shopping Preference(s), including Airline Supplier, Alliance Program, Fare, Flight and Transfer/ Connection Points.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="Alliances" type="AlliancePreferencesType" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Airline Alliance Program Preferences.</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="Airlines" type="AirlinePreferencesType" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Airline Supplier Preferences.</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="Metadata" type="ShopProductMetadataType" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Metadata List(s).</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:extension>
+							</xsd:complexContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element ref="ShoppingResponseIDs"/>
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="IATA_PayloadStdAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ShopProductReqParamsType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">A data type for Shop Product Request Message Parameters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="MessageParamsBaseType">
+				<xsd:sequence>
+					<xsd:element name="Group" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation source="description" xml:lang="en">Group-related Offer Information.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element ref="PrimaryContact" minOccurs="0"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ShopProductMetadataType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Shop Product Request Metadata definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Shopping" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Shopping Query-Related Metadata.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ShopMetadataGroup"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Shopper" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Shopper Metadata List(s).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="TravelerMetadata"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Other" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="description" xml:lang="en">Other Metadata Lists(s).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="OtherMetadata" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation source="description" xml:lang="en">Other Metadata List.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:choice>
+									<xsd:element ref="AddressMetadatas"/>
+									<xsd:element ref="AircraftMetadatas"/>
+									<xsd:element ref="AirportMetadatas"/>
+									<xsd:element ref="CityMetadatas"/>
+									<xsd:element ref="CodesetMetadatas"/>
+									<xsd:element ref="ContactMetadatas"/>
+									<xsd:element ref="CountryMetadatas"/>
+									<xsd:element ref="CurrencyMetadatas"/>
+									<xsd:element ref="DescriptionMetadatas"/>
+									<xsd:element ref="EquivalentID_Metadatas"/>
+									<xsd:element ref="LanguageMetadatas"/>
+									<xsd:element ref="PaymentCardMetadatas"/>
+									<xsd:element ref="PaymentFormMetadatas"/>
+									<xsd:element ref="PriceMetadatas"/>
+									<xsd:element ref="RuleMetadatas"/>
+									<xsd:element ref="StateProvMetadatas"/>
+									<xsd:element ref="ZoneMetadatas"/>
+								</xsd:choice>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ShopProductParameters" type="ShopProductReqParamsType">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that influence overall message results.
+
+Note: These capabilities may not be supported by all EDIST-enabled systems or may be supported by bilateral agreement only. The technical implementation of this capability is not dictated by this specification.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

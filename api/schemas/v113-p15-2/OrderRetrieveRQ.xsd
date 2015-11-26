@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/EDIST" targetNamespace="http://www.iata.org/IATA/EDIST" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.000" id="IATA2015.2">
+	<xsd:include schemaLocation="edist_commontypes.xsd"/>
+	<xsd:include schemaLocation="edist_structures.xsd"/>
+	<!---->
+	<!--
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+
+    O R D E R  R E T R I E V E   R E Q U E S T   B U S I N E S S   O B J E C T
+
+= / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / = / =
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+	<xsd:element name="OrderRetrieveRQ">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">The OrderRetrieve/ OrderView transaction set retrieves a specified order that matches one or more search criteria.
+
+Search criteria may include any supported Order Reference information, which may be the Order ID, a PNR reference, a ticket or coupon/ document number, or other Airline supported order reference and a Traveler Surname and Given Name.
+
+Note that if the order retrieval request is initiated from the party that originally requested the order creation, then an Order Reference is sufficient with the identity of the requesting party.
+
+If the order retrieval request is initiated from a party that did not originally request the order creation, then an extended security mechanism may be used to extend order view access to the party (e.g. using a CustomerInputRQ/RS for an additional security challenge (e.g. custom security question and answers.)
+
+The requestor may additionally specify filters to constrain the response information sets, including: Trip itinerary, Flight segment, Passenger, Payment and Accountable document information. If no filters are specified, all order information is returned.
+
+If a matching order is found, the OrderView response will contain all order information or filtered information (if filters were requested in the order retrieval request.) If no matching Order is located, the OrderView response will include processing condition information and no order information.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PointOfSale" minOccurs="0"/>
+				<xsd:element ref="Document"/>
+				<xsd:element ref="Party"/>
+				<xsd:element ref="OrderRetrieveParameters" minOccurs="0"/>
+				<xsd:element name="Query">
+					<xsd:annotation>
+						<xsd:documentation>Order Retrieve Query.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Filters">
+								<xsd:annotation>
+									<xsd:documentation>Query Filters.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element ref="OrderID" minOccurs="0"/>
+										<xsd:element name="Flight" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Flight Filters.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element ref="ClassOfService" minOccurs="0"/>
+													<xsd:element ref="FareBasisCode" minOccurs="0"/>
+													<xsd:element name="OriginDestination" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Flight origin/ destination information.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="Departure">
+																	<xsd:annotation>
+																		<xsd:documentation>Departure Airport.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element name="AirportCode">
+																				<xsd:annotation>
+																					<xsd:documentation source="description" xml:lang="en">Departure Airport Location code. Example: TPA
+
+Encoding Scheme: IATA/ A4A (three character) Airport or City Code</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="AirportCitySimpleType">
+																							<xsd:attributeGroup ref="RadiusAttrGroup">
+																								<xsd:annotation>
+																									<xsd:documentation source="description" xml:lang="en">Search Radius for specified Airport or City code.</xsd:documentation>
+																								</xsd:annotation>
+																							</xsd:attributeGroup>
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element name="Date" type="xsd:date">
+																				<xsd:annotation>
+																					<xsd:documentation source="description" xml:lang="en">Departure date. Example: 2017-01-13
+
+Encoding Scheme: ISO 8601 Date Format (YYYY-MM-DD)</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="Arrival">
+																	<xsd:annotation>
+																		<xsd:documentation>Arrival Airport.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element name="AirportCode">
+																				<xsd:annotation>
+																					<xsd:documentation source="description" xml:lang="en">Arrival Airport Location code. Example: GVA
+
+Encoding Scheme: IATA/ A4A (three character) Airport or City Code</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="AirportCitySimpleType">
+																							<xsd:attributeGroup ref="RadiusAttrGroup">
+																								<xsd:annotation>
+																									<xsd:documentation source="description" xml:lang="en">Search Radius for specified Airport or City code.</xsd:documentation>
+																								</xsd:annotation>
+																							</xsd:attributeGroup>
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element name="Date" type="xsd:date">
+																				<xsd:annotation>
+																					<xsd:documentation source="description" xml:lang="en">Arrival date. Example: 2017-01-14
+
+Encoding Scheme: ISO 8601 Date Format (YYYY-MM-DD)</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+															<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="Segment" minOccurs="0" maxOccurs="unbounded">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Flight segment information.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="Departure">
+																	<xsd:annotation>
+																		<xsd:documentation>Departure Airport.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element name="AirportCode">
+																				<xsd:annotation>
+																					<xsd:documentation source="description" xml:lang="en">Departure Airport Location code. Example: TPA
+
+Encoding Scheme: IATA/ A4A (three character) Airport or City Code</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="AirportCitySimpleType">
+																							<xsd:attributeGroup ref="RadiusAttrGroup">
+																								<xsd:annotation>
+																									<xsd:documentation source="description" xml:lang="en">Search Radius for specified Airport or City code.</xsd:documentation>
+																								</xsd:annotation>
+																							</xsd:attributeGroup>
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element name="Date" type="xsd:date">
+																				<xsd:annotation>
+																					<xsd:documentation source="description" xml:lang="en">Departure date. Example: 2017-01-13
+
+Encoding Scheme: ISO 8601 Date Format (YYYY-MM-DD)</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="Arrival">
+																	<xsd:annotation>
+																		<xsd:documentation>Arrival Airport.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element name="AirportCode">
+																				<xsd:annotation>
+																					<xsd:documentation source="description" xml:lang="en">Arrival Airport Location code. Example: GVA
+
+Encoding Scheme: IATA/ A4A (three character) Airport or City Code</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="AirportCitySimpleType">
+																							<xsd:attributeGroup ref="RadiusAttrGroup">
+																								<xsd:annotation>
+																									<xsd:documentation source="description" xml:lang="en">Search Radius for specified Airport or City code.</xsd:documentation>
+																								</xsd:annotation>
+																							</xsd:attributeGroup>
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element name="Date" type="xsd:date">
+																				<xsd:annotation>
+																					<xsd:documentation source="description" xml:lang="en">Arrival date. Example: 2017-01-14
+
+Encoding Scheme: ISO 8601 Date Format (YYYY-MM-DD)</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+															<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="Passengers" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Passenger and Group information.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="Name" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Passenger Name information.
+
+Note: Detailed Name information, such as prefix, title and suffix, are specified in PassengerMetadata.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="Surname">
+																	<xsd:annotation>
+																		<xsd:documentation source="description" xml:lang="en">Family (last or sur) name. Example: SMITH</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:simpleContent>
+																			<xsd:extension base="ProperNameSimpleType">
+																				<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+																			</xsd:extension>
+																		</xsd:simpleContent>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="Given" minOccurs="0" maxOccurs="5">
+																	<xsd:annotation>
+																		<xsd:documentation source="description" xml:lang="en">Family (first or given) name.  Example: JOHN</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:simpleContent>
+																			<xsd:extension base="ProperNameSimpleType">
+																				<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+																			</xsd:extension>
+																		</xsd:simpleContent>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="Middle" minOccurs="0" maxOccurs="3">
+																	<xsd:annotation>
+																		<xsd:documentation source="description" xml:lang="en">Middle name or initial.  Examples: G, GEORGE</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:simpleContent>
+																			<xsd:extension base="xsd:string">
+																				<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+																			</xsd:extension>
+																		</xsd:simpleContent>
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+															<xsd:attributeGroup ref="ObjectPolicyMetaAttrGroup"/>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="ProfileID" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Agent customer profile ID.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:simpleContent>
+																<xsd:extension base="xsd:string">
+																	<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+																</xsd:extension>
+															</xsd:simpleContent>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="FQTV" type="TravelerFQTV_Type" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Shopper Frequent Traveler Program(s).</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element ref="Contacts" minOccurs="0"/>
+													<xsd:element name="PassengerIDInfo" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Passenger FOID information</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="FOID" minOccurs="0">
+																	<xsd:annotation>
+																		<xsd:documentation source="description" xml:lang="en">Passenger Form of Identification.
+
+Note: This is the type of FOID as defined in IATA AIRIMP.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:complexContent>
+																			<xsd:extension base="KeyWithMetaObjectBaseType">
+																				<xsd:sequence>
+																					<xsd:element name="Type" type="CodesetValueSimpleType">
+																						<xsd:annotation>
+																							<xsd:documentation source="description" xml:lang="en">ID form. Examples: PP (passport), CC (credit card), FF (frequent flyer), DL (drivers license)</xsd:documentation>
+																						</xsd:annotation>
+																					</xsd:element>
+																					<xsd:element name="ID" type="UniqueStringID_SimpleType">
+																						<xsd:annotation>
+																							<xsd:documentation source="description" xml:lang="en">FOID ID value. Example: NY122345</xsd:documentation>
+																						</xsd:annotation>
+																					</xsd:element>
+																				</xsd:sequence>
+																			</xsd:extension>
+																		</xsd:complexContent>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="DateOfIssue" type="xsd:date" minOccurs="0">
+																	<xsd:annotation>
+																		<xsd:documentation>Date of Issue. Example: 2017-01-13</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element name="DateOfExpiration" type="xsd:date" minOccurs="0">
+																	<xsd:annotation>
+																		<xsd:documentation>Date of expiration. Example: 2017-01-13</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element name="CountryOfIssuance" type="xsd:date" minOccurs="0">
+																	<xsd:annotation>
+																		<xsd:documentation>Country name from where the document has been issued.</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element name="ApplicabilityLocation" type="xsd:string" minOccurs="0">
+																	<xsd:annotation>
+																		<xsd:documentation>The location where the document is applicable.</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element name="CountryOfResidence" type="xsd:string" minOccurs="0">
+																	<xsd:annotation>
+																		<xsd:documentation>Country where passenger resides.</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+															</xsd:sequence>
+															<xsd:attribute name="AllowDocumentInd" type="xsd:boolean" use="optional">
+																<xsd:annotation>
+																	<xsd:documentation>An indicator, allowing use the document number</xsd:documentation>
+																</xsd:annotation>
+															</xsd:attribute>
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="TicketDocument" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Ticket document numbers.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="TicketDocNbr">
+														<xsd:annotation>
+															<xsd:documentation>Coupon Document Number.
+
+Note: This is the document number comprised of the airline code, form code, and serial number.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:minLength value="1"/>
+																<xsd:maxLength value="14"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element name="DateOfIssue" type="xsd:date" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Date of Issue. Example: 2017-01-13</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="TicketingLocation" type="AirportCitySimpleType" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Airport or City Code. Example: JFK
+
+Encoding Scheme: IATA/ A4A (three character) Airport or City Code</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="CouponNumber" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Applicable coupon number. Example: 1234</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:integer">
+																<xsd:minInclusive value="1"/>
+																<xsd:maxInclusive value="4"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="Group" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Group Information.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="Name" type="ProperNameSimpleType" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">Group Name. Example: ABC Tour Club</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="TotalPartySize" type="xsd:positiveInteger" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation source="description" xml:lang="en">The Complete Party (TCP) indicating total party size. Example: 12</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element ref="Contacts" minOccurs="0"/>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="Payments" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation source="description" xml:lang="en">Payment information.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="Method" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Payment Method detail.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:complexContent>
+																<xsd:extension base="KeyWithMetaObjectBaseType">
+																	<xsd:sequence>
+																		<xsd:element name="CardCode" type="PayCardCodeSimpleType" minOccurs="0">
+																			<xsd:annotation>
+																				<xsd:documentation source="description" xml:lang="en">Credit card issuer code. Example: MC
+
+Note: This is the 2 character code of the credit card issuer.</xsd:documentation>
+																			</xsd:annotation>
+																		</xsd:element>
+																		<xsd:element name="MaskedCardNumber" minOccurs="0">
+																			<xsd:annotation>
+																				<xsd:documentation source="description" xml:lang="en">Concealed credit card number, Example: xxxxxxxxxxxx9922</xsd:documentation>
+																			</xsd:annotation>
+																			<xsd:complexType>
+																				<xsd:simpleContent>
+																					<xsd:extension base="MaskedCardNmbrSimpleType">
+																						<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+																					</xsd:extension>
+																				</xsd:simpleContent>
+																			</xsd:complexType>
+																		</xsd:element>
+																		<xsd:element name="TokenizedCardNumber" type="xsd:string" minOccurs="0">
+																			<xsd:annotation>
+																				<xsd:documentation source="description" xml:lang="en">Tokenized card number.
+
+Note: This capability may not be supported by all EDIST-enabled systems or may be supported by bilateral agreement only. If supported, the technical implementation of this capability is not dictated by this specification.</xsd:documentation>
+																			</xsd:annotation>
+																		</xsd:element>
+																		<xsd:element name="EffectiveExpireDate" minOccurs="0">
+																			<xsd:annotation>
+																				<xsd:documentation source="description" xml:lang="en">Payment Card Effective and/ or Expiration date(s).</xsd:documentation>
+																			</xsd:annotation>
+																			<xsd:complexType>
+																				<xsd:sequence>
+																					<xsd:element name="Effective" type="PayCardDateSimpleType" minOccurs="0">
+																						<xsd:annotation>
+																							<xsd:documentation source="description" xml:lang="en">Payment Card Effective Date. Example: 0116</xsd:documentation>
+																						</xsd:annotation>
+																					</xsd:element>
+																					<xsd:element name="Expiration" type="PayCardDateSimpleType" minOccurs="0">
+																						<xsd:annotation>
+																							<xsd:documentation source="description" xml:lang="en">Payment Card Expiration Date. Example: 0119</xsd:documentation>
+																						</xsd:annotation>
+																					</xsd:element>
+																				</xsd:sequence>
+																				<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+																			</xsd:complexType>
+																		</xsd:element>
+																		<xsd:element name="CardHolderName" minOccurs="0">
+																			<xsd:annotation>
+																				<xsd:documentation source="description" xml:lang="en">Name of credit card holder. Example: JOHN SMITH</xsd:documentation>
+																			</xsd:annotation>
+																			<xsd:complexType>
+																				<xsd:simpleContent>
+																					<xsd:extension base="ProperNameSimpleType">
+																						<xsd:attributeGroup ref="ObjAssociationAttrGroup"/>
+																					</xsd:extension>
+																				</xsd:simpleContent>
+																			</xsd:complexType>
+																		</xsd:element>
+																	</xsd:sequence>
+																</xsd:extension>
+															</xsd:complexContent>
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element ref="BookingReferences" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Existing Booking Reference (e.g. PNR Record Locator). Example: R1A3SK</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="IATA_PayloadStdAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="OrderRetrieveParameters" type="OrdRetrieveParamsType">
+		<xsd:annotation>
+			<xsd:documentation>Parameters that influence overall message results.
+
+Note: These capabilities may not be supported by all EDIST-enabled systems or may be supported by bilateral agreement only. The technical implementation of this capability is not dictated by this specification. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="OrdRetrieveAlertsType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en"> Alerts definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AssociatedObjectBaseType">
+				<xsd:sequence>
+					<xsd:element name="PIN_AuthResponse" type="PinPhraseAnswerType" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Traveler PIN Phrase Authentication Response.
+
+Notes:
+1. This is part of an ongoing transaction for a processing condition that occured when additional Traveler authentication was required to complete transaction processing, such as access to secure FQTV information to complete Order amendment.
+2. This information contains the authentication scheme response information, e.g. the Pin Phrase answer.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="OrdRetrieveMetadataType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Metadata definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="PassengerMetadata" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Other" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="description" xml:lang="en">Other Metadata Lists(s).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="OtherMetadata" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation source="description" xml:lang="en">Other Metadata List.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:choice>
+									<xsd:element ref="AddressMetadatas"/>
+									<xsd:element ref="AircraftMetadatas"/>
+									<xsd:element ref="AirportMetadatas"/>
+									<xsd:element ref="CityMetadatas"/>
+									<xsd:element ref="CodesetMetadatas"/>
+									<xsd:element ref="ContactMetadatas"/>
+									<xsd:element ref="ContentMetadatas"/>
+									<xsd:element ref="CountryMetadatas"/>
+									<xsd:element ref="CurrencyMetadatas"/>
+									<xsd:element ref="DescriptionMetadatas"/>
+									<xsd:element ref="EquivalentID_Metadatas"/>
+									<xsd:element ref="LanguageMetadatas"/>
+									<xsd:element ref="PaymentCardMetadatas"/>
+									<xsd:element ref="PaymentFormMetadatas"/>
+									<xsd:element ref="PriceMetadatas"/>
+									<xsd:element ref="RuleMetadatas"/>
+									<xsd:element ref="StateProvMetadatas"/>
+									<xsd:element ref="ZoneMetadatas"/>
+								</xsd:choice>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrdRetrieveNoticesType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Notice definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NoticeBaseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="OrdRetrieveParamsType">
+		<xsd:annotation>
+			<xsd:documentation source="description" xml:lang="en">Message Parameters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Alerts" minOccurs="0"/>
+			<xsd:element ref="Notices" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="references" type="MultiAssocSimpleType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="description" xml:lang="en">Object association(s) between this object and any other object or metadata instance(s).</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!---->
+</xsd:schema>
