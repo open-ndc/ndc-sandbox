@@ -89,12 +89,8 @@ GEM
     rb-fsevent (0.9.6)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    representable (2.3.0)
-      uber (~> 0.0.7)
     rerun (0.11.0)
       listen (~> 3.0)
-    roar (1.0.3)
-      representable (>= 2.0.1, <= 3.0.0)
     rspec (3.3.0)
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
@@ -125,7 +121,6 @@ GEM
     tilt (2.0.1)
     timecop (0.8.0)
     tzinfo (0.3.45)
-    uber (0.0.15)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -152,7 +147,6 @@ DEPENDENCIES
   racksh
   rake
   rerun
-  roar
   rspec
   sinatra
   sprockets

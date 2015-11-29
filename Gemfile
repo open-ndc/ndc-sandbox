@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 # ruby '2.2.0'
 
 gem 'json'                          # JSON
-gem 'roar'                          # Representer
 gem 'foreman'                       # Process management
 gem 'rake'
 gem 'racksh'
