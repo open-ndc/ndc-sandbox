@@ -37,3 +37,12 @@ Codebase started from
 1. Install dependencies with ```bundle install```
 2. Run ```rackup``` to start a local server (by default runs on port 9292)
 3. Test the API by validating a NDC payload, here is a curl example: ```curl -X POST "http://localhost:9292/api/v0/ndc" -H "Content-Type: application/xml" --data @search_payload.xml```
+
+# Sample data
+
+Sample data from IATA can be used with this sandbox. To use it either clone [NDCSampleMessages](https://github.com/iata-ndc/NDCSampleMessages) IATA NDC repository and use files as described in the section above or load files directly from GitHub:
+
+```shell
+curl -s "https://raw.githubusercontent.com/iata-ndc/NDCSampleMessages/master/Athena/OneWay/AirShoppingRQ%20-%20ARN-LHR%20OneWay%20with%20one%20pax.xml" | \
+curl -X POST "http://localhost:9292/api/v0/ndc" -H "Content-Type: application/xml" --data @-
+```
