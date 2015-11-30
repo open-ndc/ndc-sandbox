@@ -4,12 +4,13 @@ source 'https://rubygems.org'
 
 gem 'json'                          # JSON
 gem 'foreman'                       # Process management
-gem 'rake'
 gem 'racksh'
 gem 'thin'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'sprockets'
 gem 'sinatra'
+gem "sinatra-activerecord"
+gem 'rake'
 
 # Formatting
 gem 'nokogiri'

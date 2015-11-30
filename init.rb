@@ -1,15 +1,4 @@
-def load_path(path)
-  File.join($APP_ROOT, path)
-end
-
-$LOAD_PATH << load_path(".")
-$LOAD_PATH << load_path("./lib")
-
-require 'api/api_base'
-require 'middleware/db_connection_sweeper'
-require 'middleware/logger'
-require 'logger'
-
+require "sinatra/activerecord"
 require 'pry' if $RACK_ENV == 'development'
 
 class ::Logger; alias_method :write, :<<; end # for Rack::CommonLogger

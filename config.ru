@@ -1,9 +1,20 @@
 $RACK_ENV = ENV['RACK_ENV'] || 'development'
 $APP_ROOT = File.expand_path(File.dirname(__FILE__))
 
+def load_path(path)
+  File.join($APP_ROOT, path)
+end
+
+$LOAD_PATH << load_path(".")
+$LOAD_PATH << load_path("./lib")
+
 puts "Starting RackApp with environment (#{$RACK_ENV}) in path (#{$APP_ROOT})"
 
 require File.join(File.dirname(__FILE__), 'init')
+require 'api/api_base'
+require 'middleware/db_connection_sweeper'
+require 'middleware/logger'
+require 'logger'
 
 use Rack::CommonLogger, $logger
 use Middleware::Logger, $logger
