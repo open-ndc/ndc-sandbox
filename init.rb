@@ -1,4 +1,3 @@
-require "sinatra/activerecord"
 require 'pry' if $RACK_ENV == 'development'
 
 class ::Logger; alias_method :write, :<<; end # for Rack::CommonLogger

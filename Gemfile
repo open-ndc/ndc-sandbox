@@ -8,8 +8,6 @@ gem 'racksh'
 gem 'thin'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'sprockets'
-gem 'sinatra'
-gem "sinatra-activerecord"
 gem 'rake'
 
 # Formatting
