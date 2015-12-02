@@ -2,8 +2,17 @@ require 'yaml'
 require 'logger'
 require 'active_record'
 require 'active_record/schema_dumper'
+require 'active_record/fixtures'
 
+config_dir = File.expand_path("#{$APP_ROOT}/config", __FILE__)
+db_dir = File.expand_path("#{$APP_ROOT}/db", __FILE__)
+fixtures_dir = File.expand_path("#{$APP_ROOT}/db/fixtures", __FILE__)
+
+include ActiveRecord::Tasks
+
+desc "DB related operations"
 namespace :db do
+
   task :environment do
     DATABASE_ENV = ENV['DATABASE_ENV'] || 'development'
     MIGRATIONS_DIR = ENV['MIGRATIONS_DIR'] || 'db/migrate'
@@ -19,6 +28,10 @@ namespace :db do
     ActiveRecord::Base.logger = Logger.new STDOUT if @config['logger']
   end
 
+  task :load_models do
+    Dir["#{$APP_ROOT}/models/*.rb"].each {|file| require file }
+  end
+
   desc 'Create the database from config/database.yml for the current DATABASE_ENV'
   task :create => :configure_connection do
     create_database @config
@@ -27,6 +40,15 @@ namespace :db do
   desc 'Drops the database for the current DATABASE_ENV'
   task :drop => :configure_connection do
     ActiveRecord::Base.connection.drop_database @config['database']
+  end
+
+  desc 'Resets your database using your migrations for the current environment (Non-SQLite DB)'
+  task :reset => ['db:drop', 'db:create', 'db:migrate']
+
+  desc 'Resets your database using your migrations for the current environment (Non-SQLite DB)'
+  task :reset_lite do
+    Rake::Task["db:migrate"].invoke("VERSION=0")
+    Rake::Task["db:migrate"].invoke
   end
 
   desc 'Migrate the database (options: VERSION=x, VERBOSE=false).'
@@ -81,4 +103,50 @@ namespace :db do
       EOS
     end
   end
+
+  namespace :fixtures do
+    desc "Loads fixtures into the current environment's database. Load specific fixtures using FIXTURES=x,y. Load from subdirectory in test/fixtures using FIXTURES_DIR=z. Specify an alternative path (eg. spec/fixtures) using FIXTURES_PATH=spec/fixtures."
+    task :load => [:environment, :configuration, :configure_connection, :load_models] do
+      fixtures_dir = if ENV['FIXTURES_DIR']
+                       File.join base_dir, ENV['FIXTURES_DIR']
+                     else
+                       fixtures_dir
+                     end
+
+      fixture_files = if ENV['FIXTURES']
+                        ENV['FIXTURES'].split(',')
+                      else
+                        # The use of String#[] here is to support namespaced fixtures
+                        Dir["#{fixtures_dir}/**/*.yml"].map {|f| f[(fixtures_dir.size + 1)..-5] }
+                      end
+      puts "Invoking create_fixtures for models #{fixture_files}"
+      ActiveRecord::FixtureSet.create_fixtures(fixtures_dir, fixture_files)
+      puts "Fixtures loaded successfully!"
+    end
+
+    desc "Search for a fixture given a LABEL or ID. Specify an alternative path (eg. spec/fixtures) using FIXTURES_PATH=spec/fixtures."
+    task :identify => [:environment, :load_config] do
+      require 'active_record/fixtures'
+
+      label, id = ENV['LABEL'], ENV['ID']
+      raise 'LABEL or ID required' if label.blank? && id.blank?
+
+      puts %Q(The fixture ID for "#{label}" is #{ActiveRecord::FixtureSet.identify(label)}.) if label
+
+      base_dir = ActiveRecord::Tasks::DatabaseTasks.fixtures_path
+
+      Dir["#{base_dir}/**/*.yml"].each do |file|
+        if data = YAML::load(ERB.new(IO.read(file)).result)
+          data.each_key do |key|
+            key_id = ActiveRecord::FixtureSet.identify(key)
+
+            if key == label || key_id == id.to_i
+              puts "#{file}: #{key} (#{key_id})"
+            end
+          end
+        end
+      end
+    end
+  end
+
 end
