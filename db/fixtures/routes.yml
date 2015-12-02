@@ -1,0 +1,10 @@
+SFX-MAD:
+  airline: fa
+  origin: SFX
+  destination: MAD
+  departure_time: 12:00
+SFX-LHR:
+  airline: fa
+  origin: SFX
+  destination: LHR
+  departure_time: 14:00
