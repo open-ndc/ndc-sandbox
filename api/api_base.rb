@@ -3,8 +3,12 @@ require 'active_record'
 require 'grape'
 require 'nokogiri'
 
-# API Modules
+# Load API Modules
 require_relative 'api_ndc_endpoint'
+
+# Load API Messages
+require_relative './messages/base'
+Dir["./api/messages/*.rb"].each {|file| require file }
 
 module API
 

@@ -42,7 +42,8 @@ module API
 
     desc "NDC endpoint supporting all NDC methods"
     post '/ndc' do
-      present NDC: true
+      @message = API::Messages.class_eval(@ndc_method.to_s).new(@doc)
+      @message.doc
     end
 
   end
