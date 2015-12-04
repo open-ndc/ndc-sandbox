@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20151130030926) do
 
   create_table "fares", force: true do |t|
     t.integer "route_id"
-    t.string  "class",      limit: 1
-    t.string  "currency",   limit: 3
+    t.string  "service_class", limit: 1
+    t.string  "currency",      limit: 3
     t.integer "base_price"
   end
 
