@@ -6,7 +6,7 @@ $APP_ROOT = File.expand_path(File.dirname(__FILE__))
 
 require 'yaml'
 require 'logger'
-require 'pry'
+require 'pry' if $RACK_ENV == 'development'
 
 Dir.glob("#{$APP_ROOT}/lib/core_ext/*.rb").each { |r| import r }
 

@@ -1,0 +1,18 @@
+SFX-FRA:
+  airline: FA
+  origin: SFX
+  destination: FRA
+  departure_time: "12:00"
+  arrival_time: "13:00"
+FRA-LHR:
+  airline: FA
+  origin: FRA
+  destination: LHR
+  departure_time: "15:00"
+  arrival_time: "17:00"
+SFX-MAD:
+  airline: FA
+  origin: SFX
+  destination: MAD
+  departure_time: "12:00"
+  arrival_time: "17:00"

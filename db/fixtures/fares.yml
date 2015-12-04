@@ -1,0 +1,20 @@
+SFX-MAD-Y:
+  route: SFX-MAD
+  service_class: Y
+  currency: EUR
+  base_price: 120
+SFX-MAD-J:
+  route: SFX-MAD
+  service_class: J
+  currency: EUR
+  base_price: 220
+SFX-LHR-Y:
+  route: SFX-LHR
+  service_class: Y
+  currency: EUR
+  base_price: 80
+SFX-LHR-J:
+  route: SFX-LHR
+  service_class: J
+  currency: EUR
+  base_price: 180

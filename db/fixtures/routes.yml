@@ -1,10 +1,10 @@
 SFX-MAD:
-  airline: fa
+  airline: FA
   origin: SFX
   destination: MAD
-  departure_time: 12:00
+  departure_time: "12:00"
 SFX-LHR:
-  airline: fa
+  airline: FA
   origin: SFX
   destination: LHR
-  departure_time: 14:00
+  departure_time: "14:00"
