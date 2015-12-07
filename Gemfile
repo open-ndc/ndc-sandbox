@@ -12,6 +12,7 @@ gem 'rake'
 
 # Formatting
 gem 'nokogiri'
+gem 'chronic'
 
 # DB
 gem 'activerecord', '~> 4.0.0'      # Database
