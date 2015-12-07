@@ -1,6 +1,8 @@
 require 'pry' if $RACK_ENV == 'development'
 
 require 'active_record'
+require 'chronic'
+
 class ::Logger; alias_method :write, :<<; end # for Rack::CommonLogger
 
 # $LOG_FILE = "./log/#{$RACK_ENV}.log"

@@ -25,6 +25,7 @@ GEM
     bogus (0.1.6)
       dependor (>= 0.0.4)
     builder (3.1.4)
+    chronic (0.10.2)
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -127,6 +128,7 @@ DEPENDENCIES
   activerecord (~> 4.0.0)
   awesome_print
   bogus
+  chronic
   database_cleaner
   foreman
   grape
