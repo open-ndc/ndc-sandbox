@@ -1,20 +1,28 @@
 SFX-MAD-Y:
-  route: SFX-MAD
+  route: RT-SFX-MAD
   service_class: Y
   currency: EUR
   base_price: 120
+  top_price: 240
+  range_days_increase: 45
 SFX-MAD-J:
-  route: SFX-MAD
+  route: RT-SFX-MAD
   service_class: J
   currency: EUR
   base_price: 220
+  top_price: 450
+  range_days_increase: 45
 SFX-LHR-Y:
-  route: SFX-LHR
+  route: RT-SFX-LHR
   service_class: Y
   currency: EUR
   base_price: 80
+  top_price: 190
+  range_days_increase: 30
 SFX-LHR-J:
-  route: SFX-LHR
+  route: RT-SFX-LHR
   service_class: J
   currency: EUR
   base_price: 180
+  top_price: 270
+  range_days_increase: 30

@@ -1,18 +1,24 @@
-SFX-FRA:
+FS-SFX-FRA:
   airline: FA
   origin: SFX
   destination: FRA
+  number: "001"
+  key: "FA001"
   departure_time: "12:00"
   arrival_time: "13:00"
-FRA-LHR:
+FS-FRA-MAD:
   airline: FA
   origin: FRA
-  destination: LHR
+  destination: MAD
+  number: "002"
+  key: "FA002"
   departure_time: "15:00"
   arrival_time: "17:00"
-SFX-MAD:
+FS-TXL-LHR:
   airline: FA
-  origin: SFX
-  destination: MAD
+  origin: TXL
+  destination: LHR
+  number: "010"
+  key: "FA010"
   departure_time: "12:00"
-  arrival_time: "17:00"
+  arrival_time: "13:30"
