@@ -14,13 +14,17 @@ desc "DB related operations"
 namespace :db do
 
   task :environment do
-    DATABASE_ENV = ENV['DATABASE_ENV'] || 'development'
+    RACK_ENV = ENV['DATABASE_URL'] || 'development'
     MIGRATIONS_DIR = ENV['MIGRATIONS_DIR'] || 'db/migrate'
   end
 
   task :configuration => :environment do
     config_file = File.expand_path('../../../config/database.yml', __FILE__)
-    @config = YAML.load_file(config_file)[DATABASE_ENV]
+    if $RACK_ENV == 'production'
+      @config = ENV["DATABASE_URL"]
+    else
+      @config = YAML.load_file('config/database.yml')[$RACK_ENV]
+    end
   end
 
   task :configure_connection => :configuration do

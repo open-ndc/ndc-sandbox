@@ -10,11 +10,16 @@ $LOAD_PATH << load_path("./lib")
 
 puts "Starting RackApp with environment (#{$RACK_ENV}) in path (#{$APP_ROOT})"
 
-require File.join(File.dirname(__FILE__), 'init')
+require File.join(File.dirname(__FILE__), 'init_db')
 require 'api/api_base'
 require 'middleware/db_connection_sweeper'
 require 'middleware/logger'
 require 'logger'
+
+class ::Logger; alias_method :write, :<<; end # for Rack::CommonLogger
+
+puts "Initializing logfile in: #{STDOUT}"
+$logger = ::Logger.new(STDOUT)
 
 use Rack::CommonLogger, $logger
 use Middleware::Logger, $logger
