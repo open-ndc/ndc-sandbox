@@ -21,7 +21,16 @@ AirShoppingRQ(namespaces) {
           }
           TotalPrice {
             DetailCurrencyPrice {
-              Total(Code: offer.fare_currency) {text offer.base_price}
+              Total(Code: offer.fare_currency) {text offer.base_price_with_taxes.to_price}
+              Details {
+                Detail {
+                  SubTotal(Code: offer.fare_currency) {text offer.base_price.to_price}
+                  Application "Base Fare"
+                }
+              }
+              Taxes {
+                Total(Code: offer.fare_currency) {text offer.taxes_price.to_price}
+              }
             }
           }
         }

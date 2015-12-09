@@ -5,7 +5,7 @@ class Offer
   extend ActiveModel::Callbacks
   define_model_callbacks :create
 
-  attr_accessor :airline_code, :route_origin, :route_destination, :date_departure, :date_return, :base_price, :fare_currency, :datetime_expiration
+  attr_accessor :airline_code, :route_origin, :route_destination, :date_departure, :date_return, :base_price, :fare_currency, :datetime_expiration, :taxes_applicable
 
   validates_presence_of :airline_code, :route_origin, :route_destination
 
@@ -33,12 +33,20 @@ class Offer
                                   date_departure: date_departure, # Offer dates are now fake
                                   date_return: date_return, #Offer dates are now fake
                                   base_price: offer.base_price,
-                                  fare_currency: offer.currency
+                                  fare_currency: offer.currency,
+                                  taxes_applicable: offer.taxes_applicable,
                                 )
     }
     return offers_results
   end
 
+  def taxes_price
+    base_price * taxes_applicable
+  end
+
+  def base_price_with_taxes
+    base_price + taxes_price
+  end
 
   private
 
