@@ -10,6 +10,8 @@ $LOAD_PATH << load_path("./lib")
 
 puts "Starting RackApp with environment (#{$RACK_ENV}) in path (#{$APP_ROOT})"
 
+Dir.glob("#{$APP_ROOT}/lib/core_ext/*.rb").each { |ext| require ext }
+
 require File.join(File.dirname(__FILE__), 'init_db')
 require 'api/api_base'
 require 'middleware/db_connection_sweeper'
