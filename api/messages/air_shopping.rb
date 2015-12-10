@@ -26,7 +26,6 @@ module API
         template = File.read(TEMPLATE_PATH)
         @method = self.class.to_s.split('::').last
         @message = self
-        @@offers_iterator = 0
         builder = Nokogiri::XML::Builder.new do
           eval template
         end
