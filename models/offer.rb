@@ -5,11 +5,14 @@ class Offer
   extend ActiveModel::Callbacks
   define_model_callbacks :create
 
-  attr_accessor :airline_code, :route_origin, :route_destination, :date_departure, :date_return, :base_price, :fare_currency, :datetime_expiration, :taxes_applicable
+  attr_accessor :id, :offer_id, :airline_code, :route_origin, :route_destination, :date_departure, :date_return, :base_price, :fare_currency, :datetime_expiration, :taxes_applicable
 
   validates_presence_of :airline_code, :route_origin, :route_destination
 
-  before_create :set_expiration, :set_calculated_price
+  before_create :set_ids, :set_expiration, :set_calculated_price
+
+  # class variables
+  @@offers_counter = 0
 
   def initialize(hash)
     super(hash)
@@ -49,6 +52,11 @@ class Offer
   end
 
   private
+
+  def set_ids
+    self.id = @@offers_counter = @@offers_counter.next
+    self.offer_id = Digest::MD5.hexdigest Time.now.to_s
+  end
 
   def set_expiration
     self.datetime_expiration = Chronic.parse('in 24 hours')

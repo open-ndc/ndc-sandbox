@@ -15,7 +15,7 @@ AirShoppingRQ(namespaces) {
       Owner owner
       offers.each{|offer|
         AirlineOffer {
-          OfferID(Owner: offer.airline_code){ text "OFFER-#{@@offers_iterator += 1}" }
+          OfferID(Owner: offer.airline_code){ text "OFFER-#{offer.id}" }
           TimeLimits {
             OfferExpiration(Timestamp: offer.datetime_expiration.iso8601)
           }
@@ -30,6 +30,35 @@ AirShoppingRQ(namespaces) {
               }
               Taxes {
                 Total(Code: offer.fare_currency) {text offer.taxes_price.to_price}
+              }
+            }
+          }
+          PricedOffer {
+            OfferPrice(OfferItemID: offer.offer_id) {
+              RequestedDate {
+                PriceDetail {
+                  TotalAmount {
+                    SimpleCurrencyPrice(Code: offer.fare_currency) {text offer.base_price_with_taxes.to_price}
+                    BaseAmount(Code: offer.fare_currency) {text offer.base_price.to_price}
+                    Taxes {
+                      Total(Code: offer.fare_currency) {text offer.taxes_price.to_price}
+                    }
+                  }
+                }
+                Associations {
+                  AssociatedTraveler {
+                    TravelerReferences "AT1"
+                  }
+                }
+                FareDetail {
+                  FareComponent {
+                    FareBasis {
+                      FareBasisCode {
+                        Code "EFO"
+                      }
+                    }
+                  }
+                }
               }
             }
           }
