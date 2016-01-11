@@ -16,6 +16,8 @@ module API
 
   class NDCEndpoint < Grape::API
 
+    helpers APIHelpers
+
     before do
       @message = request.env["api.request.input"]
       if request.env["api.request.input"].blank?
