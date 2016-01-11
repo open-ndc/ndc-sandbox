@@ -10,16 +10,18 @@ module API
 
       def initialize(doc)
         super (doc)
-        doc.remove_namespaces! # Remove namespace to allow easy xpath handling
-        ond = doc.xpath('/AirShoppingRQ/CoreQuery/OriginDestinations/OriginDestination').first
+        ond = @doc.xpath('/AirShoppingRQ/CoreQuery/OriginDestinations/OriginDestination').first
         dep = ond.xpath('Departure/AirportCode').text
         arr = ond.xpath('Arrival/AirportCode').text
         date_dep = DateTime.parse(ond.xpath('Departure/Date').text) if ond.xpath('Departure/Date')
         date_arr = DateTime.parse(ond.xpath('Arrival/Date').text) if ond.xpath('Arrival/Date').present?
-        num_travelers = doc.xpath('/AirShoppingRQ/Travelers/Traveler/AnonymousTraveler/PTC').first.attributes["Quantity"].value ? doc.xpath('/AirShoppingRQ/Travelers/Traveler/AnonymousTraveler/PTC').first.attributes["Quantity"].value.to_i : nil
-        @offers = Offer.fetch_by_ond_and_dates(dep, arr, date_dep, date_arr)
+        num_travelers = @doc.xpath('/AirShoppingRQ/Travelers/Traveler/AnonymousTraveler/PTC').first.attributes["Quantity"].value ? doc.xpath('/AirShoppingRQ/Travelers/Traveler/AnonymousTraveler/PTC').first.attributes["Quantity"].value.to_i : nil
+        results = Offer.fetch_by_ond_and_dates(dep, arr, date_dep, date_arr, num_travelers)
+        @offers = results[:offers]
+        @datalist_flight_segments = results[:datalists][:flight_segments]
+        @datalist_passengers = results[:datalists][:passengers]
         @offers_count = @offers.size
-        @doc = build_response
+        @response = build_response
       end
 
       def build_response
@@ -30,10 +32,6 @@ module API
           eval template
         end
         return builder
-      end
-
-      def doc
-        @doc
       end
 
     end
