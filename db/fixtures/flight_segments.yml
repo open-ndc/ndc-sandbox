@@ -1,7 +1,7 @@
 FS-SFX-FRA:
   airline: FA
-  number: "001"
-  key: "FA001"
+  number: "0001"
+  key: "FA0001"
   departure_airport_code: "SFX"
   departure_airport_name: "Berlin Schönefeld"
   departure_time: "12:00"
@@ -15,8 +15,8 @@ FS-SFX-FRA:
   operating_carrier: "FA"
 FS-FRA-MAD:
   airline: "FA"
-  number: "002"
-  key: "FA002"
+  number: "0002"
+  key: "FA0002"
   departure_airport_code: "FRA"
   departure_airport_name: "Frankfurt International Airport"
   departure_time: "14:00"
@@ -28,10 +28,25 @@ FS-FRA-MAD:
   distance_units: "Kms."
   marketing_carrier: "FA"
   operating_carrier: "FA"
+FS-SFX-MAD:
+  airline: FA
+  number: "0003"
+  key: "FA0003"
+  departure_airport_code: "SFX"
+  departure_airport_name: "Berlin Schönefeld"
+  departure_time: "20:30"
+  arrival_airport_code: "MAD"
+  arrival_airport_name: "Madrid Adolfo Suárez International Airport"
+  arrival_time: "23:10"
+  duration: 225
+  distance: 1900
+  distance_units: "Kms."
+  marketing_carrier: "FA"
+  operating_carrier: "FA"
 FS-TXL-LHR:
   airline: FA
-  number: "003"
-  key: "FA003"
+  number: "0004"
+  key: "FA0004"
   departure_airport_code: "TXL"
   departure_airport_name: "Berlin Tegel"
   departure_time: "14:00"

@@ -4,7 +4,7 @@ module API
 
     class Base
 
-      attr_reader :timestamp, :token, :version, :namespaces, :name, :owner
+      attr_reader :response, :timestamp, :token, :version, :namespaces, :name, :owner
 
       def initialize(doc)
         @name = 'OpenNDC Sandbox'
@@ -16,6 +16,15 @@ module API
           'xmlns' => "http://www.iata.org/IATA/EDIST",
           'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
         }
+        @doc = doc.remove_namespaces! # Remove namespace to allow easy xpath handling
+      end
+
+      def response
+        @response
+      end
+
+      def parse_passengers
+        passengers = ond.xpath('Arrival/AirportCode').text
       end
 
     end

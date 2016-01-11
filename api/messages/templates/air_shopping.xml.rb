@@ -47,7 +47,10 @@ AirShoppingRQ(namespaces) {
                 }
                 Associations {
                   AssociatedTraveler {
-                    TravelerReferences "AT1"
+                    TravelerReferences offer.passengers_keys.join(' ')
+                  }
+                  AssociatedService {
+                    BundleReference "SB1"
                   }
                 }
                 FareDetail {
@@ -60,6 +63,17 @@ AirShoppingRQ(namespaces) {
                   }
                 }
               }
+            }
+            Associations {
+              offer.flight_segments.each do |fs|
+                ApplicableFlight {
+                  FlightSegmentReference(ref: fs.attributes["key"]) {
+                    ClassOfService {
+                      Code fs.attributes[:COS]
+                    }
+                  }
+                }
+              end
             }
           }
         }

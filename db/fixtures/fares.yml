@@ -6,6 +6,14 @@ SFX-MAD-Y:
   range_days_increase: 45
   rate_increase: 1.2
   taxes_applicable: 0.2
+SFX-MAD-Y-2:
+  route: RT-SFX-MAD-2
+  service_class: Y
+  currency: EUR
+  base_price: 80
+  range_days_increase: 45
+  rate_increase: 1.2
+  taxes_applicable: 0.2
 SFX-MAD-J:
   route: RT-SFX-MAD
   service_class: J

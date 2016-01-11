@@ -4,6 +4,7 @@ require 'grape'
 require 'nokogiri'
 
 # Load API Modules
+require_relative 'api_helpers'
 require_relative 'api_ndc_endpoint'
 
 # Load API Messages
