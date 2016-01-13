@@ -1,4 +1,4 @@
-AirShoppingRQ(namespaces) {
+AirShoppingRS(namespaces) {
   Document {
     Name name
     MessageVersion version
