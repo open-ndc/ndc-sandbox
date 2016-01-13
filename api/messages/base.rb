@@ -8,7 +8,7 @@ module API
 
       def initialize(doc)
         @name = 'OpenNDC Sandbox'
-        @version = '1.1.3'
+        @version = '15.2'
         @owner = 'FA'
         @timestamp = Time.now.utc.iso8601
         @token = Digest::SHA1.hexdigest @timestamp

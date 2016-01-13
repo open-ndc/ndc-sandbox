@@ -1,6 +1,9 @@
 $RACK_ENV = ENV['RACK_ENV'] || 'development'
 $APP_ROOT = File.expand_path(File.dirname(__FILE__))
 
+require 'rubygems'
+require 'bundler'
+
 def load_path(path)
   File.join($APP_ROOT, path)
 end
