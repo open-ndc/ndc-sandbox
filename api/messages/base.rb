@@ -6,7 +6,7 @@ module API
 
       attr_reader :response, :timestamp, :token, :version, :namespaces, :name, :owner
 
-      TEMPLATES_PATH = "#{File.dirname(__FILE__)}/templates/"
+      TEMPLATES_PATH = "#{File.dirname(__FILE__)}/templates"
 
       def initialize(doc)
         @name = 'OpenNDC Sandbox'
