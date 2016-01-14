@@ -4,9 +4,12 @@ module API
 
     class AirShoppingRQ < API::Messages::Base
 
-      attr_reader :offers, :offers_count
+      @response_name = "air_shopping"
+      class << self
+        attr_reader :response_name
+      end
 
-      TEMPLATE_PATH = "#{File.dirname(__FILE__)}/templates/air_shopping.xml.rb"
+      attr_reader :offers, :offers_count
 
       def initialize(doc)
         super (doc)
@@ -22,16 +25,6 @@ module API
         @datalist_passengers = results[:datalists][:passengers]
         @offers_count = @offers.size
         @response = build_response
-      end
-
-      def build_response
-        template = File.read(TEMPLATE_PATH)
-        @method = self.class.to_s.split('::').last
-        @message = self
-        builder = Nokogiri::XML::Builder.new do
-          eval template
-        end
-        return builder
       end
 
     end
