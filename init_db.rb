@@ -2,6 +2,7 @@ require 'pry' if $RACK_ENV == 'development'
 
 require 'active_record'
 require 'chronic'
+require 'yaml'
 
 puts "Loading DB config for environment: #{$RACK_ENV}..."
 if $RACK_ENV == 'production'
