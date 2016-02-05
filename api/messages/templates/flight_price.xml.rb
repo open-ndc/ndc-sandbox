@@ -18,10 +18,10 @@ FlightPriceRS(namespaces) {
           RequestedDate {
             PriceDetail {
               TotalAmount {
-                SimpleCurrencyPrice(Code: offer.fare_currency) {text offer.base_price_with_taxes.to_price}
-                BaseAmount(Code: offer.fare_currency) {text offer.base_price.to_price}
+                SimpleCurrencyPrice(Code: offer.fare.currency) {text offer.fare.base_price_with_taxes}
+                BaseAmount(Code: offer.fare.currency) {text offer.fare.base_price}
                 Taxes {
-                  Total(Code: offer.fare_currency) {text offer.taxes_price.to_price}
+                  Total(Code: offer.fare.currency) {text offer.fare.taxes_price}
                 }
               }
             }
@@ -48,15 +48,17 @@ FlightPriceRS(namespaces) {
           OfferExpiration(Timestamp: offer.datetime_expiration)
         }
         Associations {
-          offer.flight_segments.each do |fs|
             ApplicableFlight {
+              OriginDestinationReferences {text 'OD1'}
+
+              offer.flight_segments.each do |fs|
               FlightSegmentReference(ref: fs.attributes["key"]) {
                 ClassOfService {
                   Code fs.attributes[:COS]
                 }
               }
+              end
             }
-          end
         }
       }
     end

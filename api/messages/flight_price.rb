@@ -14,7 +14,8 @@ module API
       def initialize(doc)
         super (doc)
         flights = parse_xml(@doc)
-        @offers = PriceOffer.fetch_by_flights(flights)
+        results = PriceOffer.fetch_by_flights(flights)
+        @offers = results[:offers]
         @datalist_flight_segments = []
         @datalist_passengers = []
         @response = build_response
@@ -22,14 +23,13 @@ module API
 
       def parse_xml(doc)
         flight_stack = []
-        originDestinations = doc.xpath("#{self.name}/Query").css('OriginDestination')
+        originDestinations = doc.xpath("#{@method}/Query").css('OriginDestination')
         originDestinations.each do |originDestination|
-          way = []
           originDestination.css('Flight').each do |flight|
-            way << Hash.from_xml(flight.children.to_s)
+            flight_stack << Hash.from_xml(flight.to_s)['Flight']
           end
-          flight_stack << way
         end
+        flight_stack
       end
 
     end
