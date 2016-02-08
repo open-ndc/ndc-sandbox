@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.2.0'
 
 gem 'json'                          # JSON
 gem 'foreman'                       # Process management
@@ -16,10 +16,12 @@ gem 'chronic'
 
 # DB
 gem 'activerecord', '~> 4.0.0'      # Database
+gem 'redis', '~>3.2'
 
 # API Framework
 gem 'grape'
 
+  gem 'byebug'
 group :development do
   gem 'rerun'
   gem 'mina' # Deployment
