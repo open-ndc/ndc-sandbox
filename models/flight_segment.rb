@@ -1,7 +1,7 @@
 class FlightSegment < ActiveRecord::Base
 
   belongs_to :airline
-  belongs_to :route
+  has_and_belongs_to_many :route
   #has_and_belongs_to_many :flight_segments
 
 

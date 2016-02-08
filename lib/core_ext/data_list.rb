@@ -1,4 +1,10 @@
+require 'forwardable'
+
 class DataList
+
+ extend Forwardable
+
+  def_delegators :@list, :each, :size, :map
 
   class ListItem
     attr_accessor :list_id, :id, :attributes

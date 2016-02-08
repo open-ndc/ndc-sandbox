@@ -49,14 +49,13 @@ FlightPriceRS(namespaces) {
         }
         Associations {
             ApplicableFlight {
-              OriginDestinationReferences {text 'OD1'}
-
+              OriginDestinationReferences {text offer.dest_key }
               offer.flight_segments.each do |fs|
-              FlightSegmentReference(ref: fs.attributes["key"]) {
-                ClassOfService {
-                  Code fs.attributes[:COS]
+                FlightSegmentReference(ref: fs.attributes[:ref_key] + fs.list_id.to_s) {
+                  ClassOfService {
+                    Code offer.fare.service_class
+                  }
                 }
-              }
               end
             }
         }
