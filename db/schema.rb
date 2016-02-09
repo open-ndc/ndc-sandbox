@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160203084014) do
+ActiveRecord::Schema.define(version: 20160204144558) do
 
   create_table "airlines", force: true do |t|
     t.string "code",       limit: 2,  null: false
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20160203084014) do
     t.string  "aircraft",               limit: 3
     t.string  "marketing_carrier",      limit: 3
     t.string  "operating_carrier",      limit: 3
+    t.integer "departure_mask",                   default: 127
+    t.integer "arrival_mask",                     default: 127
   end
 
   create_table "flight_segments_routes", force: true do |t|
