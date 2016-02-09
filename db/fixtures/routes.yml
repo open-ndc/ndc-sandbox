@@ -3,6 +3,8 @@ RT-SFX-MAD:
   origin: SFX
   destination: MAD
   departure_time: "12:00"
+  services: 
+    - SV1
   flight_segments:
     - FS-SFX-FRA
     - FS-FRA-MAD

@@ -1,0 +1,12 @@
+SV1:
+  routes:
+    - RT-SFX-MAD
+  name: "Advance Seat selection"
+  owner: "9A"
+  description_text: "A convenient option that lets you reserve your preferred seat"
+  description_link: "http://athena.jrtechnologies.com/ServiceImage/preferred_seat.jpg"
+  description_object_id: "preferred_seat.jpg"
+  settlement_code: "AD"
+  settlement_definition: "Internal Airline Document"
+  price_total: 0
+  price_passanger_reference: "SH1"

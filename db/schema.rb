@@ -61,8 +61,8 @@ ActiveRecord::Schema.define(version: 20160203084014) do
   end
 
   create_table "routes_services", force: true do |t|
-    t.integer "routes_id"
-    t.integer "services_id"
+    t.integer "route_id"
+    t.integer "service_id"
   end
 
   create_table "services", force: true do |t|

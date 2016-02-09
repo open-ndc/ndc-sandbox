@@ -4,6 +4,7 @@ module API
 
     class ServiceListRQ < API::Messages::Base
       require "redis"
+      require "byebug"
 
       @response_name = "service_list"
       class << self
@@ -17,14 +18,15 @@ module API
         response_id = @doc.xpath('/ServiceListRQ/ShoppingResponseIDs/ResponseID').text
         od = JSON.parse(get_request(response_id))
         routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"])
+        byebug
         @services = routes.services
         @response = build_response
       end
 
-			def get_request(response_id)
-        redis = Redis.new(:host => "127.0.0.1", :port => 6380, :db => 15)
+      def get_request(response_id)
+        redis = Redis.new
         redis.get(response_id)
-			end
+      end
     end
 
   end
