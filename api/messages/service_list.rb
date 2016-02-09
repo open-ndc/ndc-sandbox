@@ -17,14 +17,14 @@ module API
         super (doc)
         response_id = @doc.xpath('/ServiceListRQ/ShoppingResponseIDs/ResponseID').text
         od = JSON.parse(get_request(response_id))
-        routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"])
+        routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"]).take
+        byebug
         @services = routes.services
         @response = build_response
       end
 
       def get_request(response_id)
-        redis = Redis.new
-        redis.get(response_id)
+        Redis.current.get(response_id)
       end
     end
 

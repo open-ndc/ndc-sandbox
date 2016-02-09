@@ -31,9 +31,8 @@ module API
       end
 
       def save_request(dep, arr, date_dep)
-        redis = Redis.new
         hash = {"dep" => dep, "arr" => arr, "date_dep" => date_dep}
-        redis.set(@token, hash.to_json)
+        Redis.current.set(@token, hash.to_json)
       end
 
     end
