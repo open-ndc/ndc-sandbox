@@ -1,8 +1,8 @@
-FS-SFX-FRA:
+FS-SXF-FRA:
   airline: FA
   number: "0001"
   key: "FA0001"
-  departure_airport_code: "SFX"
+  departure_airport_code: "SXF"
   departure_airport_name: "Berlin Schönefeld"
   departure_time: "12:00"
   arrival_airport_code: "FRA"
@@ -28,11 +28,11 @@ FS-FRA-MAD:
   distance_units: "Kms."
   marketing_carrier: "FA"
   operating_carrier: "FA"
-FS-SFX-MAD:
+FS-SXF-MAD:
   airline: FA
   number: "0003"
   key: "FA0003"
-  departure_airport_code: "SFX"
+  departure_airport_code: "SXF"
   departure_airport_name: "Berlin Schönefeld"
   departure_time: "20:30"
   arrival_airport_code: "MAD"
