@@ -33,9 +33,9 @@ class PriceOffer < BaseOffer
                           }
                       )
                       .where('flight_segments.departure_mask & ? > 0', FlightSegment.available_mask([flight['Departure']['Date']]))
-                      .where('flight_segments.arrival_mask & ? > 0', FlightSegment.available_mask([flight['Arrival']['Date']]))
-
-          puts result.to_sql
+          if flight['Arrival']['Date']
+            result.where('flight_segments.arrival_mask & ? > 0', FlightSegment.available_mask([flight['Arrival']['Date']]))
+          end
           break unless (fs = result.first)
           new_segment = DataList::ListItem.new(fs.id, {ref_key: 'SEG', data: fs})
           offer_flight_segments << new_segment
