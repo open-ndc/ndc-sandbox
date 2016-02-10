@@ -17,9 +17,8 @@ module API
         super (doc)
         response_id = @doc.xpath('/ServiceListRQ/ShoppingResponseIDs/ResponseID').text
         od = JSON.parse(get_request(response_id))
-        routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"]).take
-        byebug
-        @services = routes.services
+        routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"]).first
+        @services = routes.services.take
         @response = build_response
       end
 
