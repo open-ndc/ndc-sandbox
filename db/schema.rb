@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160203084014) do
+ActiveRecord::Schema.define(version: 20160210084012) do
 
   create_table "airlines", force: true do |t|
     t.string "code",       limit: 2,  null: false
@@ -26,6 +26,11 @@ ActiveRecord::Schema.define(version: 20160203084014) do
     t.integer "range_days_increase"
     t.float   "rate_increase"
     t.float   "taxes_applicable"
+  end
+
+  create_table "fares_service_bundles", force: true do |t|
+    t.integer "fare_id"
+    t.integer "service_bundle_id"
   end
 
   create_table "flight_segments", force: true do |t|
@@ -62,6 +67,17 @@ ActiveRecord::Schema.define(version: 20160203084014) do
 
   create_table "routes_services", force: true do |t|
     t.integer "route_id"
+    t.integer "service_id"
+  end
+
+  create_table "service_bundles", force: true do |t|
+    t.string  "name"
+    t.string  "bundle_id"
+    t.integer "maximum_quantity"
+  end
+
+  create_table "service_bundles_services", force: true do |t|
+    t.integer "service_bundle_id"
     t.integer "service_id"
   end
 
