@@ -2,7 +2,7 @@ RT-SFX-MAD:
   airline: FA
   origin: SFX
   destination: MAD
-  departure_time: "12:00"
+  departure_time: "2016-03-01"
   services: 
     - SV1
   flight_segments:
@@ -12,13 +12,13 @@ RT-SFX-MAD-2:
   airline: FA
   origin: SFX
   destination: MAD
-  departure_time: "20:30"
+  departure_time: "2016-03-01"
   flight_segments:
     - FS-SFX-MAD
 RT-TXL-LHR:
   airline: FA
   origin: TGL
   destination: LHR
-  departure_time: "14:00"
+  departure_time: "2016-03-01"
   flight_segments:
     - FS-TXL-LHR

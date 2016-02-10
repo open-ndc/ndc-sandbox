@@ -1,0 +1,8 @@
+BD1:
+  services:
+    - SV1
+    - SV2
+  name: "Discounted Package"
+  maximum_quantity: 2
+  fares:
+    - SFX-MAD-Y
