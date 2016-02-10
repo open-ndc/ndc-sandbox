@@ -1,6 +1,7 @@
 SV1:
   routes:
     - RT-SFX-MAD
+  airline: FA
   name: "Advance Seat selection"
   owner: "9A"
   description_text: "A convenient option that lets you reserve your preferred seat"
