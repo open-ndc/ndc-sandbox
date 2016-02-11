@@ -5,7 +5,6 @@ RT-SFX-MAD:
   departure_time: "2016-03-01"
   services: 
     - SV1
-    - SV2
   flight_segments:
     - FS-SFX-FRA
     - FS-FRA-MAD
@@ -19,6 +18,7 @@ RT-SFX-MAD-2:
   flight_segments:
     - FS-SFX-MAD
   services: 
+    - SV1
     - SV2
   bundles:
     - BD2
