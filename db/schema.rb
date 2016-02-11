@@ -18,6 +18,27 @@ ActiveRecord::Schema.define(version: 20160210084012) do
     t.string "name",       limit: 50
   end
 
+  create_table "bundles", force: true do |t|
+    t.string  "name"
+    t.string  "bundle_id"
+    t.integer "maximum_quantity"
+  end
+
+  create_table "bundles_fares", force: true do |t|
+    t.integer "fare_id"
+    t.integer "bundle_id"
+  end
+
+  create_table "bundles_routes", force: true do |t|
+    t.integer "route_id"
+    t.integer "bundle_id"
+  end
+
+  create_table "bundles_services", force: true do |t|
+    t.integer "bundle_id"
+    t.integer "service_id"
+  end
+
   create_table "fares", force: true do |t|
     t.integer "route_id"
     t.string  "service_class",       limit: 1
@@ -26,11 +47,6 @@ ActiveRecord::Schema.define(version: 20160210084012) do
     t.integer "range_days_increase"
     t.float   "rate_increase"
     t.float   "taxes_applicable"
-  end
-
-  create_table "fares_service_bundles", force: true do |t|
-    t.integer "fare_id"
-    t.integer "service_bundle_id"
   end
 
   create_table "flight_segments", force: true do |t|
@@ -67,17 +83,6 @@ ActiveRecord::Schema.define(version: 20160210084012) do
 
   create_table "routes_services", force: true do |t|
     t.integer "route_id"
-    t.integer "service_id"
-  end
-
-  create_table "service_bundles", force: true do |t|
-    t.string  "name"
-    t.string  "bundle_id"
-    t.integer "maximum_quantity"
-  end
-
-  create_table "service_bundles_services", force: true do |t|
-    t.integer "service_bundle_id"
     t.integer "service_id"
   end
 

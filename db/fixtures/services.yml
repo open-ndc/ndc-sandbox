@@ -11,6 +11,8 @@ SV1:
   price_passanger_reference: "SH1"
   routes:
     - RT-SFX-MAD
+  bundles:
+    - BD1
 SV2:
   airline: FA
   service_id: "1023"
@@ -25,3 +27,5 @@ SV2:
   price_passanger_reference: "SH1"
   routes:
     - RT-SFX-MAD
+  bundles:
+    - BD1
