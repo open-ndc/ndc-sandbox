@@ -7,3 +7,15 @@ BD1:
   maximum_quantity: 2
   fares:
     - SFX-MAD-Y
+  routes:
+    - RT-SFX-MAD
+BD2:
+  bundle_id: "BD2"
+  services:
+    - SV2
+  name: "Premium package"
+  maximum_quantity: 1
+  fares:
+    - SFX-MAD-Y
+  routes:
+    - RT-TXL-LHR
