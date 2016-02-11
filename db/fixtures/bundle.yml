@@ -1,4 +1,5 @@
 BD1:
+  bundle_id: "BD1"
   services:
     - SV1
     - SV2

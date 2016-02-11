@@ -11,7 +11,7 @@ module API
         attr_reader :response_name
       end
 
-      attr_reader :services
+      attr_reader :services, :bundles
 
       def initialize(doc)
         super (doc)
@@ -19,6 +19,8 @@ module API
         od = JSON.parse(get_request(response_id))
         routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"]).first
         @services = routes.services.load
+        @bundles = routes.bundles.load
+        byebug
         @response = build_response
       end
 
