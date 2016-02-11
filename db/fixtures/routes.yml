@@ -18,6 +18,10 @@ RT-SFX-MAD-2:
   departure_time: "2016-03-01"
   flight_segments:
     - FS-SFX-MAD
+  services: 
+    - SV2
+  bundles:
+    - BD2
 RT-TXL-LHR:
   airline: FA
   origin: TGL
