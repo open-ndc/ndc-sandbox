@@ -24,7 +24,11 @@ module API
       end
 
       def get_request(response_id)
-        Redis.current.get(response_id)
+        if Redis.current.exists(response_id)
+          Redis.current.get(response_id)
+        else
+					raise Errors::IvalidNDCValidationError, "Response not found. Please pass correct ResponseID"
+        end
       end
     end
 
