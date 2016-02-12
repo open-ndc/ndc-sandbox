@@ -25,6 +25,7 @@ GEM
     bogus (0.1.6)
       dependor (>= 0.0.4)
     builder (3.1.4)
+    byebug (8.2.1)
     chronic (0.10.2)
     coderay (1.1.0)
     coercible (1.0.0)
@@ -88,6 +89,8 @@ GEM
     rb-fsevent (0.9.6)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    rb-readline (0.5.3)
+    redis (3.2.2)
     rerun (0.11.0)
       listen (~> 3.0)
     rspec (3.3.0)
@@ -128,6 +131,7 @@ DEPENDENCIES
   activerecord (~> 4.0.0)
   awesome_print
   bogus
+  byebug
   chronic
   database_cleaner
   foreman
@@ -141,6 +145,8 @@ DEPENDENCIES
   rack-test
   racksh
   rake
+  rb-readline
+  redis (~> 3.2)
   rerun
   rspec
   sprockets
