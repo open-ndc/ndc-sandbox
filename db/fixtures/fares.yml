@@ -1,37 +1,37 @@
-SFX-MAD-Y:
-  route: RT-SFX-MAD
+SXF-MAD-Y:
+  route: RT-SXF-MAD
   service_class: Y
   currency: EUR
   base_price: 120
   range_days_increase: 45
   rate_increase: 1.2
   taxes_applicable: 0.2
-SFX-MAD-Y-2:
-  route: RT-SFX-MAD-2
+SXF-MAD-Y-2:
+  route: RT-SXF-MAD-2
   service_class: Y
   currency: EUR
   base_price: 80
   range_days_increase: 45
   rate_increase: 1.2
   taxes_applicable: 0.2
-SFX-MAD-J:
-  route: RT-SFX-MAD
+SXF-MAD-J:
+  route: RT-SXF-MAD
   service_class: J
   currency: EUR
   base_price: 220
   range_days_increase: 45
   rate_increase: 1.2
   taxes_applicable: 0.2
-SFX-LHR-Y:
-  route: RT-SFX-LHR
-  service_class: Y
+TXL-LHR-M:
+  route: RT-TXL-LHR
+  service_class: M
   currency: EUR
   base_price: 80
   range_days_increase: 30
   rate_increase: 1.2
   taxes_applicable: 0.2
-SFX-LHR-J:
-  route: RT-SFX-LHR
+TXL-LHR-J:
+  route: RT-TXL-LHR
   service_class: J
   currency: EUR
   base_price: 180

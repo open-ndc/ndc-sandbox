@@ -8,7 +8,11 @@ class Offer < BaseOffer
 
   validates_presence_of :airline_code, :route_origin, :route_destination
 
+<<<<<<< HEAD
   before_create :set_expiration, :set_calculated_price
+=======
+  before_create :set_calculated_price
+>>>>>>> 3dd0e1ea9663b056fb5ae40158f18cf99a24cdab
 
   def initialize(hash)
     super(hash)

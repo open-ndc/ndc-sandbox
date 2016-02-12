@@ -1,6 +1,10 @@
 source 'https://rubygems.org'
 
+<<<<<<< HEAD
 ruby '2.2.0'
+=======
+ruby ENV['CUSTOM_RUBY_VERSION'] || "2.2.0"
+>>>>>>> 3dd0e1ea9663b056fb5ae40158f18cf99a24cdab
 
 gem 'json'                          # JSON
 gem 'foreman'                       # Process management
