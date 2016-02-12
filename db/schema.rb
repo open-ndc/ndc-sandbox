@@ -10,12 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160203084014) do
+ActiveRecord::Schema.define(version: 20160210084012) do
 
   create_table "airlines", force: true do |t|
     t.string "code",       limit: 2,  null: false
     t.string "short_name", limit: 20, null: false
     t.string "name",       limit: 50
+  end
+
+  create_table "bundles", force: true do |t|
+    t.string  "name"
+    t.string  "bundle_id"
+    t.integer "maximum_quantity"
+  end
+
+  create_table "bundles_fares", force: true do |t|
+    t.integer "fare_id"
+    t.integer "bundle_id"
+  end
+
+  create_table "bundles_routes", force: true do |t|
+    t.integer "route_id"
+    t.integer "bundle_id"
+  end
+
+  create_table "bundles_services", force: true do |t|
+    t.integer "bundle_id"
+    t.integer "service_id"
   end
 
   create_table "fares", force: true do |t|
@@ -61,8 +82,8 @@ ActiveRecord::Schema.define(version: 20160203084014) do
   end
 
   create_table "routes_services", force: true do |t|
-    t.integer "routes_id"
-    t.integer "services_id"
+    t.integer "route_id"
+    t.integer "service_id"
   end
 
   create_table "services", force: true do |t|

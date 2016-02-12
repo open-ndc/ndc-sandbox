@@ -4,14 +4,28 @@ ServiceListRS(namespaces) {
     MessageVersion version
   }
   Success {}
-  AnonymousTravelerList{
-    AnonymousTraveler(ObjectKey: "SH1"){
-      PTC(Quantity: "1"){ text "ADT" }
-    }
-  }
   DataLists {
+    AnonymousTravelerList{
+      AnonymousTraveler(ObjectKey: "SH1"){
+        PTC(Quantity: "1"){ text "ADT" }
+      }
+    }
+    ServiceBundleList {
+      bundles.each{ |bundle|
+        ServiceBundle(ListKey: bundle.bundle_id) {
+          ItemCount bundles.count
+          Associations {
+            bundle.services.each{ |service|
+              ServiceReference service.service_id
+            }
+          }
+          BundleID bundle.bundle_id
+          BundleName bundle.name
+        }
+      }
+    }
     ServiceList {
-      services.each{|service|
+      services.each{ |service|
         Service(ObjectKey: service.service_id){ 
           ServiceID(Owner: service.airline.code){ text service.id }
           Name service.name

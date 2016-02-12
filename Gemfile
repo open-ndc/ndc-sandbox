@@ -21,8 +21,9 @@ gem 'redis', '~>3.2'
 # API Framework
 gem 'grape'
 
-  gem 'byebug'
 group :development do
+  gem 'rb-readline'
+  gem 'byebug'
   gem 'rerun'
   gem 'mina' # Deployment
 end

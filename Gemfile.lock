@@ -89,6 +89,7 @@ GEM
     rb-fsevent (0.9.6)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    rb-readline (0.5.3)
     redis (3.2.2)
     rerun (0.11.0)
       listen (~> 3.0)
@@ -144,6 +145,7 @@ DEPENDENCIES
   rack-test
   racksh
   rake
+  rb-readline
   redis (~> 3.2)
   rerun
   rspec
@@ -151,6 +153,3 @@ DEPENDENCIES
   sqlite3
   thin
   timecop
-
-BUNDLED WITH
-   1.11.2

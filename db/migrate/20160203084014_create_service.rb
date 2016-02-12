@@ -16,8 +16,8 @@ class CreateService < ActiveRecord::Migration
     end
 
     create_table(:routes_services) do |t|
-      t.references :routes
-      t.references :services
+      t.references :route
+      t.references :service
     end
   end
 end
