@@ -2,18 +2,6 @@ require_relative 'base_offer'
 
 class PriceOffer < BaseOffer
 
-<<<<<<< HEAD
-  attr_accessor :base_price, :fare_currency, :datetime_expiration, :taxes_applicable,
-                :flight_segments, :offer_flight_segments, :passengers_list, :passengers_keys
-  def self.fetch_by_flights(flights = [], num_travelers = 1)
-    flights.each do |flight|
-
-    end
-  end
-
-
-end
-=======
   OD_KEY = 'OD'
 
   attr_accessor :fare, :flight_segments, :passengers_keys, :base_price_with_taxes, :dest_key
@@ -72,4 +60,3 @@ end
    fare.base_price  = 1.5 * fare.base_price
   end
 end
->>>>>>> 3dd0e1ea9663b056fb5ae40158f18cf99a24cdab
