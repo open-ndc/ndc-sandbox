@@ -2,7 +2,11 @@
 
 class BaseOffer
 
+<<<<<<< HEAD
   attr_accessor :id, :offer_id
+=======
+  attr_accessor :id, :offer_id, :datetime_expiration
+>>>>>>> 3dd0e1ea9663b056fb5ae40158f18cf99a24cdab
 
   include ActiveModel::Model
   include ActiveModel::Validations

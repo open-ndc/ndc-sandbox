@@ -13,6 +13,7 @@ module API
         @version = '15.2'
         @owner = 'FA'
         @timestamp = Time.now.utc.iso8601
+        @method = self.class.to_s.split('::').last
         @token = Digest::SHA1.hexdigest @timestamp
         @namespaces = {
           'xmlns' => "http://www.iata.org/IATA/EDIST",
@@ -24,7 +25,6 @@ module API
       def build_response
         template_path = "#{TEMPLATES_PATH}/#{self.class.response_name}.xml.rb"
         template = File.read(template_path)
-        @method = self.class.to_s.split('::').last
         @message = self
         builder = Nokogiri::XML::Builder.new do
           eval template
