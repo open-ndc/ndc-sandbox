@@ -27,7 +27,7 @@ module API
         if Redis.current.exists(response_id)
           Redis.current.get(response_id)
         else
-					raise Errors::IvalidNDCValidationError, "Response not found. Please pass correct ResponseID"
+          raise Errors::IvalidNDCValidationError, "Response not found. Please pass correct ResponseID"
         end
       end
     end
