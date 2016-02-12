@@ -15,6 +15,9 @@ module API
   NDC_METHODS = [:AirShoppingRQ, :FlightPriceRQ, :SeatAvailabilityRQ, :ServiceListRQ, :ServicePriceRQ]
 
   class NDCEndpoint < Grape::API
+		rescue_from Errors::IvalidNDCValidationError do |e|
+			error!(e.message, 400)
+		end
 
     helpers APIHelpers
 
