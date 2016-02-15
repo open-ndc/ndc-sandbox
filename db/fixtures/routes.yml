@@ -8,28 +8,20 @@ RT-SXF-MAD:
   flight_segments:
     - FS-SXF-FRA
     - FS-FRA-MAD
-<<<<<<< HEAD
   bundles:
     - BD1
 RT-SFX-MAD-2:
-=======
-RT-SXF-MAD-2:
->>>>>>> 3dd0e1ea9663b056fb5ae40158f18cf99a24cdab
   airline: FA
   origin: SXF
   destination: MAD
   departure_time: "2016-03-01"
   flight_segments:
-<<<<<<< HEAD
     - FS-SFX-MAD
   services: 
     - SV1
     - SV2
   bundles:
     - BD2
-=======
-    - FS-SXF-MAD
->>>>>>> 3dd0e1ea9663b056fb5ae40158f18cf99a24cdab
 RT-TXL-LHR:
   airline: FA
   origin: TGL
