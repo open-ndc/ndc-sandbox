@@ -70,6 +70,7 @@ GEM
       mini_portile (~> 0.6.0)
     open4 (1.3.4)
     pg (0.18.3)
+    power_assert (0.2.6)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -110,6 +111,8 @@ GEM
     sprockets (3.4.0)
       rack (> 1, < 3)
     sqlite3 (1.3.11)
+    test-unit (3.1.5)
+      power_assert
     thin (1.6.4)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -138,6 +141,7 @@ DEPENDENCIES
   grape
   json
   mina
+  minitest
   nokogiri
   pg
   pry
@@ -151,5 +155,6 @@ DEPENDENCIES
   rspec
   sprockets
   sqlite3
+  test-unit
   thin
   timecop

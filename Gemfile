@@ -31,6 +31,9 @@ end
 group :test do
   gem 'rspec'
   gem 'rack-test'
+  gem 'test-unit'
+  gem 'minitest'
+
   gem 'bogus'
   gem 'database_cleaner'
   gem 'timecop'
