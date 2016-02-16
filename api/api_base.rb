@@ -7,6 +7,7 @@ require 'nokogiri'
 require_relative 'api_helpers'
 require_relative 'api_ndc_endpoint'
 
+
 # Load API Messages
 require_relative './messages/base'
 Dir["./api/messages/*.rb"].each {|file| require file }
@@ -22,13 +23,10 @@ module API
     format :xml
     content_type :xml, CONTENT_TYPE
     version 'v0', using: :path
+    
 
     rescue_from Grape::Exceptions::Validation do |e|
       Rack::Response.new({ message: e.message }.to_json, 412, RACK_CONTENT_TYPE_HEADER).finish
-    end
-
-    rescue_from ActiveRecord::RecordNotFound do |e|
-      Rack::Response.new({ message: "The item you are looking for does not exist."}.to_json, 404, RACK_CONTENT_TYPE_HEADER).finish
     end
 
     before do
