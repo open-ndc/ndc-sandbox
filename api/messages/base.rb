@@ -2,13 +2,20 @@ module API
 
   module Messages
 
+    module Errors
+      class IvalidNDCParameters < RuntimeError; end
+      class IvalidNDCResponseID < RuntimeError; end
+      class UnknownNDCProcessingError < RuntimeError; end
+    end
+
     class Base
 
-      attr_reader :response, :timestamp, :token, :version, :namespaces, :name, :owner
+      attr_reader :response, :timestamp, :token, :version, :namespaces, :name, :owner, :errors
 
       TEMPLATES_PATH = "#{File.dirname(__FILE__)}/templates"
 
       def initialize(doc)
+        @errors = []
         @name = 'OpenNDC Sandbox'
         @version = '15.2'
         @owner = 'FA'

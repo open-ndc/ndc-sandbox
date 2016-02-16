@@ -8,29 +8,44 @@ module API
 
   module Errors
     class IvalidNDCMessageError < RuntimeError; end
-    class IvalidNDCValidationError < RuntimeError; end
     class IvalidNDCFormatError < RuntimeError; end
+    class IvalidNDCValidationError < RuntimeError; end
+    class IvalidNDCMessageProcessing < RuntimeError; end
+    class UnexpectedNDCResponseError < RuntimeError; end
   end
 
-  NDC_METHODS = [:AirShoppingRQ, :FlightPriceRQ, :SeatAvailabilityRQ, :ServiceListRQ, :ServicePriceRQ]
-
   class NDCEndpoint < Grape::API
-    rescue_from Errors::IvalidNDCValidationError do |e|
-      error!(e.message, 400)
-    end
+
+    ACCEPTABLE_NDC_REQUESTS = {
+                                AirShoppingRQ: :AirShoppingRS,
+                                FlightPriceRQ: :FlightPriceRS,
+                                SeatAvailabilityRQ: :SeatAvailabilityRS,
+                                ServiceListRQ: :ServiceListRS,
+                                ServicePriceRQ: :ServicePriceRS,
+
+                                OrderCreateRQ: :OrderViewRS,
+                                OrderListRQ: :OrderListRS,
+                                OrderRetrieveRQ: :OrderViewRS,
+                                OrderCancelRQ: :OrderCancelRS
+                              }
+
+    attr_accessor :message, :ndc_method, :ndc_response_method
 
     helpers APIHelpers
 
     before do
       @message = request.env["api.request.input"]
-      if request.env["api.request.input"].blank?
-        error!("Malformed Request :: Empty Body", 400)
+      if !request.post?
+        error!("Method not allowed. Try POST", 405)
+      elsif @message.blank?
+        error!("Malformed Request :: Empty Request Body", 400)
       elsif (@doc = Nokogiri::XML(@message)).root.nil?
         error!("Malformed Request :: XML structure format invalid", 400)
-      elsif !NDC_METHODS.include?(@ndc_method = @doc.root.name.to_sym)
+      elsif !ACCEPTABLE_NDC_REQUESTS.include?(@ndc_method = @doc.root.name.to_sym)
         error!("Malformed Request :: Invalid or unrecognized NDC method (#{@ndc_method})", 400)
       else
         errors = []
+        @ndc_response_method = ACCEPTABLE_NDC_REQUESTS[@ndc_method]
         schemas_path = SCHEMAS_DIR + SCHEMAS_VERSION
         Dir.chdir(schemas_path) do
           begin
@@ -45,11 +60,25 @@ module API
       end
     end
 
+    get '/ndc' do
+
+    end
+
     desc "NDC endpoint supporting all NDC methods"
     post '/ndc' do
-      status 200
-      @message = API::Messages.class_eval(@ndc_method.to_s).new(@doc)
-      @message.response
+      begin
+        @message = API::Messages.class_eval(@ndc_method.to_s).new(@doc)
+        if @message.errors.empty? && @message.response.present?
+          status 200
+        else
+          render_ndc_error(@ndc_response_method, @message.errors.first.class, 400, @message.errors.first.message)
+        end
+      rescue Exception => e
+        status 500
+        raise Errors::UnexpectedNDCResponseError
+      else
+        @message.response
+      end
     end
 
   end
