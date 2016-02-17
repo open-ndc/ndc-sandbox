@@ -4,10 +4,13 @@ require 'bundler/setup'
 $RACK_ENV = ENV['RACK_ENV'] || 'development'
 $APP_ROOT = File.expand_path(File.dirname(__FILE__))
 
-if $RACK_ENV == 'test'
-  require 'rspec/core'
-  require "rspec/core/rake_task"
-  RSpec::Core::RakeTask.new(:spec)
+require "rake/testtask"       
+require 'minitest/autorun'
+
+Rake::TestTask.new(:test) do |test|
+  test.ruby_opts = ["-rubygems"] if defined? Gem
+  test.libs << "test"
+  test.test_files = FileList['test/*test.rb']
 end
 
 require 'yaml'

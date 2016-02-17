@@ -5,13 +5,13 @@ require 'test/unit'
 class CheckerTest < Test::Unit::TestCase
   extend Minitest::Spec::DSL
 
-  describe "Client Base instance initialized wrong" do
+  describe "Checker test is running" do
 
     setup do
       @ndc_client = 1
     end
   
-    test "Config is wrong" do
+    test "simple test" do
       assert true
     end
 
