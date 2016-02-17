@@ -21,6 +21,9 @@ gem 'redis', '~>3.2'
 # API Framework
 gem 'grape'
 
+gem 'test-unit'
+gem 'minitest'
+
 group :development do
   gem 'rb-readline'
   gem 'byebug'
@@ -29,10 +32,6 @@ group :development do
 end
 
 group :test do
-  gem 'rspec'
-  gem 'rack-test'
-  gem 'test-unit'
-  gem 'minitest'
 
   gem 'bogus'
   gem 'database_cleaner'

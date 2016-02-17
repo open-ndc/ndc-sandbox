@@ -1,11 +1,20 @@
-require "test_helper"
+require 'minitest/autorun'
+require 'test/unit'
 
-class NDCCheckerTest < Test::Unit::TestCase
+
+class CheckerTest < Test::Unit::TestCase
   extend Minitest::Spec::DSL
 
-  describe "Unit testing checker started working" do
-		test "Checking if its valid" do
-      assert 1+1==2
+  describe "Client Base instance initialized wrong" do
+
+    setup do
+      @ndc_client = 1
     end
+  
+    test "Config is wrong" do
+      assert true
+    end
+
   end
+
 end
