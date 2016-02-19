@@ -3,7 +3,6 @@ module API
   module Messages
 
     class ServiceListRQ < API::Messages::Base
-      require "redis"
 
       @response_name = "service_list"
       class << self
@@ -16,8 +15,8 @@ module API
         super (doc)
         begin
           response_id = @doc.xpath('/ServiceListRQ/ShoppingResponseIDs/ResponseID').text
-          od = JSON.parse(get_request(response_id))
-          routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"]).first
+          od = JSON.parse(ShoppingStore.get_request(response_id))
+          routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"]).first
           if routes.present?
             @services = routes.services.load
             @bundles = routes.bundles.load
@@ -30,16 +29,7 @@ module API
         end
       end
 
-      def get_request(response_id)
-        if Redis.current.exists("airshopping-" + response_id)
-          Redis.current.get("airshopping-" + response_id)
-        else
-          @errors << Errors::IvalidNDCMessageProcessing.new("Response ID not found")
-          raise Errors::IvalidNDCMessageProcessing, "Response ID not found."
-        end
-      end
     end
-
   end
 
 end
