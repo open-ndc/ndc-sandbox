@@ -32,8 +32,8 @@ module API
       end
 
       def get_request(response_id)
-        if Redis.current.exists(response_id)
-          Redis.current.get(response_id)
+        if Redis.current.exists("air-shopping-" + response_id)
+          Redis.current.get("air-shopping-" + response_id)
         else
           @errors << Errors::IvalidNDCMessageProcessing.new("Response ID not found")
           raise Errors::IvalidNDCMessageProcessing, "Response ID not found."

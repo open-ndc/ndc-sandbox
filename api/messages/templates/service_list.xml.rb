@@ -7,7 +7,7 @@ ServiceListRS(namespaces) {
   DataLists {
     AnonymousTravelerList{
       AnonymousTraveler(ObjectKey: "SH1"){
-        PTC(Quantity: "1"){ text "ADT" }
+        PTC(Quantity: "#{num_travelers}"){ text "ADT" }
       }
     }
     ServiceBundleList {
