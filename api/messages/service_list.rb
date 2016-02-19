@@ -4,7 +4,6 @@ module API
 
     class ServiceListRQ < API::Messages::Base
       require "redis"
-      require "byebug"
 
       @response_name = "service_list"
       class << self

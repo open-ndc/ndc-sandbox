@@ -4,7 +4,6 @@ module API
 
     class AirShoppingRQ < API::Messages::Base
       require "redis"
-      require "byebug"
 
       @response_name = "air_shopping"
       class << self
