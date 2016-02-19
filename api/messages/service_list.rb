@@ -17,7 +17,7 @@ module API
         begin
           response_id = @doc.xpath('/ServiceListRQ/ShoppingResponseIDs/ResponseID').text
           od = JSON.parse(get_request(response_id))
-          routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"]).first
+          routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"]).first
           if routes.present?
             @services = routes.services.load
             @bundles = routes.bundles.load
@@ -31,8 +31,8 @@ module API
       end
 
       def get_request(response_id)
-        if Redis.current.exists(response_id)
-          Redis.current.get(response_id)
+        if Redis.current.exists("airshopping-" + response_id)
+          Redis.current.get("airshopping-" + response_id)
         else
           @errors << Errors::IvalidNDCMessageProcessing.new("Response ID not found")
           raise Errors::IvalidNDCMessageProcessing, "Response ID not found."

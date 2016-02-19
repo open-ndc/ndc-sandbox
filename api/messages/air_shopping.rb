@@ -31,7 +31,8 @@ module API
 
       def save_request(dep, arr, date_dep)
         hash = {"dep" => dep, "arr" => arr, "date_dep" => date_dep}
-        Redis.current.set(@token, hash.to_json)
+        Redis.current.set("airshopping-" + @token, hash.to_json)
+        Redis.current.expire("airshopping-" + @token, 3000)
       end
 
     end
