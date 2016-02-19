@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.0'
+ruby '2.2.2'
 
 gem 'json'                          # JSON
 gem 'foreman'                       # Process management
@@ -26,7 +26,6 @@ gem 'minitest'
 
 group :development do
   gem 'rb-readline'
-  gem 'byebug'
   gem 'rerun'
   gem 'mina' # Deployment
 end
