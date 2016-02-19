@@ -24,6 +24,9 @@ gem 'grape'
 gem 'test-unit'
 gem 'minitest'
 
+# DB
+gem 'pg'
+
 group :development do
   gem 'rb-readline'
   gem 'rerun'
@@ -31,18 +34,12 @@ group :development do
 end
 
 group :test do
-
   gem 'bogus'
   gem 'database_cleaner'
   gem 'timecop'
 end
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'awesome_print'
   gem 'pry'
-end
-
-group :production do
-  gem 'pg'
 end
