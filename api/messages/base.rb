@@ -5,6 +5,7 @@ module API
     module Errors
       class IvalidNDCParameters < RuntimeError; end
       class IvalidNDCResponseID < RuntimeError; end
+      class RouteNotFound < RuntimeError; end
       class UnknownNDCProcessingError < RuntimeError; end
     end
 
