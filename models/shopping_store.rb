@@ -15,4 +15,17 @@ class ShoppingStore
       raise Errors::IvalidNDCMessageProcessing, "Response ID not found."
     end
   end
+
+  def self.get_dow_hash(dep_date)
+    # this method will return hash like this: { "mon" => true, "tue" => false ... so on }
+    days = [ "mon", "tue", "wed", "thu", "fri", "sat", "sun" ]
+    dow_hash = {}
+    days.each do |day|
+      if date_dep.strftime("%a").downcase == day
+        dow_hash[day] = true
+      else
+        dow_hash[day] = false
+      end
+    end
+  end
 end
