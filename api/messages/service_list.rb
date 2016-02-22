@@ -20,17 +20,16 @@ module API
             @errors << API::Messages::Errors::IvalidNDCResponseID.new("ShoppingResponseID is invalid")
           end
           od = JSON.parse(od_hash)
-					dow = Date.parse(od["date_dep"]).strftime("%a").downcase
-          routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], dow).first
+          routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"]).first
           if routes.present?
             @services = routes.services.load
             @bundles = routes.bundles.load
             @response = build_response
           else
-            @errors << API::Messages::Errors::RouteNotFound.new("Unable to find routes")
+            @errors << API::Messages::Errors::RouteNotFound.new("Unable to find route")
           end
-        rescue
-          @errors << API::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError")
+        rescue => error
+          @errors << API::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError: #{error}")
         end
       end
 
