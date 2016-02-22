@@ -81,9 +81,9 @@ ActiveRecord::Schema.define(version: 20160210084012) do
 
   create_table "routes", force: true do |t|
     t.integer "airline_id"
-    t.string  "origin",         limit: 3
-    t.string  "destination",    limit: 3
-    t.string  "departure_time", limit: 5
+    t.string  "origin",      limit: 3
+    t.string  "destination", limit: 3
+    t.string  "dow",         limit: 3
   end
 
   create_table "routes_services", force: true do |t|
