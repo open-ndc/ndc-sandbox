@@ -1,10 +1,10 @@
 class ShoppingStore
   require "redis"
 
-  def self.save_request(dep, arr, date_dep)
+  def self.save_request(dep, arr, date_dep, token)
     hash = {"dep" => dep, "arr" => arr, "date_dep" => date_dep}
-    Redis.current.set("airshopping-" + @token, hash.to_json)
-    Redis.current.expire("airshopping-" + @token, 3000)
+    Redis.current.set("airshopping-" + token, hash.to_json)
+    Redis.current.expire("airshopping-" + token, 3000)
   end
 
   def self.get_request(response_id)
