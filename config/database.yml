@@ -1,11 +1,27 @@
+# development:
+#   adapter: sqlite3
+#   database: db/development.sqlite3
+#   pool: 5
+#   timeout: 5000
+#
+# test: &test
+#   adapter: sqlite3
+#   database: db/test.sqlite3
+#   pool: 5
+#   timeout: 5000
+
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: ndc_sandbox_dev
   pool: 5
-  timeout: 5000
+  username: rubypostgres
+  password: password1
 
 test: &test
-  adapter: sqlite3
-  database: db/test.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: ndc_sandbox_test
   pool: 5
-  timeout: 5000
+  username: rubypostgres
+  password: password1

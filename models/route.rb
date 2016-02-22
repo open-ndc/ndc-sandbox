@@ -7,6 +7,8 @@ class Route < ActiveRecord::Base
   has_and_belongs_to_many :bundles
 
   def self.fetch_by_ond_and_dates(dep, arr, date_dep)
-    Route.where(origin: dep, departure_time: date_dep, destination: arr)
+    dep_dow = Date.parse(date_dep).strftime("%a").downcase
+    routes = Route.where(origin: dep, destination: arr)
+    routes.where("dow @> '#{dep_dow}=>true'")
   end
 end

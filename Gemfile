@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.0'
+ruby '2.2.2'
 
 gem 'json'                          # JSON
 gem 'foreman'                       # Process management
@@ -24,26 +24,22 @@ gem 'grape'
 gem 'test-unit'
 gem 'minitest'
 
+# DB
+gem 'pg'
+
 group :development do
   gem 'rb-readline'
-  gem 'byebug'
   gem 'rerun'
   gem 'mina' # Deployment
 end
 
 group :test do
-
   gem 'bogus'
   gem 'database_cleaner'
   gem 'timecop'
 end
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'awesome_print'
   gem 'pry'
-end
-
-group :production do
-  gem 'pg'
 end

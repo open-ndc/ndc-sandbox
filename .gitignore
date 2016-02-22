@@ -1,3 +1,4 @@
+.ruby-version
 tmp/
 log/*.log
 db/*.sqlite3
