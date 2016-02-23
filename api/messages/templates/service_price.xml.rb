@@ -7,7 +7,7 @@ ServicePriceRS(namespaces) {
   DataLists {
     AnonymousTravelerList{
       AnonymousTraveler(ObjectKey: "SH1"){
-        PTC(Quantity: "#{num_travelers}"){ text "ADT" }
+        PTC(Quantity: num_travelers){ text "ADT" }
       }
     }
     ServiceList {
@@ -32,7 +32,7 @@ ServicePriceRS(namespaces) {
             }
           }
           Price {
-            Total service.price_total * num_travelers
+            Total Integer(service.price_total) * Integer(num_travelers)
             PassengerReferences service.price_passanger_reference
           }
         }
