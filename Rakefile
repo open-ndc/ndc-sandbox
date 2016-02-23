@@ -4,8 +4,7 @@ require 'bundler/setup'
 $RACK_ENV = ENV['RACK_ENV'] || 'development'
 $APP_ROOT = File.expand_path(File.dirname(__FILE__))
 
-require "rake/testtask"       
-require 'minitest/autorun'
+require "rake/testtask"
 
 Rake::TestTask.new(:test) do |test|
   test.ruby_opts = ["-rubygems"] if defined? Gem
