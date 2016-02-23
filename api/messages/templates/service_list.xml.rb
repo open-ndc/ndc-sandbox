@@ -26,12 +26,12 @@ ServiceListRS(namespaces) {
     }
     ServiceList {
       services.each{ |service|
-        Service(ObjectKey: service.service_id){ 
+        Service(ObjectKey: service.service_id){
           ServiceID(Owner: service.airline.code){ text service.id }
           Name service.name
           Encoding ""
-          Descriptoins {
-            Descriptoin {
+          Descriptions {
+            Description {
               Text service.description_text
               Link service.description_link
               Media {
