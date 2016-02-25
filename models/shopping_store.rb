@@ -8,7 +8,12 @@ class ShoppingStore
   end
 
   def self.get_request(response_id)
-    Redis.current.get("airshopping-" + response_id)
+    JSON.parse(Redis.current.get("airshopping-" + response_id))
+  end
+
+  def self.get_num_travelers(response_id)
+    od = JSON.parse(Redis.current.get("airshopping-" + response_id))
+    od["num_travelers"]
   end
 
   def self.get_dow_hash(dep_date)

@@ -15,19 +15,9 @@ module API
         super (doc)
         begin
           response_id = @doc.xpath('/ServicePriceRQ/ShoppingResponseIDs/ResponseID').text
-          od_hash = ShoppingStore.get_request(response_id)
-          unless od_hash.present?
-            @errors << API::Messages::Errors::IvalidNDCResponseID.new("ShoppingResponseID is invalid")
-          end
-          od = JSON.parse(od_hash)
-          @num_travelers = od["num_travelers"]
-          routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"]).first
-          if routes.present?
-            @services = routes.services.load
-            @response = build_response
-          else
-            @errors << API::Messages::Errors::RouteNotFound.new("Unable to find route")
-          end
+          @services = Service.get_services(response_id)
+          @num_travelers = ShoppingStore.get_num_travelers(response_id)
+          @response = build_response
         rescue => error
           @errors << API::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError: #{error}")
         end

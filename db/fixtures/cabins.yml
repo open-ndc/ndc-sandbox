@@ -1,0 +1,13 @@
+ECO:
+  code: M
+  definition: ECONOMY
+  columns: A, C, D, F
+  rows:
+    first: 1
+    last: 4
+FC:
+  code: F
+  definition: FIRSTCLASS
+  columns: A, C, D, F
+  rows_first: 5
+  rows_last: 9

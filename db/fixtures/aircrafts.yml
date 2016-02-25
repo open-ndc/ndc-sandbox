@@ -1,0 +1,7 @@
+31F:
+  code: E95
+  model: "AirBus"
+  name: "E95 - EMBRAER 195 JET"
+  cabin:
+    - ECO
+    - FC
