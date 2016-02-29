@@ -1,13 +1,16 @@
-ECO:
+ECO-31F:
   code: M
   definition: ECONOMY
   columns: A, C, D, F
-  rows:
-    first: 1
-    last: 4
-FC:
+  rows_first: 1
+  rows_last: 4
+  aircraft:
+    - 31F
+FC-31F:
   code: F
   definition: FIRSTCLASS
   columns: A, C, D, F
   rows_first: 5
   rows_last: 9
+  aircraft:
+    - 31F
