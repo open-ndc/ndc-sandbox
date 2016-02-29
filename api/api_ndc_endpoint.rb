@@ -75,7 +75,7 @@ module API
         end
       rescue Exception => e
         status 500
-        raise Errors::UnexpectedNDCResponseError
+        raise Errors::UnexpectedNDCResponseError.new("UnknownNDCProcessingError: #{e}")
       else
         @message.response
       end

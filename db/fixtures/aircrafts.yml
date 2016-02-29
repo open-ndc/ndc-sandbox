@@ -1,0 +1,8 @@
+31F:
+  code: "31F"
+  model: "AirBus"
+  name: "E95 - EMBRAER 195 JET"
+  flight_segment:
+    - FS-FRA-MAD
+    - FS-SXF-MAD
+    - FS-SXF-FRA
