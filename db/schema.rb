@@ -10,11 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222115032) do
+ActiveRecord::Schema.define(version: 20160285114015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "aircrafts", force: true do |t|
+    t.integer "flight_segment_id"
+    t.string  "model",             limit: 32
+    t.string  "name",              limit: 128
+    t.string  "code",              limit: 6
+  end
 
   create_table "airlines", force: true do |t|
     t.string "code",       limit: 2,  null: false
@@ -41,6 +48,15 @@ ActiveRecord::Schema.define(version: 20160222115032) do
   create_table "bundles_services", force: true do |t|
     t.integer "bundle_id"
     t.integer "service_id"
+  end
+
+  create_table "cabins", force: true do |t|
+    t.integer "aircraft_id"
+    t.string  "code",        limit: 1
+    t.string  "definition",  limit: 32
+    t.string  "columns",     limit: 32
+    t.integer "rows_first"
+    t.integer "rows_last"
   end
 
   create_table "fares", force: true do |t|
@@ -90,6 +106,14 @@ ActiveRecord::Schema.define(version: 20160222115032) do
   create_table "routes_services", force: true do |t|
     t.integer "route_id"
     t.integer "service_id"
+  end
+
+  create_table "seats", force: true do |t|
+    t.integer "cabin_id"
+    t.string  "column",         limit: 1
+    t.string  "row",            limit: 32
+    t.string  "list_key",       limit: 8
+    t.string  "characteristic", limit: 32
   end
 
   create_table "services", force: true do |t|

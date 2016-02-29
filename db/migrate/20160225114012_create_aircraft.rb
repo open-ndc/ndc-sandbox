@@ -1,4 +1,4 @@
-class CreateAirctaft < ActiveRecord::Migration
+class CreateAircraft < ActiveRecord::Migration
 
   def change
     create_table(:aircrafts) do |t|
