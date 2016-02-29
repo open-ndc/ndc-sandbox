@@ -16,6 +16,21 @@ class ShoppingStore
     od["num_travelers"]
   end
 
+  def self.get_flight_segments(token)
+    JSON.parse(Redis.current.get("flight_segment-" + response_id))
+  end
+
+  def self.save_flight_segments(token, offers)
+    flight_segment_keys = []
+    offers.each do |offer|
+      offer.flight_segments.each do |fs|
+        flight_segment_keys.insert(fs.attributes["key"])
+      end
+    end
+    Redis.current.set("flight_segment-" + token, flight_segment_keys.to_json)
+    Redis.current.expire("flight_segment-" + token, 3000)
+  end
+
   def self.get_dow_hash(dep_date)
     # this method will return hash like this: { "mon" => true, "tue" => false ... so on }
     days = [ "mon", "tue", "wed", "thu", "fri", "sat", "sun" ]
