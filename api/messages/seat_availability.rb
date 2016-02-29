@@ -6,19 +6,29 @@ module API
 
       @response_name = "seat_availability"
       class << self
-        attr_reader :response_name, :cabin, :aircraft
+        attr_reader :response_name
       end
+
+      attr_reader :cabins, :flight_segment_list, :seats
 
       def initialize(doc)
         super (doc)
-        begin
-          fsl = @doc.xpath('/SeatAvailabilityRQ/DataList/FlightSegmentList').first
-          aircraft_code = fsl.xpath('Equipment/AircraftCode').text
-          class_of_service = fsl.('ClassOfService/Code').text
-          @aircraft = Aircraft.where(code: aircraft_code)
-          @cabin = aircrafts.cabins.where(code: class_of_service)
 
-          @services = routes.services.load
+        begin
+          cabins = []
+          seats = []
+          @doc.xpath('/SeatAvailabilityRQ/DataList/FlightSegmentList/FlightSegment').each do |fs|
+            aircraft_code = fs.xpath('./Equipment/AircraftCode').text
+            service_class_code = fs.xpath('./ClassOfService/Code').text
+            segment_key = fs.attribute("SegmentKey").text
+            cabin = Cabin.fetch_cabins(aircraft_code, service_class_code, segment_key)
+            seat = Seat.where(cabin_id: cabin.id).first
+            seats.push(seat)
+            cabins.push(cabin)
+          end
+
+          @cabins = cabins
+          @seats = seats
           @response = build_response
         rescue => error
           @errors << API::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError: #{error}")

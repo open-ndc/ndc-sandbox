@@ -4,37 +4,42 @@ SeatAvailabilityRS(namespaces) {
     MessageVersion version
   }
   Success {}
-  flights.each{ |flight|
+  cabins.each{ |cabin|
     Flights {
-      FlightSegmentReferences 'SEG1'
+      FlightSegmentReferences cabin.segment_key
       Cabin {
-        Code M
-      }
-      Definition 'ECONOMY'
-      SeatDisplay {
-        columns.each{ |col|
-          Columns col
-        }
-        Rows{
-          First 3
-          Last 31
+        Code "M"
+        Definition cabin.definition
+        SeatDisplay {
+          cabin.columns.split(",").each{ |col|
+            Columns col
+          }
+          Rows{
+            First cabin.rows_first
+            Last cabin.rows_last
+          }
         }
       }
     }
   }
-  DataLists {
-    FlightSegmentList {
-      flight_segment_list.each { |fs|
-        FlightSegment(SegmentKey: fs.object_key){
-          Departure{
-            AirportCode fs.airport_code
-            Date fs.date
-            Time fs.time
+  #DataLists {
+    #FlightSegmentList flight_segment_list
+  #}
+  SeatList{
+    seats.each{|seat|
+      Seats(refs: "SV1 SV2 SV3 SV4", ListKey: seat.list_key){
+        Location {
+          Column seat.column
+          Row{
+            Number seat.row
           }
-          Arrival {
-            AirportCode fs.arrival.airport_code
+          Characteristics{
+            seat.characteristic.split(",").each{ |charac|
+              Characteristic{
+                Code charac
+              }
+            }
           }
-
         }
       }
     }
