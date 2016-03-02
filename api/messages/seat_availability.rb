@@ -20,22 +20,24 @@ module API
           services = []
 
           @doc.xpath('/SeatAvailabilityRQ/DataList/FlightSegmentList/FlightSegment').each do |fs|
-            aircraft_code = fs.xpath('./Equipment/AircraftCode').text
-            service_class_code = fs.xpath('./ClassOfService/Code').text
             segment_key = fs.attribute("SegmentKey").text
-
-            cabin = Cabin.fetch_cabins(aircraft_code, service_class_code, segment_key)
-            cabins.push(cabin)
-
-            seat = Seat.where(cabin_id: cabin.id).first
-            seats.push(seat)
-
             dep = fs.xpath('./Departure/AirportCode').text
-            arr = fs.xpath('./Arrival/AirportCode').text
+            dep_time = fs.xpath('./Departure/Time').text
             dep_date = fs.xpath('./Departure/Date').text
-            service = Service.fetch_by_od(dep, arr, dep_date, segment_key)
-            service.each do |s| 
-              services.push(s) 
+            arr = fs.xpath('./Arrival/AirportCode').text
+            arr_time = fs.xpath('./Arrival/Time').text
+
+            flight_segment = FlightSegment.where(departure_airport_code: dep, departure_time: dep_time, arrival_airport_code: arr, arrival_time: arr_time).first
+
+            Cabin.fetch_cabins(flight_segment.id, segment_key).each do |cabin|
+              Seat.where(cabin_id: cabin.id).each do |seat|
+                seats.push(seat)
+              end
+              cabins.push(cabin)
+            end
+
+            Service.fetch_by_od(dep, arr, dep_date, segment_key).each do |service|
+              services.push(service)
             end
           end
 

@@ -3,12 +3,10 @@ C3SEG1:
   column: A
   row: 3
   characteristic: W, 1A, LS, 1
-  cabin:
-    - ECO-31F
+  cabin: ECO-31F
 A3SEG1:
   list_key: A3SEG1
   column: A
   row: 4
   characteristic: W, 1A, LS, 1
-  cabin:
-    - ECO-31F
+  cabin: ECO-31F
