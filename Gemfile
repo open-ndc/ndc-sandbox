@@ -13,6 +13,7 @@ gem 'rake'
 # Formatting
 gem 'nokogiri'
 gem 'chronic'
+gem 'htmlentities', '~> 4.3', '>= 4.3.4'
 
 # DB
 gem 'activerecord', '~> 4.0.0'      # Database

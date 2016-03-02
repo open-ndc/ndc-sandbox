@@ -4,13 +4,11 @@ ECO-31F:
   columns: A, C, D, F
   rows_first: 1
   rows_last: 4
-  aircraft:
-    - 31F
+  flight_segment: FS-SXF-MAD
 FC-31F:
   code: F
   definition: FIRSTCLASS
   columns: A, C, D, F
   rows_first: 5
   rows_last: 9
-  aircraft:
-    - 31F
+  flight_segment: FS-SXF-MAD
