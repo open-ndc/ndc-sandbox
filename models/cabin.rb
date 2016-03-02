@@ -5,7 +5,7 @@ class Cabin < ActiveRecord::Base
 
   attr_accessor :segment_key
 
-  def self.fetch_cabins(flight_segment_id, segment_key)
+  def self.fetch_by_flight_segment(flight_segment_id, segment_key)
     cabins = Cabin.where(flight_segment_id: flight_segment_id).to_a
     cabins.map {|c| c.segment_key = segment_key}
     cabins
