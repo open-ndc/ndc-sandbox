@@ -3,6 +3,7 @@ module API
   module Messages
 
     class SeatAvailabilityRQ < API::Messages::Base
+      require 'htmlentities'
 
       @response_name = "seat_availability"
       class << self
@@ -20,27 +21,20 @@ module API
           services = []
 
           @doc.xpath('/SeatAvailabilityRQ/DataList/FlightSegmentList/FlightSegment').each do |fs|
-            segment_key = fs.attribute("SegmentKey").text
             dep = fs.xpath('./Departure/AirportCode').text
             dep_time = fs.xpath('./Departure/Time').text
             dep_date = fs.xpath('./Departure/Date').text
             arr = fs.xpath('./Arrival/AirportCode').text
             arr_time = fs.xpath('./Arrival/Time').text
+            segment_key = fs.attribute("SegmentKey").text
 
             flight_segment = FlightSegment.where(departure_airport_code: dep, departure_time: dep_time, arrival_airport_code: arr, arrival_time: arr_time).first
-
-            Cabin.fetch_cabins(flight_segment.id, segment_key).each do |cabin|
-              Seat.where(cabin_id: cabin.id).each do |seat|
-                seats.push(seat)
-              end
-              cabins.push(cabin)
-            end
-
-            Service.fetch_by_od(dep, arr, dep_date, segment_key).each do |service|
-              services.push(service)
-            end
+            cabins = cabins + Cabin.fetch_by_flight_segment(flight_segment.id, segment_key)
+            seats = seats + Seat.fetch_by_flight_segment(flight_segment.id)
+            services = services + Service.fetch_by_od(dep, arr, dep_date, segment_key)
           end
 
+          @flight_segment_list = HTMLEntities.new.decode(@doc.xpath('/SeatAvailabilityRQ/DataList/FlightSegmentList'))
           @cabins = cabins
           @seats = seats
           @services = services

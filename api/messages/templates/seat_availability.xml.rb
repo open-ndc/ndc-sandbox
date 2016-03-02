@@ -22,9 +22,9 @@ SeatAvailabilityRS(namespaces) {
       }
     }
   }
-  #DataLists {
-    #FlightSegmentList flight_segment_list
-  #}
+  DataLists {
+    FlightSegmentList flight_segment_list
+  }
   ServiceList {
     services.each{ |service|
       Service(ObjectKey: service.service_id){
