@@ -19,6 +19,7 @@ module API
           @cabins = []
           @seats = []
           @services = []
+          @flight_segment_list = []
 
           @doc.xpath('/SeatAvailabilityRQ/DataList/FlightSegmentList/FlightSegment').each do |fs|
             dep = fs.xpath('./Departure/AirportCode').text
@@ -28,13 +29,13 @@ module API
             arr_time = fs.xpath('./Arrival/Time').text
             segment_key = fs.attribute("SegmentKey").text
 
-            flight_segment = FlightSegment.where(departure_airport_code: dep, departure_time: dep_time, arrival_airport_code: arr, arrival_time: arr_time).first
+            flight_segment = FlightSegment.fetch_by_od(dep, dep_time, arr, arr_time, segment_key)
             @cabins = @cabins + Cabin.fetch_by_flight_segment(flight_segment.id, segment_key)
             @seats = @seats + Seat.fetch_by_flight_segment(flight_segment.id)
             @services = @services + Service.fetch_by_od(dep, arr, dep_date, segment_key)
+            @flight_segment_list.push(flight_segment)
           end
 
-          @flight_segment_list = HTMLEntities.new.decode(@doc.xpath('/SeatAvailabilityRQ/DataList/FlightSegmentList'))
           @response = build_response
         rescue => error
           @errors << API::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError: #{error}")
