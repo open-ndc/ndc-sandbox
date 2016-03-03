@@ -1,0 +1,15 @@
+FRA:
+  code: FRA
+  name: Frankfurt International
+SXF:
+  code: SXF
+  name: Berlin Schönefeld
+MAD:
+  code: MAD
+  name: Madrid Adolfo Suárez International Airport
+TXL:
+  code: TXL
+  name: Berlin Tegel
+LHR:
+  code: LHR
+  name: London Heathrow International Airport

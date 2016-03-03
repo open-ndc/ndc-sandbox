@@ -1,0 +1,14 @@
+ECO-31F:
+  code: M
+  definition: ECONOMY
+  columns: A, C, D, F
+  rows_first: 1
+  rows_last: 4
+  flight_segment: FS-SXF-MAD
+FC-31F:
+  code: F
+  definition: FIRSTCLASS
+  columns: A, C, D, F
+  rows_first: 5
+  rows_last: 9
+  flight_segment: FS-SXF-MAD

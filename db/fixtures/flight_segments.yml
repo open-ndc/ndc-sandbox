@@ -13,6 +13,7 @@ FS-SXF-FRA:
   distance_units: "Kms."
   marketing_carrier: "FA"
   operating_carrier: "FA"
+  aircraft: "31F"
 FS-FRA-MAD:
   airline: "FA"
   number: "0002"
@@ -28,6 +29,7 @@ FS-FRA-MAD:
   distance_units: "Kms."
   marketing_carrier: "FA"
   operating_carrier: "FA"
+  aircraft: "31F"
 FS-SXF-MAD:
   airline: FA
   number: "0003"
@@ -43,6 +45,7 @@ FS-SXF-MAD:
   distance_units: "Kms."
   marketing_carrier: "FA"
   operating_carrier: "FA"
+  aircraft: "31F"
 FS-TXL-LHR:
   airline: FA
   number: "0004"
@@ -58,3 +61,4 @@ FS-TXL-LHR:
   distance_units: "Kms."
   marketing_carrier: "FA"
   operating_carrier: "FA"
+  aircraft: "31F"
