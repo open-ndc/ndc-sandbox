@@ -1,14 +1,28 @@
-ECO-31F:
+ECO-31F-SXF-FRA:
   code: M
   definition: ECONOMY
   columns: A, C, D, F
   rows_first: 1
   rows_last: 4
-  flight_segment: FS-SXF-MAD
-FC-31F:
+  flight_segment: FS-SXF-FRA
+FC-31F-SXF-FRA:
   code: F
   definition: FIRSTCLASS
   columns: A, C, D, F
   rows_first: 5
   rows_last: 9
-  flight_segment: FS-SXF-MAD
+  flight_segment: FS-SXF-FRA
+ECO-31F-FRA-MAD:
+  code: M
+  definition: ECONOMY
+  columns: A, C, D, F
+  rows_first: 1
+  rows_last: 4
+  flight_segment: FS-FRA-MAD
+FC-31F-FRA-MAD:
+  code: F
+  definition: FIRSTCLASS
+  columns: A, C, D, F
+  rows_first: 5
+  rows_last: 9
+  flight_segment: FS-FRA-MAD
