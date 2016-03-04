@@ -1,0 +1,15 @@
+31F:
+  code: 31F
+  manufacturer: Airbus
+  model: A310F
+  wake: M
+31X:
+  code: 31X
+  manufacturer: Airbus
+  model: A310-200F
+  wake: M
+31Y:
+  code: 31Y
+  manufacturer: Airbus
+  model: A310-300F
+  wake: M

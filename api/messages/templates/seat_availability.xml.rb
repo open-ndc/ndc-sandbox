@@ -23,7 +23,39 @@ SeatAvailabilityRS(namespaces) {
     }
   }
   DataLists {
-    FlightSegmentList flight_segment_list
+    FlightSegmentList {
+      flight_segment_list.each{ |fs|
+        FlightSegment(SegmentKey: fs.segment_key){
+          Departure{
+            AirportCode fs.departure_airport_code
+            Date fs.departure_date
+            Time fs.departure_time
+          }
+          Arrival{
+            AirportCode fs.arrival_airport_code
+            Date fs.arrival_time
+            Time fs.arrival_time
+          }
+          MarketingCarrier{
+            AirlineID fs.marketing_carrier
+            Name fs.airline.name
+            FlightNumber fs.key
+          }
+          OperatingCarrier{
+            AirlineID fs.operating_carrier
+            Name fs.airline.name
+            FlightNumber fs.key
+          }
+          Equipment{
+            AircraftCode fs.aircraft
+            Name fs.aircraft_name
+          }
+          ClassOfService{
+            Code "M"
+          }
+        }
+      }
+    }
   }
   ServiceList {
     services.each{ |service|
