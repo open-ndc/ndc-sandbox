@@ -40,5 +40,5 @@ Any kind of software contribution, bug-report, and feedback is welcome and great
 ## Credits
 
 - Codebase started from [grape-skeleton](https://github.com/xurde/grape-skeleton) by [xurde](https://github.com/xurde)
-- [flyiin](http://flyiin.com) who contributed actively to this project
+- Thanks to [flyiin](http://flyiin.com) who contributed actively to this project
 
