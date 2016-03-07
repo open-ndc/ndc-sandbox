@@ -14,7 +14,7 @@ class Service < ActiveRecord::Base
   def self.fetch_by_od(dep, arr, date_dep, segment_key)
     route = Route.fetch_by_ond_and_dates(dep, arr, date_dep).first
     services = route.services.to_a
-    services.map {|s| s.segment_key = segment_key}
+    services.map {|s| s.segment_key = segment_key} unless segment_key.to_s.empty?
     services
   end
 end

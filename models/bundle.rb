@@ -8,4 +8,9 @@ class Bundle < ActiveRecord::Base
     routes = Route.fetch_by_ond_and_dates(od["dep"], od["arr"], od["date_dep"]).first
     routes.bundles.load
   end
+
+  def self.fetch_by_od(dep, arr, date_dep)
+    routes = Route.fetch_by_ond_and_dates(dep, arr, date_dep).first
+    routes.bundles.to_a
+  end
 end

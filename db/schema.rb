@@ -16,41 +16,43 @@ ActiveRecord::Schema.define(version: 20160285114015) do
   enable_extension "plpgsql"
   enable_extension "hstore"
 
-  create_table "aircrafts", force: true do |t|
+  create_table "aircrafts", force: :cascade do |t|
     t.integer "flight_segment_id"
     t.string  "model",             limit: 32
     t.string  "name",              limit: 128
     t.string  "code",              limit: 6
   end
 
-  create_table "airlines", force: true do |t|
+  create_table "airlines", force: :cascade do |t|
     t.string "code",       limit: 2,  null: false
     t.string "short_name", limit: 20, null: false
     t.string "name",       limit: 50
   end
 
-  create_table "bundles", force: true do |t|
+  add_index "airlines", ["code"], name: "index_airlines_on_code", using: :btree
+
+  create_table "bundles", force: :cascade do |t|
     t.string  "name"
     t.string  "bundle_id"
     t.integer "maximum_quantity"
   end
 
-  create_table "bundles_fares", force: true do |t|
+  create_table "bundles_fares", force: :cascade do |t|
     t.integer "fare_id"
     t.integer "bundle_id"
   end
 
-  create_table "bundles_routes", force: true do |t|
+  create_table "bundles_routes", force: :cascade do |t|
     t.integer "route_id"
     t.integer "bundle_id"
   end
 
-  create_table "bundles_services", force: true do |t|
+  create_table "bundles_services", force: :cascade do |t|
     t.integer "bundle_id"
     t.integer "service_id"
   end
 
-  create_table "cabins", force: true do |t|
+  create_table "cabins", force: :cascade do |t|
     t.integer "flight_segment_id"
     t.string  "code",              limit: 1
     t.string  "definition",        limit: 32
@@ -59,7 +61,7 @@ ActiveRecord::Schema.define(version: 20160285114015) do
     t.integer "rows_last"
   end
 
-  create_table "fares", force: true do |t|
+  create_table "fares", force: :cascade do |t|
     t.integer "route_id"
     t.string  "service_class",       limit: 1
     t.string  "currency",            limit: 3
@@ -69,7 +71,7 @@ ActiveRecord::Schema.define(version: 20160285114015) do
     t.float   "taxes_applicable"
   end
 
-  create_table "flight_segments", force: true do |t|
+  create_table "flight_segments", force: :cascade do |t|
     t.integer "airline_id"
     t.string  "number",                 limit: 4
     t.string  "key",                    limit: 6
@@ -91,24 +93,28 @@ ActiveRecord::Schema.define(version: 20160285114015) do
     t.integer "arrival_mask",                     default: 127
   end
 
-  create_table "flight_segments_routes", force: true do |t|
+  create_table "flight_segments_routes", force: :cascade do |t|
     t.integer "flight_segment_id"
     t.integer "route_id"
   end
 
-  create_table "routes", force: true do |t|
+  create_table "routes", force: :cascade do |t|
     t.integer "airline_id"
     t.string  "origin",      limit: 3
     t.string  "destination", limit: 3
     t.hstore  "dow"
   end
 
-  create_table "routes_services", force: true do |t|
+  add_index "routes", ["destination"], name: "index_routes_on_destination", using: :btree
+  add_index "routes", ["dow"], name: "index_routes_on_dow", using: :btree
+  add_index "routes", ["origin"], name: "index_routes_on_origin", using: :btree
+
+  create_table "routes_services", force: :cascade do |t|
     t.integer "route_id"
     t.integer "service_id"
   end
 
-  create_table "seats", force: true do |t|
+  create_table "seats", force: :cascade do |t|
     t.integer "cabin_id"
     t.string  "column",         limit: 1
     t.string  "row",            limit: 32
@@ -116,7 +122,7 @@ ActiveRecord::Schema.define(version: 20160285114015) do
     t.string  "characteristic", limit: 32
   end
 
-  create_table "services", force: true do |t|
+  create_table "services", force: :cascade do |t|
     t.integer "airline_id"
     t.string  "name"
     t.string  "service_id"
