@@ -22,8 +22,8 @@ module API
 
     format :xml
     content_type :xml, CONTENT_TYPE
-    version 'v0', using: :path
-    
+    # version 'v0', using: :path
+
 
     rescue_from Grape::Exceptions::Validation do |e|
       Rack::Response.new({ message: e.message }.to_json, 412, RACK_CONTENT_TYPE_HEADER).finish
