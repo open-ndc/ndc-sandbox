@@ -1,0 +1,31 @@
+SV1:
+  airline: IA
+  service_id: "1022"
+  name: "Advance Seat selection"
+  owner: "9A"
+  description_text: "A convenient option that lets you reserve your preferred seat"
+  description_link: "http://athena.jrtechnologies.com/ServiceImage/preferred_seat.jpg"
+  description_object_id: "preferred_seat.jpg"
+  settlement_definition: "Internal Airline Document"
+  price_total: 0
+  price_passanger_reference: "SH1"
+  routes:
+    - RT-SFX-MAD
+  bundles:
+    - BD1
+SV2:
+  airline: IA
+  service_id: "1023"
+  name: "Inflight entertainment"
+  owner: "9A"
+  description_text: "The latest blockbusters, classics from film history, music and games"
+  description_link: "http://athena.jrtechnologies.com/ServiceImage/comfort-eco-int-1_title.jpg"
+  description_object_id: "comfort-eco-int-1_title.jpg"
+  settlement_code: "AD"
+  settlement_definition: "Internal Airline Document"
+  price_total: 0
+  price_passanger_reference: "SH1"
+  routes:
+    - RT-SFX-MAD
+  bundles:
+    - BD1
