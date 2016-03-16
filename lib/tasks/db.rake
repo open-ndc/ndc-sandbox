@@ -10,6 +10,8 @@ fixtures_dir = File.expand_path("#{$APP_ROOT}/db/fixtures", __FILE__)
 
 include ActiveRecord::Tasks
 
+class TaskParamsMissingError < StandardError; end
+
 desc "DB related operations"
 namespace :db do
 
@@ -109,12 +111,16 @@ namespace :db do
   end
 
   namespace :fixtures do
-    desc "Loads fixtures into the current environment's database. Load specific fixtures using FIXTURES=x,y. Load from subdirectory in test/fixtures using FIXTURES_DIR=z. Specify an alternative path (eg. spec/fixtures) using FIXTURES_PATH=spec/fixtures."
-    task :load => [:environment, :configuration, :configure_connection, :load_models] do
+    desc "Loads a set of fixtures into the current environment's database (Syntax: db:fixtures:load[SET]). Load specific fixtures using FIXTURES=x,y."
+    task :load, [:set] => [:environment, :configuration, :configure_connection, :load_models] do |t, args|
+
+      fixtures_set = args[:set] || ENV['FIXTURES_SET']
+      raise TaskParamsMissingError "Missing fixtures set param " if fixtures_set.blank?
+
       fixtures_dir = if ENV['FIXTURES_DIR']
                        File.join base_dir, ENV['FIXTURES_DIR']
                      else
-                       fixtures_dir
+                       "#{fixtures_dir}/#{fixtures_set}/"
                      end
 
       fixture_files = if ENV['FIXTURES']
@@ -123,9 +129,17 @@ namespace :db do
                         # The use of String#[] here is to support namespaced fixtures
                         Dir["#{fixtures_dir}/**/*.yml"].map {|f| f[(fixtures_dir.size + 1)..-5] }
                       end
-      puts "Invoking create_fixtures for models #{fixture_files}"
-      ActiveRecord::FixtureSet.create_fixtures(fixtures_dir, fixture_files)
-      puts "Fixtures loaded successfully!"
+
+
+      puts "Loading #{fixture_files.size} fixture files for set: '#{fixtures_set}'"
+
+      if !fixture_files.empty?
+        puts "Invoking create_fixtures for models #{fixture_files}"
+        ActiveRecord::FixtureSet.create_fixtures(fixtures_dir, fixture_files)
+        puts "Fixtures loaded successfully!"
+      else
+        puts "No fixtures found for that nameset!"
+      end
     end
 
     desc "Search for a fixture given a LABEL or ID. Specify an alternative path (eg. spec/fixtures) using FIXTURES_PATH=spec/fixtures."
