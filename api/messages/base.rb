@@ -19,7 +19,7 @@ module API
         @errors = []
         @name = 'OpenNDC Sandbox'
         @version = '15.2'
-        @owner = 'FA'
+        @owner = $GLOBAL_OWNER
         @timestamp = Time.now.utc.iso8601
         @method = self.class.to_s.split('::').last
         @token = Digest::SHA1.hexdigest @timestamp
