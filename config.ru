@@ -1,6 +1,6 @@
 $RACK_ENV = ENV['RACK_ENV'] || 'development'
 $APP_ROOT = File.expand_path(File.dirname(__FILE__))
-$REQUEST_DELAY = ENV['REQUEST_DELAY']
+$REQUEST_DELAY = ENV['REQUEST_DELAY'].try(:to_i)
 
 require 'rubygems'
 require 'bundler'
