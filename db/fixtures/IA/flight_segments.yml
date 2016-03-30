@@ -1,7 +1,7 @@
 FS-SXF-FRA:
   airline: IA
   number: "0001"
-  key: "FA0001"
+  key: "IA0001"
   departure_airport_code: "SXF"
   departure_airport_name: "Berlin Schönefeld"
   departure_time: "12:00"
@@ -17,7 +17,7 @@ FS-SXF-FRA:
 FS-FRA-MAD:
   airline: "IA"
   number: "0002"
-  key: "FA0002"
+  key: "IA0002"
   departure_airport_code: "FRA"
   departure_airport_name: "Frankfurt International Airport"
   departure_time: "14:00"
@@ -33,7 +33,7 @@ FS-FRA-MAD:
 FS-SXF-MAD:
   airline: IA
   number: "0003"
-  key: "FA0003"
+  key: "IA0003"
   departure_airport_code: "SXF"
   departure_airport_name: "Berlin Schönefeld"
   departure_time: "20:30"
@@ -49,7 +49,7 @@ FS-SXF-MAD:
 FS-TXL-LHR:
   airline: IA
   number: "0004"
-  key: "FA0004"
+  key: "IA0004"
   departure_airport_code: "TXL"
   departure_airport_name: "Berlin Tegel"
   departure_time: "14:00"
