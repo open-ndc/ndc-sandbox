@@ -10,8 +10,6 @@ fixtures_dir = File.expand_path("#{$APP_ROOT}/db/fixtures", __FILE__)
 
 include ActiveRecord::Tasks
 
-class TaskParamsMissingError < StandardError; end
-
 desc "DB related operations"
 namespace :db do
 
@@ -114,8 +112,8 @@ namespace :db do
     desc "Loads a set of fixtures into the current environment's database (Syntax: db:fixtures:load[SET]). Load specific fixtures using FIXTURES=x,y."
     task :load, [:set] => [:environment, :configuration, :configure_connection, :load_models] do |t, args|
 
-      fixtures_set = args[:set] || ENV['FIXTURES_SET']
-      raise TaskParamsMissingError "Missing fixtures set param " if fixtures_set.blank?
+      fixtures_set = args[:set] || ENV['GLOBAL_OWNER']
+      raise "Missing fixtures set param " if fixtures_set.blank?
 
       fixtures_dir = if ENV['FIXTURES_DIR']
                        File.join base_dir, ENV['FIXTURES_DIR']

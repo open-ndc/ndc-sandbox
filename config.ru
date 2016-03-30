@@ -1,5 +1,6 @@
 $RACK_ENV = ENV['RACK_ENV'] || 'development'
 $APP_ROOT = File.expand_path(File.dirname(__FILE__))
+$GLOBAL_OWNER = ENV['GLOBAL_OWNER'] || '--'
 $REQUEST_DELAY = ENV['REQUEST_DELAY'].to_i if ENV['REQUEST_DELAY']
 
 require 'rubygems'
