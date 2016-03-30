@@ -77,6 +77,10 @@ module API
         status 500
         raise Errors::UnexpectedNDCResponseError
       else
+        if $REQUEST_DELAY
+          puts "Adding #{$REQUEST_DELAY} seconds of delay..."
+          sleep($REQUEST_DELAY)
+        end
         @message.response
       end
     end
