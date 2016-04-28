@@ -1,0 +1,64 @@
+FS-SXF-FRA:
+  airline: WA
+  number: "0001"
+  key: "WA0001"
+  departure_airport_code: "SXF"
+  departure_airport_name: "Berlin Schönefeld"
+  departure_time: "12:00"
+  arrival_airport_code: "FRA"
+  arrival_airport_name: "Frankfurt International Airport"
+  arrival_time: "13:10"
+  duration: 70
+  distance: 750
+  distance_units: "Kms."
+  marketing_carrier: "WA"
+  operating_carrier: "WA"
+  aircraft: "31F"
+FS-FRA-MAD:
+  airline: "WA"
+  number: "0002"
+  key: "WA0002"
+  departure_airport_code: "FRA"
+  departure_airport_name: "Frankfurt International Airport"
+  departure_time: "14:00"
+  arrival_airport_code: "MAD"
+  arrival_airport_name: "Madrid Adolfo Suárez International Airport"
+  arrival_time: "16:35"
+  duration: 155
+  distance: 1455
+  distance_units: "Kms."
+  marketing_carrier: "WA"
+  operating_carrier: "WA"
+  aircraft: "31F"
+FS-SXF-MAD:
+  airline: WA
+  number: "0003"
+  key: "WA0003"
+  departure_airport_code: "SXF"
+  departure_airport_name: "Berlin Schönefeld"
+  departure_time: "20:30"
+  arrival_airport_code: "MAD"
+  arrival_airport_name: "Madrid Adolfo Suárez International Airport"
+  arrival_time: "23:10"
+  duration: 225
+  distance: 1900
+  distance_units: "Kms."
+  marketing_carrier: "WA"
+  operating_carrier: "WA"
+  aircraft: "31F"
+FS-TXL-LHR:
+  airline: WA
+  number: "0004"
+  key: "WA0004"
+  departure_airport_code: "TXL"
+  departure_airport_name: "Berlin Tegel"
+  departure_time: "14:00"
+  arrival_airport_code: "LHR"
+  arrival_airport_name: "London Heathrow International Airport"
+  arrival_time: "15:15"
+  duration: 75
+  distance: 1100
+  distance_units: "Kms."
+  marketing_carrier: "WA"
+  operating_carrier: "WA"
+  aircraft: "31F"

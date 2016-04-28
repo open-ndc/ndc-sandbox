@@ -1,0 +1,53 @@
+RT-SXF-MAD:
+  airline: MF
+  origin: SXF
+  destination: MAD
+  services:
+    - SV1
+  flight_segments:
+    - FS-SXF-FRA
+    - FS-FRA-MAD
+  bundles:
+    - BD1
+  dow: 
+    mon: true
+    tue: true
+    wed: true
+    thu: true
+    fri: true
+    sat: true
+    sun: true
+RT-SFX-MAD-2:
+  airline: MF
+  origin: SXF
+  destination: MAD
+  flight_segments:
+    - FS-SFX-MAD
+  services:
+    - SV1
+    - SV2
+  bundles:
+    - BD2
+  dow: 
+    mon: true
+    tue: true
+    wed: true
+    thu: true
+    fri: true
+    sat: true
+    sun: true
+RT-TXL-LHR:
+  airline: MF
+  origin: TGL
+  destination: LHR
+  dow: mon
+  flight_segments:
+    - FS-TXL-LHR
+  dow: 
+    mon: true
+    tue: true
+    wed: true
+    thu: true
+    fri: true
+    sat: true
+    sun: true
