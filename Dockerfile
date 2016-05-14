@@ -17,7 +17,9 @@ COPY docker_redis.rb config/initializers/redis.rb
 
 ONBUILD RUN rake db:migrate
 
-ONBUILD RUN rake db:fixtures:load[FA]
+ENV AIRLINE FA
+
+ONBUILD RUN rake db:fixtures:load[$AIRLINE]
 
 
 EXPOSE 9292
