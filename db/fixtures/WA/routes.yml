@@ -9,7 +9,7 @@ RT-SXF-MAD:
     - FS-FRA-MAD
   bundles:
     - BD1
-  dow: 
+  dow:
     mon: true
     tue: true
     wed: true
@@ -28,7 +28,7 @@ RT-SFX-MAD-2:
     - SV2
   bundles:
     - BD2
-  dow: 
+  dow:
     mon: true
     tue: true
     wed: true
@@ -38,12 +38,25 @@ RT-SFX-MAD-2:
     sun: true
 RT-TXL-LHR:
   airline: WA
-  origin: TGL
+  origin: TXL
   destination: LHR
-  dow: mon
   flight_segments:
     - FS-TXL-LHR
-  dow: 
+  dow:
+    mon: true
+    tue: true
+    wed: true
+    thu: true
+    fri: true
+    sat: true
+    sun: true
+RT-LHR-JFK:
+  airline: WA
+  origin: LHR
+  destination: JFK
+  flight_segments:
+    - FS-LHR-JFK
+  dow:
     mon: true
     tue: true
     wed: true

@@ -62,3 +62,19 @@ FS-TXL-LHR:
   marketing_carrier: "WA"
   operating_carrier: "WA"
   aircraft: "31F"
+FS-LHR-JFK:
+  airline: WA
+  number: "0005"
+  key: "WA0005"
+  departure_airport_code: "LHR"
+  departure_airport_name: "London Heathrow International Airport"
+  departure_time: "01:00"
+  arrival_airport_code: "JFK"
+  arrival_airport_name: "John Fitzgerald Kennedy International Airport"
+  arrival_time: "21:15"
+  duration: 3600
+  distance: 5100
+  distance_units: "Kms."
+  marketing_carrier: "WA"
+  operating_carrier: "WA"
+  aircraft: "380"
