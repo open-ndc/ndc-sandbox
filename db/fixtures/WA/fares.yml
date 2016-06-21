@@ -38,3 +38,27 @@ TXL-LHR-J:
   range_days_increase: 30
   rate_increase: 1.2
   taxes_applicable: 0.2
+TXL-LHR-J:
+  route: RT-TXL-LHR
+  service_class: J
+  currency: EUR
+  base_price: 180
+  range_days_increase: 30
+  rate_increase: 1.2
+  taxes_applicable: 0.2
+LHR-JFK-Y:
+  route: RT-LHR-JFK
+  service_class: Y
+  currency: EUR
+  base_price: 800
+  range_days_increase: 30
+  rate_increase: 1.2
+  taxes_applicable: 0.2
+LHR-JFK-J:
+  route: RT-LHR-JFK
+  service_class: J
+  currency: EUR
+  base_price: 2150
+  range_days_increase: 30
+  rate_increase: 1.5
+  taxes_applicable: 0.2
