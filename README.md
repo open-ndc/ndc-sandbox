@@ -29,7 +29,7 @@ This project is currently under a pre-development debate on how to approach it.
 1. Git clone this repo.
 2. Install dependencies with ```bundle install```
 3. Run ```rackup``` to start a local server (by default runs on port 9292)
-4. Test the API by validating a NDC payload, here is a curl example: ```curl -X POST "http://localhost:9292/api/v0/ndc" -H "Content-Type: application/xml" --data @AirShopping.xml```
+4. Test the API by validating a NDC payload, here is a curl example: ```curl -X POST -H "Content-Type: application/xml" --data @AirShopping.xml "http://ndc-sandbox.dev/api/ndc/"```
 
 
 ## Contribute
