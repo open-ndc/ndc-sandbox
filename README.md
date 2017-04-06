@@ -41,5 +41,5 @@ Any kind of software contribution, bug-report, and feedback is welcome and great
 
 - Codebase started from [grape-skeleton](https://github.com/xurde/grape-skeleton) by [xurde](https://github.com/xurde)
 - Thanks to [AirGateway](http://airgateway.net) who contributed very actively to this project
-- Thanks to *flyiin* who contributed actively to this project
+- Thanks to *flyiin* who contributed to this project
 
