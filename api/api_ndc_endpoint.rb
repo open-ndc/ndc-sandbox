@@ -75,6 +75,7 @@ module API
         end
       rescue Exception => e
         status 500
+        puts "Exception: #{e}"
         raise Errors::UnexpectedNDCResponseError
       else
         if $REQUEST_DELAY
