@@ -4,17 +4,17 @@ require 'grape'
 require 'nokogiri'
 
 # Load API Modules
-require_relative 'api_helpers'
-require_relative 'api_ndc_endpoint'
+require_relative 'sandbox_api_helpers'
+require_relative 'sandbox_ndc_endpoint'
 
 
 # Load API Messages
 require_relative './messages/base'
 Dir["./api/messages/*.rb"].each {|file| require file }
 
-module API
+module Sandbox
 
-  class Base < Grape::API
+  class API < Grape::API
 
     CONTENT_TYPE = "application/xml"
     RACK_CONTENT_TYPE_HEADER = {"content-type" => CONTENT_TYPE}
@@ -38,7 +38,7 @@ module API
 
     get '/', desc: "Lists API routes" do
       {
-        routes: API::Base.routes.collect { |r| {
+        routes: Sandbox::API.routes.collect { |r| {
                                                 route: {
                                                  version: r.instance_variable_get(:@options)[:version],
                                                  method: r.instance_variable_get(:@options)[:method],

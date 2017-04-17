@@ -4,7 +4,7 @@ require 'nokogiri'
 SCHEMAS_DIR = "./api/schemas/"
 SCHEMAS_VERSION = 'v113-p15-2'
 
-module API
+module Sandbox
 
   module Errors
     class IvalidNDCMessageError < RuntimeError; end
@@ -58,10 +58,6 @@ module API
           error!("Malformed NDC message :: #{errors.join(' | ')}", 400) unless errors.empty?
         end
       end
-    end
-
-    get '/ndc' do
-
     end
 
     desc "NDC endpoint supporting all NDC methods"

@@ -1,20 +1,18 @@
-require 'minitest/autorun'
-require 'test/unit'
+require 'test_helper'
 
+# class CheckerTest < Test::Unit::TestCase
+#   extend Minitest::Spec::DSL
 
-class CheckerTest < Test::Unit::TestCase
-  extend Minitest::Spec::DSL
+#   describe "Checker test is running" do
 
-  describe "Checker test is running" do
-
-    setup do
-      @ndc_client = 1
-    end
+#     setup do
+#       @ndc_client = 1
+#     end
   
-    test "simple test" do
-      assert true
-    end
+#     test "simple test" do
+#       assert true
+#     end
 
-  end
+#   end
 
-end
+# end

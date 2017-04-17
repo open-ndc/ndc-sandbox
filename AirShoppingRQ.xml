@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AirShoppingRQ xmlns="http://www.iata.org/IATA/EDIST" TimeStamp="2015-02-01T12:38:00Z" Version="1.1.5" TransactionIdentifier="TRN12345">
+  <PointOfSale>
+    <Location>
+      <CountryCode>ES</CountryCode>
+      <CityCode>MAD</CityCode>
+    </Location>
+    <RequestTime Zone="EST">2015-08-13T07:38:00</RequestTime>
+    <TouchPoint>
+      <Device>
+        <Code>2</Code>
+        <Definition>Web Browser</Definition>
+        <Position>
+          <Latitude>38.89756</Latitude>
+          <Longitude>-77.03650</Longitude>
+          <NAC>8KD7V PGGM0</NAC>
+        </Position>
+      </Device>
+      <Event>
+        <Code>9</Code>
+        <Definition>Shop</Definition>
+      </Event>
+    </TouchPoint>
+  </PointOfSale>
+  <Document>
+    <Name>WADUS NDC CLIENT</Name>
+    <ReferenceVersion>1.0</ReferenceVersion>
+  </Document>
+  <Party>
+    <Sender>
+      <ORA_Sender>
+        <AirlineID>C9</AirlineID>
+        <Name>Wadus Travels</Name>
+        <AgentUser>
+          <Name>Wadus Roger</Name>
+          <Type>TravelManagementCompany</Type>
+          <Contacts>
+            <Contact>
+              <EmailContact>
+                <Address>info@wadustravels.com</Address>
+              </EmailContact>
+            </Contact>
+          </Contacts>
+          <PseudoCity>A4A</PseudoCity>
+          <IATA_Number>98417900</IATA_Number>
+          <AgentUserID>ksmith212</AgentUserID>
+        </AgentUser>
+      </ORA_Sender>
+    </Sender>
+  </Party>
+  <Parameters>
+    <CurrCodes>
+      <CurrCode>EUR</CurrCode>
+    </CurrCodes>
+  </Parameters>
+  <Travelers>
+    <Traveler>
+      <AnonymousTraveler>
+        <PTC Quantity="2">ADT</PTC>
+      </AnonymousTraveler>
+     </Traveler>
+  </Travelers>
+  <CoreQuery>
+    <OriginDestinations>
+      <OriginDestination>
+        <Departure>
+          <AirportCode>SXF</AirportCode>
+          <Date>2016-12-25</Date>
+        </Departure>
+        <Arrival>
+          <AirportCode>MAD</AirportCode>
+          <Date>2017-01-05</Date>
+        </Arrival>
+      </OriginDestination>
+    </OriginDestinations>
+  </CoreQuery>
+  <Metadata>
+    <Other>
+      <OtherMetadata>
+        <CurrencyMetadatas>
+          <CurrencyMetadata MetadataKey="EUR">
+            <Decimals>2</Decimals>
+          </CurrencyMetadata>
+        </CurrencyMetadatas>
+      </OtherMetadata>
+    </Other>
+  </Metadata>
+</AirShoppingRQ>
