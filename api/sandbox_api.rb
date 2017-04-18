@@ -7,7 +7,6 @@ require 'nokogiri'
 require_relative 'sandbox_api_helpers'
 require_relative 'sandbox_ndc_endpoint'
 
-
 # Load API Messages
 require_relative './messages/base'
 Dir["./api/messages/*.rb"].each {|file| require file }
@@ -21,6 +20,7 @@ module Sandbox
     HTTP_STATUS_CODES = Rack::Utils::HTTP_STATUS_CODES.invert
 
     format :xml
+    prefix 'api'
     content_type :xml, CONTENT_TYPE
     # version 'v0', using: :path
 
@@ -51,7 +51,11 @@ module Sandbox
 
     desc "Returns ok status if reached"
     get '/status' do
-      {status: 'ok' }
+      {
+        status: 'ok',
+        sandbox_owner_code: $GLOBAL_OWNER,
+        airlines: Airline.all.collect{|a| {code: a[:code], name: a[:name]} }
+      }
     end
 
     # Mount other api modules here
