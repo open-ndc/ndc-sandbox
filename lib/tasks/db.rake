@@ -38,7 +38,7 @@ namespace :db do
 
   desc 'Create the database from config/database.yml for the current DATABASE_ENV'
   task :create => :configure_connection do
-    create_database @config
+    ActiveRecord::Base.connection.create_database @config['database']
   end
 
   desc 'Drops the database for the current DATABASE_ENV'

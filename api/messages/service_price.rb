@@ -1,8 +1,8 @@
-module API
+module Sandbox
 
   module Messages
 
-    class ServicePriceRQ < API::Messages::Base
+    class ServicePriceRQ < Sandbox::Messages::Base
 
       @response_name = "service_price"
       class << self
@@ -19,7 +19,7 @@ module API
           @num_travelers = ShoppingStore.get_num_travelers(response_id)
           @response = build_response
         rescue => error
-          @errors << API::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError: #{error}")
+          @errors << Sandbox::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError: #{error}")
         end
       end
     end

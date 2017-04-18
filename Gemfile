@@ -16,17 +16,12 @@ gem 'chronic'
 gem 'htmlentities', '~> 4.3', '>= 4.3.4'
 
 # DB
+gem 'pg'
 gem 'activerecord', '~> 4.0.0'      # Database
 gem 'redis', '~>3.2'
 
 # API Framework
 gem 'grape'
-
-gem 'test-unit'
-gem 'minitest'
-
-# DB
-gem 'pg'
 
 group :development do
   gem 'rb-readline'
@@ -35,6 +30,11 @@ group :development do
 end
 
 group :test do
+  # gem 'rspec'
+  gem 'test-unit'
+  # gem 'minitest'
+  gem "rack-test", require: "rack/test"
+  gem 'test_xml'
   gem 'bogus'
   gem 'database_cleaner'
   gem 'timecop'

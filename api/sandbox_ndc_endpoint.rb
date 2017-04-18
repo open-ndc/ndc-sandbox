@@ -4,7 +4,7 @@ require 'nokogiri'
 SCHEMAS_DIR = "./api/schemas/"
 SCHEMAS_VERSION = 'v113-p15-2'
 
-module API
+module Sandbox
 
   module Errors
     class IvalidNDCMessageError < RuntimeError; end
@@ -60,14 +60,10 @@ module API
       end
     end
 
-    get '/ndc' do
-
-    end
-
     desc "NDC endpoint supporting all NDC methods"
     post '/ndc' do
       begin
-        @message = API::Messages.class_eval(@ndc_method.to_s).new(@doc)
+        @message = Sandbox::Messages.class_eval(@ndc_method.to_s).new(@doc)
         if @message.errors.empty? && @message.response.present?
           status 200
         else

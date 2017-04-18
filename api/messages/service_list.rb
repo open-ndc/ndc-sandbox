@@ -1,8 +1,8 @@
-module API
+module Sandbox
 
   module Messages
 
-    class ServiceListRQ < API::Messages::Base
+    class ServiceListRQ < Sandbox::Messages::Base
 
       @response_name = "service_list"
       class << self
@@ -19,7 +19,7 @@ module API
           @bundles = Bundle.get_bundles(response_id)
           @response = build_response
         rescue => error
-          @errors << API::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError: #{error}")
+          @errors << Sandbox::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError: #{error}")
         end
       end
     end
