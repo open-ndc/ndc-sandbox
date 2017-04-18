@@ -14,20 +14,23 @@ desc "DB related operations"
 namespace :db do
 
   task :environment do
-    RACK_ENV = ENV['DATABASE_URL'] || 'development'
+    # Setup default ENV variables if missing
+    RACK_ENV ||= ENV['RACK_ENV'] ||= 'development'
     MIGRATIONS_DIR = ENV['MIGRATIONS_DIR'] || 'db/migrate'
   end
 
-  task :configuration => :environment do
+  task :configure_db => :environment do
     config_file = File.expand_path('../../../config/database.yml', __FILE__)
-    if $RACK_ENV == 'production'
+    if !ENV["DATABASE_URL"].nil? && !ENV["DATABASE_URL"].empty?
+      puts "Loading DB config from environment variable 'DATABASE_URL': #{ENV['DATABASE_URL']}..."
       @config = ENV["DATABASE_URL"]
     else
+      puts "Loading DB config from database.yml (environment: #{$RACK_ENV})..."
       @config = YAML.load_file('config/database.yml')[$RACK_ENV]
     end
   end
 
-  task :configure_connection => :configuration do
+  task :configure_connection => :configure_db do
     ActiveRecord::Base.establish_connection @config
     ActiveRecord::Base.logger = Logger.new STDOUT if @config['logger']
   end
