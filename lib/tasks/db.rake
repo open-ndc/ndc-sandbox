@@ -113,7 +113,7 @@ namespace :db do
 
   namespace :fixtures do
     desc "Loads a set of fixtures into the current environment's database (Syntax: db:fixtures:load[SET]). Load specific fixtures using FIXTURES=x,y."
-    task :load, [:set] => [:environment, :configuration, :configure_connection, :load_models] do |t, args|
+    task :load, [:set] => [:environment, :configure_db, :configure_connection, :load_models] do |t, args|
 
       fixtures_set = args[:set] || ENV['GLOBAL_OWNER']
       raise "Missing fixtures set param " if fixtures_set.blank?
