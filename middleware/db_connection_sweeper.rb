@@ -6,7 +6,6 @@ module Middleware
 
     def initialize(app)
       @app = app
-      Dir["models/*.rb"].each {|file| require file }
     end
 
     def call(env)
