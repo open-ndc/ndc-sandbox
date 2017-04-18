@@ -4,8 +4,8 @@ require 'active_record'
 require 'chronic'
 require 'yaml'
 
-if $RACK_ENV == 'production'
-  puts "Loading DB config from environment variable ENV['DATABASE_URL']: #{DATABASE_URL}..."
+if !ENV['DATABASE_URL'].nil?
+  puts "Loading DB config from environment variable ENV['DATABASE_URL']: #{ENV['DATABASE_URL']}..."
   @config = ENV["DATABASE_URL"]
 else
   puts "Loading DB config from database.yml (environment: #{$RACK_ENV})..."
