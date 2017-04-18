@@ -1,8 +1,8 @@
-module API
+module Sandbox
 
   module Messages
 
-    class Error # < API::Messages::Base
+    class Error # < Sandbox::Messages::Base
 
       class << self
         # attr_accessor :ndc_method, :ndc_response_method, :error_type, :error_type, :error_message

@@ -63,7 +63,7 @@ module Sandbox
     desc "NDC endpoint supporting all NDC methods"
     post '/ndc' do
       begin
-        @message = API::Messages.class_eval(@ndc_method.to_s).new(@doc)
+        @message = Sandbox::Messages.class_eval(@ndc_method.to_s).new(@doc)
         if @message.errors.empty? && @message.response.present?
           status 200
         else

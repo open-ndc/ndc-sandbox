@@ -1,8 +1,8 @@
-module API
+module Sandbox
 
   module Messages
 
-    class FlightPriceRQ < API::Messages::Base
+    class FlightPriceRQ < Sandbox::Messages::Base
 
       @response_name = 'flight_price'
       class << self

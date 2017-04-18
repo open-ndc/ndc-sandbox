@@ -1,8 +1,8 @@
-module API
+module Sandbox
 
   module Messages
 
-    class AirShoppingRQ < API::Messages::Base
+    class AirShoppingRQ < Sandbox::Messages::Base
 
       @response_name = "air_shopping"
       class << self

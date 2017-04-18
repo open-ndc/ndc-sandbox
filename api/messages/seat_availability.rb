@@ -1,8 +1,8 @@
-module API
+module Sandbox
 
   module Messages
 
-    class SeatAvailabilityRQ < API::Messages::Base
+    class SeatAvailabilityRQ < Sandbox::Messages::Base
       require 'htmlentities'
 
       @response_name = "seat_availability"
@@ -68,7 +68,7 @@ module API
           @services = @services + Service.fetch_by_od(route_dep, route_arr, route_dep_date, segment_key)
           @response = build_response
         rescue => error
-          @errors << API::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError: #{error}")
+          @errors << Sandbox::Messages::Errors::UnknownNDCProcessingError.new("UnknownNDCProcessingError: #{error}")
         end
       end
 
