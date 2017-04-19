@@ -114,31 +114,18 @@ namespace :db do
   end
 
   namespace :fixtures do
-    desc "Loads a set of fixtures into the current environment's database (Syntax: db:fixtures:load[SET]). Load specific fixtures using FIXTURES=x,y."
+    desc "Loads a set of fixtures into the current environment's database (Syntax: db:fixtures:load[SET])."
     task :load, [:set] => [:environment, :configure_db, :configure_connection, :load_models] do |t, args|
 
       fixtures_set = args[:set] || ENV['GLOBAL_OWNER'] || DEFAULT_FIXTURES_SET
       raise "Missing fixtures set param " if fixtures_set.blank?
-
-      FIXTURES_DIR = if ENV['FIXTURES_DIR']
-                       File.join base_dir, ENV['FIXTURES_DIR']
-                     else
-                       "#{FIXTURES_DIR}/#{fixtures_set}/"
-                     end
-
-      fixture_files = if ENV['FIXTURES']
-                        ENV['FIXTURES'].split(',')
-                      else
-                        # The use of String#[] here is to support namespaced fixtures
-                        Dir["#{FIXTURES_DIR}/**/*.yml"].map {|f| f[(FIXTURES_DIR.size + 1)..-5] }
-                      end
-
+      fixtures_dir = File.join(FIXTURES_DIR, fixtures_set)
+      fixture_files = Dir["#{fixtures_dir}/**/*.yml"].map {|f| f[(fixtures_dir.size + 1)..-5] }
 
       puts "Loading #{fixture_files.size} fixture files for set: '#{fixtures_set}'"
-
       if !fixture_files.empty?
         puts "Invoking create_fixtures for models #{fixture_files}"
-        ActiveRecord::FixtureSet.create_fixtures(FIXTURES_DIR, fixture_files)
+        ActiveRecord::FixtureSet.create_fixtures(fixtures_dir, fixture_files)
         puts "Fixtures loaded successfully!"
       else
         puts "No fixtures found for that nameset!"
