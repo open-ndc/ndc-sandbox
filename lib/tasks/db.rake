@@ -4,10 +4,10 @@ require 'active_record'
 require 'active_record/schema_dumper'
 require 'active_record/fixtures'
 
-config_dir = File.expand_path("#{$APP_ROOT}/config", __FILE__)
-db_dir = File.expand_path("#{$APP_ROOT}/db", __FILE__)
-fixtures_dir = File.expand_path("#{$APP_ROOT}/db/fixtures", __FILE__)
-DEFAULT_TEST_DB_NAME = 'sandbox_test'
+CONFIG_DIR = File.expand_path("#{$APP_ROOT}/config", __FILE__)
+DB_DIR = File.expand_path("#{$APP_ROOT}/db", __FILE__)
+FIXTURES_DIR = File.expand_path("#{$APP_ROOT}/db/fixtures", __FILE__)
+DEFAULT_TEST_DB_NAME = "sandbox_test"
 
 include ActiveRecord::Tasks
 
@@ -119,17 +119,17 @@ namespace :db do
       fixtures_set = args[:set] || ENV['GLOBAL_OWNER']
       raise "Missing fixtures set param " if fixtures_set.blank?
 
-      fixtures_dir = if ENV['FIXTURES_DIR']
+      FIXTURES_DIR = if ENV['FIXTURES_DIR']
                        File.join base_dir, ENV['FIXTURES_DIR']
                      else
-                       "#{fixtures_dir}/#{fixtures_set}/"
+                       "#{FIXTURES_DIR}/#{fixtures_set}/"
                      end
 
       fixture_files = if ENV['FIXTURES']
                         ENV['FIXTURES'].split(',')
                       else
                         # The use of String#[] here is to support namespaced fixtures
-                        Dir["#{fixtures_dir}/**/*.yml"].map {|f| f[(fixtures_dir.size + 1)..-5] }
+                        Dir["#{FIXTURES_DIR}/**/*.yml"].map {|f| f[(FIXTURES_DIR.size + 1)..-5] }
                       end
 
 
@@ -137,7 +137,7 @@ namespace :db do
 
       if !fixture_files.empty?
         puts "Invoking create_fixtures for models #{fixture_files}"
-        ActiveRecord::FixtureSet.create_fixtures(fixtures_dir, fixture_files)
+        ActiveRecord::FixtureSet.create_fixtures(FIXTURES_DIR, fixture_files)
         puts "Fixtures loaded successfully!"
       else
         puts "No fixtures found for that nameset!"
