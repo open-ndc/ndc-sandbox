@@ -1,5 +1,6 @@
 # OpenNDC :: NDC Sandbox
 
+![https://circleci.com/gh/open-ndc/ndc-sandbox](https://circleci.com/gh/open-ndc/ndc-sandbox/tree/master.svg?style=shield)
 [![Join the chat at https://gitter.im/open-ndc/ndc-sandbox](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/open-ndc/ndc-sandbox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Open-source NDC Sandbox for testing/development purposes.
@@ -21,7 +22,6 @@ This project is currently under a pre-development debate on how to approach it.
   - OrderList
   - OrderRetrieve
   - OrderCancel
-  - ItinReshop
 
 
 ## Setup
@@ -39,7 +39,7 @@ Any kind of software contribution, bug-report, and feedback is welcome and great
 
 ## Credits
 
-- Codebase started from [grape-skeleton](https://github.com/xurde/grape-skeleton) by [xurde](https://github.com/xurde)
-- Thanks to [AirGateway](http://airgateway.net) who contributed very actively to this project
-- Thanks to *flyiin* who contributed to this project
+- Codebase started from [grape-skeleton](https://github.com/xurde/grape-skeleton)
+- Thanks to [AirGateway](http://airgateway.net) who contributed actively to this project
+- Thanks to *Flyiin* who contributed to this project
 
