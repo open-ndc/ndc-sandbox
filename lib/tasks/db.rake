@@ -132,25 +132,22 @@ namespace :db do
       end
     end
 
-    desc "Search for a fixture given a LABEL or ID. Specify an alternative path (eg. spec/fixtures) using FIXTURES_PATH=spec/fixtures."
-    task :identify => [:environment, :load_config] do
-      require 'active_record/fixtures'
+    desc "Search for a fixture set given as param. (Syntax: db:fixtures:identify[SET])."
+    task :browse, [:set] => [:environment, :configure_db, :configure_connection, :load_models] do |t, args|
 
-      label, id = ENV['LABEL'], ENV['ID']
-      raise 'LABEL or ID required' if label.blank? && id.blank?
+      fixtures_set = args[:set] || ENV['GLOBAL_OWNER']
+      raise "Missing fixtures set param " if fixtures_set.blank?
+      fixtures_dir = File.join(FIXTURES_DIR, fixtures_set)
 
-      puts %Q(The fixture ID for "#{label}" is #{ActiveRecord::FixtureSet.identify(label)}.) if label
+      puts %Q(The fixture ID for "#{fixtures_set}" is #{ActiveRecord::FixtureSet.identify(fixtures_set)}.) if fixtures_set
 
       base_dir = ActiveRecord::Tasks::DatabaseTasks.fixtures_path
 
-      Dir["#{base_dir}/**/*.yml"].each do |file|
+      Dir["#{fixtures_dir}/**/*.yml"].each do |file|
         if data = YAML::load(ERB.new(IO.read(file)).result)
           data.each_key do |key|
             key_id = ActiveRecord::FixtureSet.identify(key)
-
-            if key == label || key_id == id.to_i
-              puts "#{file}: #{key} (#{key_id})"
-            end
+            puts "#{File.basename(file, '.yml')}: #{key} (#{key_id})"
           end
         end
       end
