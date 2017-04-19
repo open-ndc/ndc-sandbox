@@ -7,6 +7,7 @@ require 'active_record/fixtures'
 config_dir = File.expand_path("#{$APP_ROOT}/config", __FILE__)
 db_dir = File.expand_path("#{$APP_ROOT}/db", __FILE__)
 fixtures_dir = File.expand_path("#{$APP_ROOT}/db/fixtures", __FILE__)
+DEFAULT_TEST_DB_NAME = 'sandbox_test'
 
 include ActiveRecord::Tasks
 
@@ -41,12 +42,12 @@ namespace :db do
 
   desc 'Create the database from config/database.yml for the current DATABASE_ENV'
   task :create => :configure_connection do
-    ActiveRecord::Base.connection.create_database @config['database']
+    ActiveRecord::Base.connection.create_database @config['database'] || DEFAULT_TEST_DB_NAME
   end
 
   desc 'Drops the database for the current DATABASE_ENV'
   task :drop => :configure_connection do
-    ActiveRecord::Base.connection.drop_database @config['database']
+    ActiveRecord::Base.connection.drop_database @config['database'] || DEFAULT_TEST_DB_NAME
   end
 
   desc 'Resets your database using your migrations for the current environment (Non-SQLite DB)'
