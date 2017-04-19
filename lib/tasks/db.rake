@@ -8,6 +8,7 @@ CONFIG_DIR = File.expand_path("#{$APP_ROOT}/config", __FILE__)
 DB_DIR = File.expand_path("#{$APP_ROOT}/db", __FILE__)
 FIXTURES_DIR = File.expand_path("#{$APP_ROOT}/db/fixtures", __FILE__)
 DEFAULT_TEST_DB_NAME = "sandbox_test"
+DEFAULT_FIXTURES_SET = "FA"
 
 include ActiveRecord::Tasks
 
@@ -116,7 +117,7 @@ namespace :db do
     desc "Loads a set of fixtures into the current environment's database (Syntax: db:fixtures:load[SET]). Load specific fixtures using FIXTURES=x,y."
     task :load, [:set] => [:environment, :configure_db, :configure_connection, :load_models] do |t, args|
 
-      fixtures_set = args[:set] || ENV['GLOBAL_OWNER']
+      fixtures_set = args[:set] || ENV['GLOBAL_OWNER'] || DEFAULT_FIXTURES_SET
       raise "Missing fixtures set param " if fixtures_set.blank?
 
       FIXTURES_DIR = if ENV['FIXTURES_DIR']
