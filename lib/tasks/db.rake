@@ -4,9 +4,11 @@ require 'active_record'
 require 'active_record/schema_dumper'
 require 'active_record/fixtures'
 
-config_dir = File.expand_path("#{$APP_ROOT}/config", __FILE__)
-db_dir = File.expand_path("#{$APP_ROOT}/db", __FILE__)
-fixtures_dir = File.expand_path("#{$APP_ROOT}/db/fixtures", __FILE__)
+CONFIG_DIR = File.expand_path("#{$APP_ROOT}/config", __FILE__)
+DB_DIR = File.expand_path("#{$APP_ROOT}/db", __FILE__)
+FIXTURES_DIR = File.expand_path("#{$APP_ROOT}/db/fixtures", __FILE__)
+DEFAULT_TEST_DB_NAME = "sandbox_test"
+DEFAULT_FIXTURES_SET = "FA"
 
 include ActiveRecord::Tasks
 
@@ -14,20 +16,23 @@ desc "DB related operations"
 namespace :db do
 
   task :environment do
-    RACK_ENV = ENV['DATABASE_URL'] || 'development'
+    # Setup default ENV variables if missing
+    RACK_ENV ||= ENV['RACK_ENV'] ||= 'development'
     MIGRATIONS_DIR = ENV['MIGRATIONS_DIR'] || 'db/migrate'
   end
 
-  task :configuration => :environment do
+  task :configure_db => :environment do
     config_file = File.expand_path('../../../config/database.yml', __FILE__)
-    if $RACK_ENV == 'production'
+    if !ENV["DATABASE_URL"].nil? && !ENV["DATABASE_URL"].empty?
+      puts "Loading DB config from environment variable 'DATABASE_URL': #{ENV['DATABASE_URL']}..."
       @config = ENV["DATABASE_URL"]
     else
+      puts "Loading DB config from database.yml (environment: #{$RACK_ENV})..."
       @config = YAML.load_file('config/database.yml')[$RACK_ENV]
     end
   end
 
-  task :configure_connection => :configuration do
+  task :configure_connection => :configure_db do
     ActiveRecord::Base.establish_connection @config
     ActiveRecord::Base.logger = Logger.new STDOUT if @config['logger']
   end
@@ -38,12 +43,12 @@ namespace :db do
 
   desc 'Create the database from config/database.yml for the current DATABASE_ENV'
   task :create => :configure_connection do
-    ActiveRecord::Base.connection.create_database @config['database']
+    ActiveRecord::Base.connection.create_database @config['database'] || DEFAULT_TEST_DB_NAME
   end
 
   desc 'Drops the database for the current DATABASE_ENV'
   task :drop => :configure_connection do
-    ActiveRecord::Base.connection.drop_database @config['database']
+    ActiveRecord::Base.connection.drop_database @config['database'] || DEFAULT_TEST_DB_NAME
   end
 
   desc 'Resets your database using your migrations for the current environment (Non-SQLite DB)'
@@ -109,28 +114,15 @@ namespace :db do
   end
 
   namespace :fixtures do
-    desc "Loads a set of fixtures into the current environment's database (Syntax: db:fixtures:load[SET]). Load specific fixtures using FIXTURES=x,y."
-    task :load, [:set] => [:environment, :configuration, :configure_connection, :load_models] do |t, args|
+    desc "Loads a set of fixtures into the current environment's database (Syntax: db:fixtures:load[SET])."
+    task :load, [:set] => [:environment, :configure_db, :configure_connection, :load_models] do |t, args|
 
-      fixtures_set = args[:set] || ENV['GLOBAL_OWNER']
+      fixtures_set = args[:set] || ENV['GLOBAL_OWNER'] || DEFAULT_FIXTURES_SET
       raise "Missing fixtures set param " if fixtures_set.blank?
-
-      fixtures_dir = if ENV['FIXTURES_DIR']
-                       File.join base_dir, ENV['FIXTURES_DIR']
-                     else
-                       "#{fixtures_dir}/#{fixtures_set}/"
-                     end
-
-      fixture_files = if ENV['FIXTURES']
-                        ENV['FIXTURES'].split(',')
-                      else
-                        # The use of String#[] here is to support namespaced fixtures
-                        Dir["#{fixtures_dir}/**/*.yml"].map {|f| f[(fixtures_dir.size + 1)..-5] }
-                      end
-
+      fixtures_dir = File.join(FIXTURES_DIR, fixtures_set)
+      fixture_files = Dir["#{fixtures_dir}/**/*.yml"].map {|f| f[(fixtures_dir.size + 1)..-5] }
 
       puts "Loading #{fixture_files.size} fixture files for set: '#{fixtures_set}'"
-
       if !fixture_files.empty?
         puts "Invoking create_fixtures for models #{fixture_files}"
         ActiveRecord::FixtureSet.create_fixtures(fixtures_dir, fixture_files)
@@ -140,25 +132,22 @@ namespace :db do
       end
     end
 
-    desc "Search for a fixture given a LABEL or ID. Specify an alternative path (eg. spec/fixtures) using FIXTURES_PATH=spec/fixtures."
-    task :identify => [:environment, :load_config] do
-      require 'active_record/fixtures'
+    desc "Search for a fixture set given as param. (Syntax: db:fixtures:identify[SET])."
+    task :browse, [:set] => [:environment, :configure_db, :configure_connection, :load_models] do |t, args|
 
-      label, id = ENV['LABEL'], ENV['ID']
-      raise 'LABEL or ID required' if label.blank? && id.blank?
+      fixtures_set = args[:set] || ENV['GLOBAL_OWNER']
+      raise "Missing fixtures set param " if fixtures_set.blank?
+      fixtures_dir = File.join(FIXTURES_DIR, fixtures_set)
 
-      puts %Q(The fixture ID for "#{label}" is #{ActiveRecord::FixtureSet.identify(label)}.) if label
+      puts %Q(The fixture ID for "#{fixtures_set}" is #{ActiveRecord::FixtureSet.identify(fixtures_set)}.) if fixtures_set
 
       base_dir = ActiveRecord::Tasks::DatabaseTasks.fixtures_path
 
-      Dir["#{base_dir}/**/*.yml"].each do |file|
+      Dir["#{fixtures_dir}/**/*.yml"].each do |file|
         if data = YAML::load(ERB.new(IO.read(file)).result)
           data.each_key do |key|
             key_id = ActiveRecord::FixtureSet.identify(key)
-
-            if key == label || key_id == id.to_i
-              puts "#{file}: #{key} (#{key_id})"
-            end
+            puts "#{File.basename(file, '.yml')}: #{key} (#{key_id})"
           end
         end
       end

@@ -10,7 +10,7 @@ require 'rake'
 require 'rake/testtask'
 
 Rake::TestTask.new(:test) do |test|
-  $RACK_ENV = 'test'
+  # $RACK_ENV = 'test'
   test.ruby_opts = ["-rubygems"] if defined? Gem
   test.libs << "test"
   test.test_files = FileList['test/*test.rb']
