@@ -28,9 +28,11 @@ This project is currently under a pre-development debate on how to approach it.
 ## Setup
 
 1. Git clone this repo.
-2. Install dependencies with ```bundle install```
-3. Run ```rackup``` to start a local server (by default runs on port 9292)
-4. Test the API by validating a NDC payload, here is a curl example: ```curl -X POST -H "Content-Type: application/xml" --data @AirShopping.xml "http://ndc-sandbox.dev/api/ndc/"```
+2. Install dependencies with `bundle install`
+3. Run `rake db:setup`
+4. Run `rake db:fixtures:load[ID]` (ID is the id of a valid fixtures set. By default it will load 'FA') 
+5. Run `rackup` to start a local server (by default runs on port 9292)
+6. Test the API by validating a NDC payload, here is a curl example: `curl -X POST -H "Content-Type: application/xml" --data @AirShopping.xml "http://ndc-sandbox.dev/api/ndc/"`
 
 
 ## Contribute
