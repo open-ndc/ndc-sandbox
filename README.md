@@ -13,9 +13,10 @@ This project is currently under a pre-development debate on how to approach it.
 ## Features List
 
 1. Planned NDC Messages:
-  - AirShopping ✔︎
-  - FlightPrice ✔︎
-  - SeatAvailability
+
+  - AirShopping (supported)
+  - FlightPrice (supported)
+  - SeatAvailability (in progress)
   - ServiceList
   - ServicePrice
   - OrderCreate
