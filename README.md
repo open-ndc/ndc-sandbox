@@ -1,6 +1,6 @@
 # OpenNDC :: NDC Sandbox
 
-![https://circleci.com/gh/open-ndc/ndc-sandbox](https://circleci.com/gh/open-ndc/ndc-sandbox/tree/master.svg?style=shield)
+[![Circle CI - ndc-sandbox](https://circleci.com/gh/open-ndc/ndc-sandbox/tree/master.svg?style=shield)](https://circleci.com/gh/open-ndc/ndc-sandbox)
 [![Join the chat at https://gitter.im/open-ndc/ndc-sandbox](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/open-ndc/ndc-sandbox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Open-source NDC Sandbox for testing/development purposes.
