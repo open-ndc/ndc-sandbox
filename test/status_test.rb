@@ -3,7 +3,6 @@ require './api/sandbox_api'
 
 STATUS_URI = '/api/status'
 
-
 class StatusTest < Test::Unit::TestCase
   include Rack::Test::Methods
 
@@ -15,6 +14,12 @@ class StatusTest < Test::Unit::TestCase
     header "Content-Type", "application/xml"
     get STATUS_URI
     assert last_response.ok?
+  end
+
+  test "Post status fails" do
+    header "Content-Type", "application/xml"
+    post STATUS_URI
+    assert !last_response.ok?
   end
 
 end
