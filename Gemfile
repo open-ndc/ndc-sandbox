@@ -30,9 +30,7 @@ group :development do
 end
 
 group :test do
-  # gem 'rspec'
   gem 'test-unit'
-  # gem 'minitest'
   gem "rack-test", require: "rack/test"
   gem 'test_xml'
   gem 'bogus'
