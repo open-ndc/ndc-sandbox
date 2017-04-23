@@ -1,6 +1,7 @@
 $RACK_ENV = ENV['RACK_ENV'] = 'test'
 
 TEMPLATES_PATH = "./test/templates"
+STATUS_URI = '/api/status'
 API_URL = "/api/ndc/"
 
 require 'grape'
