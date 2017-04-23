@@ -1,7 +1,4 @@
 require 'test_helper'
-require './api/sandbox_api'
-
-STATUS_URI = '/api/status'
 
 class StatusTest < Test::Unit::TestCase
   include Rack::Test::Methods
