@@ -1,5 +1,4 @@
 require 'test_helper'
-require './api/sandbox_api'
 
 STATUS_URI = '/api/status'
 

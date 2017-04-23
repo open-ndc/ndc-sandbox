@@ -12,4 +12,6 @@ require 'rack/test'
 require './middleware/init_db'
 require './middleware/db_connection_sweeper'
 
+require './api/sandbox_api'
+
 
