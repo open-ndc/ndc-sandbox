@@ -5,8 +5,6 @@
 
 Open-source NDC Sandbox for testing/development purposes.
 
-This project is currently under a pre-development debate on how to approach it.
-
 [Check out here more about the scope of this project](https://github.com/open-ndc/ndc-sandbox/wiki).
 
 
