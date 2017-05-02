@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<AirShoppingRQ xmlns="http://www.iata.org/IATA/EDIST" Version="1.1.5">
+<AirShoppingRQ xmlns="http://www.iata.org/IATA/EDIST" Version="1.1.3">
   <PointOfSale>
     <Location>
       <CountryCode>ES</CountryCode>
