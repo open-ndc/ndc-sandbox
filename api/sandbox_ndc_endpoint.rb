@@ -53,9 +53,9 @@ module Sandbox
             xsd = Nokogiri::XML::Schema(File.read(schema_file))
             errors += xsd.validate(@doc)
           rescue => e
-            errors << Errors::IvalidNDCValidationError.new("NDC Validation Error :: #{e.message}")
+            errors << Errors::IvalidNDCValidationError.new("NDC Validation Error(s) :: #{e.message}")
           end
-          error!("Malformed NDC message :: #{errors.join(' | ')}", 400) unless errors.empty?
+          error!("NDC Validation Error(s) :: #{errors.join(' | ')}", 400) unless errors.empty?
         end
       end
     end
@@ -63,6 +63,7 @@ module Sandbox
     desc "NDC endpoint supporting all NDC methods"
     post '/ndc' do
       begin
+        puts "INFO :: called NDC method: #{@ndc_method.to_s}"
         @message = Sandbox::Messages.class_eval(@ndc_method.to_s).new(@doc)
         if @message.errors.empty? && @message.response.present?
           status 200
