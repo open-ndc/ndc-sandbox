@@ -8,11 +8,21 @@ class NDCErrorsTest < Test::Unit::TestCase
   end
 
   EMPTY_REQUEST_ERROR_MESSAGE = <<-XML
+  <error>
     <message>Malformed Request :: Empty Request Body</message>
+  </error>
   XML
 
   INVALID_REQUEST_ERROR_MESSAGE = <<-XML
+  <error>
     <message>Malformed Request :: Invalid or unrecognized NDC method (Wadus)</message>
+  </error>
+  XML
+
+  INVALID_AIRSHOPPING_ERROR_MESSAGE = <<-XML
+  <error>
+    <message>Malformed Request :: Invalid or unrecognized NDC method (AirShopping)</message>
+  </error>
   XML
 
   test "Post empty fails" do
@@ -20,7 +30,7 @@ class NDCErrorsTest < Test::Unit::TestCase
       post API_URL
       assert !last_response.ok?
       assert last_response.status == 400
-      assert_xml_structure_contain last_response.body, EMPTY_REQUEST_ERROR_MESSAGE
+      assert_xml_contain last_response.body, EMPTY_REQUEST_ERROR_MESSAGE
   end
 
   test "Post NDC invalid fails" do
@@ -28,7 +38,15 @@ class NDCErrorsTest < Test::Unit::TestCase
       post API_URL, "<Wadus>Wadus</Wadus>"
       assert !last_response.ok?
       assert last_response.status == 400
-      assert_xml_structure_contain last_response.body, INVALID_REQUEST_ERROR_MESSAGE
+      assert_xml_contain last_response.body, INVALID_REQUEST_ERROR_MESSAGE
+  end
+
+  test "Post invalid NDC AirShopping fails" do
+      header "Content-Type", "application/xml"
+      post API_URL, "<AirShopping>Wadus</AirShopping>"
+      assert !last_response.ok?
+      assert last_response.status == 400
+      assert_xml_contain last_response.body, INVALID_AIRSHOPPING_ERROR_MESSAGE
   end
 
 end

@@ -4,6 +4,10 @@ TEMPLATES_PATH = "./test/templates"
 STATUS_URI = '/api/status'
 API_URL = "/api/ndc/"
 
+Dir.glob("./lib/core_ext/*.rb").each { |ext| 
+  require ext 
+}
+
 require 'grape'
 
 require 'test/unit'

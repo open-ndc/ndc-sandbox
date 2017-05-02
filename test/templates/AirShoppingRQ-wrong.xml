@@ -60,7 +60,7 @@
       </AnonymousTraveler>
      </Traveler>
   </Travelers>
-  <CoreQuery>
+  <!--<CoreQuery>
     <OriginDestinations>
       <OriginDestination>
         <Departure>
@@ -73,7 +73,7 @@
         </Arrival>
       </OriginDestination>
     </OriginDestinations>
-  </CoreQuery>
+  </CoreQuery>-->
   <Metadata>
     <Other>
       <OtherMetadata>
