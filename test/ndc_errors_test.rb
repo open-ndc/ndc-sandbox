@@ -44,7 +44,6 @@ class NDCErrorsTest < Test::Unit::TestCase
   test "Post invalid NDC AirShopping fails" do
       header "Content-Type", "application/xml"
       post API_URL, "<AirShopping>Wadus</AirShopping>"
-      puts "DEBUG ::: #{last_response.body}"
       assert !last_response.ok?
       assert last_response.status == 400
       assert_xml_contain last_response.body, INVALID_AIRSHOPPING_ERROR_MESSAGE

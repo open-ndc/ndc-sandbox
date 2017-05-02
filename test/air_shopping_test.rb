@@ -1,34 +1,49 @@
 require 'test_helper'
 
-# class AirShoppingTest < Test::Unit::TestCase
-  # extend Minitest::Spec::DSL
-  # include Rack::Test::Methods
+AIRSHOPPING_SUCCESS = <<-XML
+  <AirShoppingRS>
+    <Success/>
+  </AirShoppingRS>
+XML
 
-  # STATUS_URI = "http://localhost:9292/api/status/"
-  # NDC_URI = "http://localhost:9292/api/ndc/"
+AIRSHOPPING_SHOPPING_RESPONSE_IDS = <<-XML
+  <AirShoppingRS>
+    <ShoppingResponseIDs>
+      <ResponseID></ResponseID>
+    </ShoppingResponseIDs>
+  </AirShoppingRS>
+XML
 
-  # describe "AirShopping tests" do
+RESPONSE_ERROR = <<-XML
+  <error/>
+XML
 
-  #   # include Rack::Test::Methods
+class AirShoppingTest < Test::Unit::TestCase
+  include Rack::Test::Methods
 
-  #   setup do
-  #     @method = :AirShopping
-  #     @message = File.read("#{TEMPLATES_PATH}/#{@method.to_s}RQ.xml")
-  #   end
-  
-  #   test "Gets status OK" do
-  #     # post API_URL
-  #     response = HTTParty.get(STATUS_URI)
-  #     assert true
-  #   end
+  def app
+    Sandbox::API
+  end
 
-  #   test "Sends valid AirShopping" do
-  #     # post API_URL
-  #     response = HTTParty.post(NDC_URI, body: "<Wadus/>")
-  #     assert true
-  #   end
+  setup do
+    @method = :AirShopping
+    @message = File.read("#{TEMPLATES_PATH}/#{@method.to_s}RQ.xml")
+    @wrong_message = File.read("#{TEMPLATES_PATH}/#{@method.to_s}RQ-wrong.xml")
+  end
 
+  test "Post valid AirShopping gets OK" do
+    header "Content-Type", "application/xml"
+    post API_URL, @message
+    assert last_response.ok?
+    assert_xml_contain last_response.body, AIRSHOPPING_SUCCESS
+    assert_xml_structure_contain last_response.body, AIRSHOPPING_SHOPPING_RESPONSE_IDS
+  end
 
-  # end
+  test "Post invalid AirShopping gets OK" do
+    header "Content-Type", "application/xml"
+    post API_URL, @wrong_message
+    assert !last_response.ok?
+    assert_xml_structure_contain last_response.body, RESPONSE_ERROR
+  end
 
-# end
+end
