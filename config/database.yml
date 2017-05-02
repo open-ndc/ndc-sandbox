@@ -12,6 +12,7 @@
 
 development:
   adapter: postgresql
+  host: 127.0.0.1
   encoding: unicode
   database: ndc_sandbox_dev
   pool: 5
