@@ -2,7 +2,7 @@ require 'grape'
 require 'nokogiri'
 
 SCHEMAS_DIR = "./api/schemas/"
-SCHEMAS_VERSION = 'v113-p15-2'
+SCHEMAS_VERSION = 'p15-2'
 
 module Sandbox
 
