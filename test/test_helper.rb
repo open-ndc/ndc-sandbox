@@ -19,4 +19,10 @@ require './middleware/db_connection_sweeper'
 
 require './api/sandbox_api'
 
+# XML general patterns
+
+RESPONSE_ERROR = <<-XML
+  <error/>
+XML
+
 

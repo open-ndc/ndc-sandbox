@@ -14,10 +14,6 @@ AIRSHOPPING_SHOPPING_RESPONSE_IDS = <<-XML
   </AirShoppingRS>
 XML
 
-RESPONSE_ERROR = <<-XML
-  <error/>
-XML
-
 class AirShoppingTest < Test::Unit::TestCase
   include Rack::Test::Methods
 
