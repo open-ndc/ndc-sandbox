@@ -63,7 +63,7 @@ module Sandbox
     desc "NDC endpoint supporting all NDC methods"
     post '/ndc' do
       begin
-        puts "INFO :: called NDC method: #{@ndc_method.to_s}"
+        puts "INFO :: NDC Request: #{@ndc_method.to_s}"
         @message = Sandbox::Messages.class_eval(@ndc_method.to_s).new(@doc)
         if @message.errors.empty? && @message.response.present?
           status 200
