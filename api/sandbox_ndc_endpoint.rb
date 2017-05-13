@@ -36,7 +36,7 @@ module Sandbox
     before do
       @message = request.env["api.request.input"]
       if !request.post?
-        error!("Method not allowed. Try POST", 405)
+        error!("GET Method is not allowed. Send POST", 405)
       elsif @message.blank?
         error!("Malformed Request :: Empty Request Body", 400)
       elsif (@doc = Nokogiri::XML(@message)).root.nil?
@@ -58,6 +58,10 @@ module Sandbox
           error!("NDC Validation Error(s) :: #{errors.join(' | ')}", 400) unless errors.empty?
         end
       end
+    end
+
+    desc "GET is handled but not valid"
+    get '/ndc' do
     end
 
     desc "NDC endpoint supporting all NDC methods"
