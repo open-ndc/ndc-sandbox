@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.7'
+ruby '2.2.2'
 
 gem 'json'                          # JSON
 gem 'foreman'                       # Process management
