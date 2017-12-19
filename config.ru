@@ -18,8 +18,9 @@ Dir.glob("#{$APP_ROOT}/lib/core_ext/*.rb").each { |ext| require ext }
 # DBs
 require File.join(File.dirname(__FILE__), './middleware/init_db')
 require 'middleware/db_connection_sweeper'
+require 'middleware/connection_management'
 use Middleware::DBConnectionSweeper
-use ActiveRecord::ConnectionAdapters::ConnectionManagement
+use Middleware::ConnectionManagement
 
 # Loggers
 require 'middleware/logger'
