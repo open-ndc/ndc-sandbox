@@ -17,7 +17,7 @@ gem 'htmlentities', '~> 4.3', '>= 4.3.4'
 
 # DB
 gem 'pg'
-gem 'activerecord', '~> 4.0.0'      # Database
+gem 'activerecord', '~> 5.0.0'      # Database
 gem 'redis', '~>3.2'
 
 # API Framework
