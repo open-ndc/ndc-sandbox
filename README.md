@@ -41,7 +41,7 @@ Open-source NDC Sandbox for testing/development purposes.
 7. Run `rackup` to start a local server (by default runs on port 9292)
 8. Test the API by validating a NDC payload, here is a curl example: `curl -X POST -H "Content-Type: application/xml" --data @AirShopping.xml "http://ndc-sandbox.dev/api/ndc/"`
 
-Note: if ion step 3 you get an error saying the database is not available, try creating it manually for both environments (deb and test) with:
+Note: if ion step 3 you get an error saying the database is not available, try creating it manually for both environments (dev and test) with:
 
 ```
 $ createdb db_name
